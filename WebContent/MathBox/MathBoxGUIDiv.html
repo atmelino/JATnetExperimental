@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MathBox</title>
+
+<script type="text/javascript" charset="utf-8"
+	src="../libjs/MathBox/vendor/domready.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="../libjs/MathBox/build/MathBox-bundle.js"></script>
+<script type="text/javascript" charset="utf-8" src="../libjs/colors.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+  /**
+   * Bootstrap
+   */
+  DomReady.ready(function() {
+    ThreeBox.preload([
+      '../libjs/MathBox/build/MathBox.glsl.html',
+    ], function () {
+
+	//document.getElementById('info').style.opacity = '1';
+
+	// MathBox boilerplate
+	var element = document.getElementById('mathboxdiv');
+	var mathbox = window.mathbox = mathBox(element, {
+	//var mathbox = window.mathbox = mathBox({
+        cameraControls: true,
+            cursor:         true,
+        controlClass:   ThreeBox.OrbitControls,
+            elementResize:  false,//true,
+          fullscreen:   true,
+        screenshot:     true,
+          stats:          false,
+        scale:          1,
+      }).start();
+
+      // Set up director
+      var script = window.mathboxScript;
+	//var director = window.director = new MathBox.Director(mathbox, script);
+
+      // Arrow controls
+      // Controls for stand-alone
+      window.addEventListener('touchstart', function (e) {
+          //director.forward();
+        document.getElementById('info').style.opacity = '0';
+      });
+      window.addEventListener('keydown', function (e) {
+        //if (e.keyCode == 38 || e.keyCode == 37) director.back();
+        //else if (e.keyCode == 40 || e.keyCode == 39) director.forward();
+	  if (e.keyCode == 82) toPolarGridRTheta();
+	  else if (e.keyCode == 84) toPolarGridThetaR();
+	  else if (e.keyCode == 67) toCartesianGrid();
+	  else if (e.keyCode == 72) toHelix();
+        else {
+          return;
+        }
+
+        document.getElementById('info').style.opacity = '0';
+      });
+
+      //window.polar.mathboxSetup(mathbox);
+      window.JAT.mathboxSetup(mathbox);
+    });
+  });
+  </script>
+
+
+
+<script type="text/javascript" charset="utf-8">
+    window.JAT = {};
+
+
+    window.JAT.mathboxSetup = function (mathbox) {
+		// Viewport camera/setup
+		mathbox
+		// Cartesian viewport
+		.viewport({
+			type : 'cartesian',
+			range : [ [ -4, 4 ], [ -4, 4 ], [ -4, 4 ] ],
+			scale : [ 1, 1, 1 ],
+		}).camera({
+			orbit : 4.5,
+			phi : 0.3,
+			theta : 0.3,
+		}).transition(300)
+
+		// Axes
+		.axis({
+			id : 'Y',
+			axis : 0,
+			offset : [ 0, -4, -4 ],
+			color : colourNameToHex("green"),
+			ticks : 5,
+			lineWidth : 2,
+			size : .05,
+			labels : true,
+			arrow : true,
+		}).axis({
+			id : 'Z',
+			axis : 1,
+			offset : [ -4, 0, -4 ],
+			color : colourNameToHex("blue"),
+			ticks : 5,
+			lineWidth : 2,
+			size : .05,
+			zero : false,
+			labels : true,
+			arrow : true,
+		}).axis({
+			id : 'X',
+			axis : 2,
+			offset : [ -4, -4, 0 ],
+			//	color : 0x00A000,
+			color : colourNameToHex("red"),
+			ticks : 5,
+			lineWidth : 2,
+			size : .05,
+			zero : false,
+			labels : true,
+			arrow : true,
+		})
+		// Grid
+		.grid({
+			axis : [ 0, 1 ],
+			offset : [ 0, 0, -4 ],
+			color : colourNameToHex("lightgrey"),
+			lineWidth : 1,
+		}).grid({
+			axis : [ 0, 2 ],
+			//ticks: [2, 1],
+			offset : [ 0, -4, 0 ],
+			color : colourNameToHex("lightgrey"),
+			lineWidth : 1,
+		}).grid({
+			axis : [ 1, 2 ],
+			//ticks: [2, 1],
+			offset : [ -4, 0, 0 ],
+			color : colourNameToHex("lightgrey"),
+			lineWidth : 1,
+		})
+		// Curve
+		.curve({
+			n : 2,
+			domain : [ -1, 1 ],
+			data : [ [ 0, 0, -4 ], [ 1.5 * π, .5, 4 ] ],
+			color : 0xa00000,
+			lineWidth : 1,
+		}).curve({
+			n : 2,
+			domain : [ -1, 1 ],
+			data : [ [ 0, 0, -4 ], [ 1.75 * π, .5, 4 ] ],
+			color : 0xa0a0a0,
+			lineWidth : 1,
+		}).curve({
+			n : 48,
+			domain : [ -π, π ],
+			expression : function(x) {
+				return [ x, .5, 4 ];
+			},
+			color : 0xa0a0a0,
+			lineWidth : 1,
+		})
+
+		;
+
+		// Move axis + grid
+		setTimeout(function() {
+			//document.getElementById('message').innerHTML = "color=" + colourNameToHex("red");
+
+			mathbox.animate('camera', {
+				orbit : 4.5,
+				phi : 1.5
+			}, {
+				duration : 2500
+			});
+		}, 1000);
+
+
+    }
+    </script>
+
+<link href="base.css" rel="stylesheet" type="text/css" media="screen">
+
+
+</head>
+<body>
+	<h1>Polar Graphics Transformation</h1>
+	<p>
+		Change the coordinate system by pressing the key or selecting the
+		option. When adding a function, use <a
+			href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Math">Javascript
+			Math library</a> to access things like sine, cosine, etc.
+	</p>
+	<div>
+		<input name="coordsys" class="coordsys" type="radio" value="0"
+			onclick="toPolarGridRTheta(this);">Polar Grid: \(r,\theta\) (<em>R</em></input>)
+		<input name="coordsys" class="coordsys" type="radio" value="0"
+			onclick="toPolarGridThetaR(this);">Polar Grid: \(\theta,r\) (<em>T</em>)</input>
+		<input name="coordsys" class="coordsys" type="radio" value="0"
+			onclick="toCartesianGrid(this);">Cartesian (<em>C</em>)</input> <input
+			name="coordsys" class="coordsys" type="radio" value="0"
+			onclick="toHelix(this);">Helix (<em>H</em>)<br>
+	</div>
+	<span style="margin-left: 1em">r(t)=<input id="newfunction"
+		name="fn" type="input" onKeyDown="function() {return false;}"
+		value="Math.cos(t)"></input></span>
+	<button onclick="newFunction()">Add Function</button>
+	<div id="mathboxdiv"></div>
+</body>
+</html>

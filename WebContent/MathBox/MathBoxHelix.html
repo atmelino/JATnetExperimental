@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MathBox</title>
+
+<style type="text/css" media="screen">
+html,body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0
+}
+
+canvas {
+	display: block
+}
+
+div+div+div {
+	max-width: 80%;
+}
+
+.mathbox-label {
+	font-family: 'klavika-web', sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	text-shadow: 3px 0px 1px rgb(255, 255, 255), -3px 0px 1px
+		rgb(255, 255, 255), 0px -3px 1px rgb(255, 255, 255), 0px 3px 1px
+		rgb(255, 255, 255), 2px 2px 1px rgb(255, 255, 255), -2px 2px 1px
+		rgb(255, 255, 255), 2px -2px 1px rgb(255, 255, 255), -2px -2px 1px
+		rgb(255, 255, 255), 3px 2px 1px rgb(255, 255, 255), -3px 2px 1px
+		rgb(255, 255, 255), 3px -2px 1px rgb(255, 255, 255), -3px -2px 1px
+		rgb(255, 255, 255), 1px 3px 1px rgb(255, 255, 255), -1px 3px 1px
+		rgb(255, 255, 255), 1px -3px 1px rgb(255, 255, 255), -1px -3px 1px
+		rgb(255, 255, 255), -1px -1px 1px rgb(255, 255, 255), -1px 1px 1px
+		rgb(255, 255, 255), 1px -1px 1px rgb(255, 255, 255), 1px 1px 1px
+		rgb(255, 255, 255);
+}
+</style>
+
+<script type="text/javascript" src="http://use.typekit.com/nde6wmn.js"></script>
+<script type="text/javascript">
+	try {
+		Typekit.load();
+	} catch (e) {
+	}
+</script>
+
+<!--
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      "HTML-CSS": { availableFonts: ["TeX"] },
+      extensions: ["tex2jax.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      messageStyle: 'none'
+    });
+  </script>
+  <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+-->
+
+<script type="text/javascript" charset="utf-8" src="../vendor/domready.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="../build/MathBox-bundle.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+	/**
+	 * Bootstrap
+	 */
+	DomReady.ready(function() {
+		ThreeBox.preload([ '../build/MathBox.glsl.html', ], function() {
+
+			// MathBox boilerplate
+			var mathbox = window.mathbox = mathBox({
+				cameraControls : true,//false,
+				cursor : true,
+				controlClass : ThreeBox.OrbitControls,
+				elementResize : true,
+				fullscreen : true,
+				screenshot : true,
+				stats : false,
+				scale : 1,
+			});
+
+			if (top == window)
+				mathbox.start();
+
+			// Set up director
+			var script = window.mathboxScript;
+			var director = window.director = new MathBox.Director(mathbox, script);
+
+			// Arrow controls
+			// Controls for stand-alone
+			window.addEventListener('keydown', function(e) {
+				if (e.keyCode == 38 || e.keyCode == 37)
+					director.back();
+				else if (e.keyCode == 40 || e.keyCode == 39)
+					director.forward();
+				else {
+					return;
+				}
+
+				document.getElementById('info').style.opacity = '0';
+			});
+
+			window.mathboxSetup(mathbox);
+
+			// Rotate camera continuously
+			mathbox.world().loop().hookPreRender(function() {
+				mathbox.set('camera', {
+					phi : +new Date() * .0003
+				});
+			});
+		});
+	});
+</script>
+
+<script type="text/javascript" charset="utf-8">
+	/**
+	 * Custom helpers
+	 */
+
+	// Clock that starts as soon as it is first called (per id).
+	var clocks = {};
+	window.clock = function(id) {
+		if (!clocks[id])
+			clocks[id] = +new Date();
+		return (+new Date() - clocks[id]) * .001;
+	}
+
+	// Arbitrary function
+	function surfaceFunc(x, y) {
+		return [ x, 3 + -1 + Math.cos(x * 5) + Math.cos(y * 5), y ];
+	}
+
+	// Horizontal slice
+	function sliceFunc(x, y) {
+		var t = clock(1);
+		return Math.sin(t) * .75 + 2;
+	}
+
+	// Wandering point
+	function wander(t, x, r) {
+		var u = r
+				* (1 + .1 * (Math.cos(t * .31 + x + Math.cos(t * .67 - 1)) + Math.sin(t * 1.32 - x * 3
+						+ Math.cos(t * .441))));
+		var v = t * .21 + x + Math.cos(t * .57 - 2) + Math.sin(t * 1.12 - x * 3 + Math.cos(t * .541));
+		return [ Math.cos(v) * u, Math.sin(v) * u ];
+	}
+
+	/**
+	 * Setup
+	 */
+	window.mathboxSetup = function(mathbox) {
+
+		// Viewport camera/setup
+		mathbox
+		// Polar viewport
+		.viewport({
+			type : 'polar',
+			polar : 1,
+			fold : .811,
+			helix : .2,
+			range : [ [ -π * 4, π * 4 ], [ -2, 2 ], [ -1, 1 ] ],
+			scale : [ 1, 1, 1 ],
+			rotation : [ π / 2, 0, 0 ],
+		}).camera({
+			orbit : 9,
+			phi : τ / 4,
+			theta : .5,
+		}).transition(300)
+
+		.grid({
+			n : [ 128, 2 ],
+			tickUnit : [ π, 1 ],
+			tickScale : [ 2, 10 ],
+			lineWidth : 2,
+			color : 0xc0c0c0,
+			zIndex : -10,
+			ticks : [ 24, 6 ],
+		}, {
+			delay : 500,
+			duration : 300,
+		}).surface({
+			id : 'fill',
+			n : [ 128, 2 ],
+			domain : [ [ -π * 4, π * 4 ], [ 0.001, 2 ] ],
+			expression : function(x, y) {
+				return [ x, y, 0 ];
+			},
+			zIndex : -20,
+			color : 0xffffff,
+			shaded : false,
+			opacity : .8,
+			live : false,
+		}, {
+			delay : 500,
+			duration : 300,
+		}).vector(
+				{
+					n : 9,
+					data : [ [ -τ * 2 ], [ -τ * 2, 1.6 ], [ -τ * 1.5 ], [ -τ * 1.5, 1.6 ], [ -τ ], [ -τ, 1.6 ],
+							[ -τ * .5 ], [ -τ * .5, 1.6 ], [ 0 ], [ 0, 1.6 ], [ τ * .5 ], [ τ * .5, 1.6 ], [ τ ],
+							[ τ, 1.6 ], [ τ * 1.5 ], [ τ * 1.5, 1.6 ], [ τ * 2 ], [ τ * 2, 1.6 ], ],
+					lineWidth : 5,
+					size : .13,
+					zIndex : 5,
+				}).vector(
+				{
+					n : 8,
+					data : [ [ -τ * 2 ], [ -τ * 2, 1.6 ], [ -τ * 1.5 ], [ -τ * 1.5, 1.6 ], [ -τ ], [ -τ, 1.6 ],
+							[ -τ * .5 ], [ -τ * .5, 1.6 ], [ 0 ], [ 0, 1.6 ], [ τ * .5 ], [ τ * .5, 1.6 ], [ τ ],
+							[ τ, 1.6 ], [ τ * 1.5 ], [ τ * 1.5, 1.6 ], ],
+					lineWidth : 5,
+					size : .13,
+					zIndex : 5,
+					color : 0x20C050,
+					mathPosition : [ π / 2, 0 ],
+				}).curve({
+			n : 2,
+			data : [ [ -τ * 2, 0 ], [ τ * 2, 0 ] ],
+			color : 0xc0c0c0,
+			lineWidth : 4,
+			line : true,
+			points : false,
+		})
+
+	}
+
+	/** 
+	 * Script
+	 */
+	window.mathboxScript = [
+
+	];
+</script>
+
+</head>
+<body>
+	<div id="info"></div>
+</body>
+</html>

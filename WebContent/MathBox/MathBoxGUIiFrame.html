@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+<script src="../libjs/jquery-2.1.1.js"></script>
+<link rel="stylesheet" type="text/css" href="JATServlet.css">
+
+
+<script>
+	$(document).ready(
+			function() {
+				$('#twobodyFixed-button').click(
+						function() {
+							$.post('/JATServlet/TwoBodyFixed', function(responseText) {
+								$('#orbitFixedMessage').text(responseText);
+								var obj = JSON.parse(responseText);
+								//$('#orbitFixedMessage').text(obj.message);
+								//$('#orbitFixedMessage').text(obj.listx);
+							});
+						});
+				$('#twobodyParam-button').click(
+						function() {
+
+							var Eccentricity = document.getElementById('Eccentricity').value;
+							var Inclination = document.getElementById('Inclination').value;
+
+							$.post('/JATServlet/TwoBodyParam', {
+								Eccentricity : Eccentricity,
+								Inclination : Inclination
+							}, function(responseText) {
+								//$('#tb2message').text(responseText);
+
+								var obj = JSON.parse(responseText);
+								$('#orbitParamMessage').text(JSON.stringify(obj));
+
+								d3.select("#orbitParam").datum(obj.coords).call(
+										Elegans.LinePlot.data_name("orbit").thickness(5).colors(
+												[ "#dd1c77", "#dd1c77" ]));
+								//d3.select("#orbitParam").datum(responseText.coords).call(Elegans.LinePlot.data_name("orbit").thickness(5).colors([ "#dd1c77", "#dd1c77" ]));
+								//$('#orbitParamMessage').text(obj.message);
+							});
+						});
+			});
+</script>
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="item-1">
+			<br> Eccentricity:<br>
+			<textarea rows="1" cols="12" name="Eccentricity" id="Eccentricity">0.5</textarea>
+			<br> Inclination:<br>
+			<textarea rows="1" cols="12" name="Inclination" id="Inclination">0.5</textarea>
+			<br>
+			<button id="twobodyFixed-button">Orbit</button>
+
+			<div class="clear"></div>
+		</div>
+		<div class="item-2">
+			<iframe src="MathBoxPlot.html" class="myiframe">
+				<p>Your browser does not support iframes.</p>
+			</iframe>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div id="orbitFixedMessage"></div>
+
+</body>
+</html>

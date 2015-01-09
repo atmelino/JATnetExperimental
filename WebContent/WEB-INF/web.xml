@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+
+	<display-name>JAT Servlet</display-name>
+	<servlet>
+		<servlet-name>HelloWorld</servlet-name>
+		<servlet-class>test.HelloWorld</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HelloWorld</servlet-name>
+		<url-pattern>/HelloWorldLink</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UseJar</servlet-name>
+		<servlet-class>test.UseJar</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UseJar</servlet-name>
+		<url-pattern>/UseJarLink</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>JulianDate</servlet-name>
+		<servlet-class>test.JulianDate</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>JulianDate</servlet-name>
+		<url-pattern>/JulianDateLink</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileReadSave</servlet-name>
+		<servlet-class>test.FileReadSave</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileReadSave</servlet-name>
+		<url-pattern>/FileReadSaveLink</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileRead</servlet-name>
+		<servlet-class>test.FileRead</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileRead</servlet-name>
+		<url-pattern>/FileReadLink</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileRead2</servlet-name>
+		<servlet-class>test.FileRead2</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileRead2</servlet-name>
+		<url-pattern>/FileReadLink2</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileRead3</servlet-name>
+		<servlet-class>test.FileRead3</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileRead3</servlet-name>
+		<url-pattern>/FileReadLink3</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Ephemeris1</servlet-name>
+		<servlet-class>test.Ephemeris1</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Ephemeris1</servlet-name>
+		<url-pattern>/Ephemeris1Link</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TwoBodyText</servlet-name>
+		<servlet-class>test.TwoBodyText</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TwoBodyText</servlet-name>
+		<url-pattern>/TwoBodyTextLink</url-pattern>
+	</servlet-mapping>
+
+	<description>
+		This is a simple web application with a source code
+		organization
+		based on the recommendations of the Application
+		Developer's Guide.
+	</description>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+
+
+
+
+</web-app>
+
+
+
+
+
+
+

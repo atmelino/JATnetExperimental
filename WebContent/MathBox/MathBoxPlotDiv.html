@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>MathBox01</title>
+
+<script src="../libjs/jquery-2.1.1.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="../libjs/MathBox/vendor/domready.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="../libjs/MathBox/build/MathBox-bundle.js"></script>
+<script type="text/javascript" charset="utf-8" src="../libjs/colors.js"></script>
+
+<script type="text/javascript">
+	DomReady
+			.ready(function() {
+				if (location.href.match(/^file:/)) {
+					document.getElementById('info').style.opacity = 1;
+					document.getElementById('info').innerHTML = "Sorry. This example does not work when accessed using file://. Please use an http:// host and try again.";
+				}
+			});
+</script>
+
+<script type="text/javascript">
+	/**
+	 * Bootstrap
+	 */
+	DomReady.ready(function() {
+		ThreeBox.preload([ '../libjs/MathBox/shaders/snippets.glsl.html', ], function() {
+			var element = document.getElementById('mathboxdiv');
+
+			// MathBox boilerplate
+			var mathbox = window.mathbox = mathBox(element, {
+				//var mathbox = window.mathbox = mathBox({
+				cameraControls : true,
+				cursor : true,
+				controlClass : ThreeBox.OrbitControls,
+				elementResize : true,
+				fullscreen : false,
+				screenshot : true,
+				stats : false,
+				scale : 1,
+			}).start();
+
+			// Viewport camera/setup
+			mathbox
+			// Cartesian viewport
+			.viewport({
+				type : 'cartesian',
+				range : [ [ -4, 4 ], [ -4, 4 ], [ -4, 4 ] ],
+				scale : [ 1, 1, 1 ],
+			}).camera({
+				orbit : 4.5,
+				phi : 0.3,
+				theta : 0.3,
+			}).transition(300)
+
+			// Axes
+			.axis({
+				id : 'Y',
+				axis : 0,
+				offset : [ 0, -4, -4 ],
+				color : colourNameToHex("green"),
+				ticks : 5,
+				lineWidth : 2,
+				size : .05,
+				labels : true,
+				arrow : true,
+			}).axis({
+				id : 'Z',
+				axis : 1,
+				offset : [ -4, 0, -4 ],
+				color : colourNameToHex("blue"),
+				ticks : 5,
+				lineWidth : 2,
+				size : .05,
+				zero : false,
+				labels : true,
+				arrow : true,
+			}).axis({
+				id : 'X',
+				axis : 2,
+				offset : [ -4, -4, 0 ],
+				//	color : 0x00A000,
+				color : colourNameToHex("red"),
+				ticks : 5,
+				lineWidth : 2,
+				size : .05,
+				zero : false,
+				labels : true,
+				arrow : true,
+			})
+			// Grid
+			.grid({
+				axis : [ 0, 1 ],
+				offset : [ 0, 0, -4 ],
+				color : colourNameToHex("lightgrey"),
+				lineWidth : 1,
+			}).grid({
+				axis : [ 0, 2 ],
+				//ticks: [2, 1],
+				offset : [ 0, -4, 0 ],
+				color : colourNameToHex("lightgrey"),
+				lineWidth : 1,
+			}).grid({
+				axis : [ 1, 2 ],
+				//ticks: [2, 1],
+				offset : [ -4, 0, 0 ],
+				color : colourNameToHex("lightgrey"),
+				lineWidth : 1,
+			})
+			// Curve
+			.curve({
+				n : 2,
+				domain : [ -1, 1 ],
+				data : [ [ 0, 0, -4 ], [ 1.5 * π, .5, 4 ] ],
+				color : 0xa00000,
+				lineWidth : 1,
+			}).curve({
+				n : 2,
+				domain : [ -1, 1 ],
+				data : [ [ 0, 0, -4 ], [ 1.75 * π, .5, 4 ] ],
+				color : 0xa0a0a0,
+				lineWidth : 1,
+			}).curve({
+				n : 48,
+				domain : [ -π, π ],
+				expression : function(x) {
+					return [ x, .5, 4 ];
+				},
+				color : 0xa0a0a0,
+				lineWidth : 1,
+			})
+
+			// 			.vector({
+			// 				n : 1,
+			// 				data : [ [ 0, -4, -4 ], [ 1, -4, -4 ] ],
+			// 				color : 0xc00000,
+			// 			}).vector({
+			// 				n : 1,
+			// 				data : [ [ -4, 0, -4 ], [ -4, 1, -4 ] ],
+			// 				color : 0x00c000,
+			// 			}).vector({
+			// 				n : 1,
+			// 				data : [ [ -4, -4, 0 ], [ -4, -4, 1 ] ],
+			// 				color : 0x0000c0,
+			// 			}).vector({
+			// 				n : 1,
+			// 				data : [ [ 0, 0, -4 ], [ 2, 2, -4 ] ],
+			// 				color : 0xC0C000,
+			// 			}).vector({
+			// 				n : 1,
+			// 				data : [ [ 0, -4, 0 ], [ 2, -4, 2 ] ],
+			// 				color : 0xC000C0,
+			// 			})
+
+			;
+
+			// Move axis + grid
+			setTimeout(function() {
+				//document.getElementById('message').innerHTML = "color=" + colourNameToHex("red");
+
+				mathbox.animate('camera', {
+					orbit : 4.5,
+					phi : 1.5
+				}, {
+					duration : 2500
+				});
+			}, 1000);
+
+		});
+	});
+</script>
+
+<link href="base.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body bgcolor="white">
+
+	<div id="info"></div>
+	<div id="mathboxdiv"></div>
+	<div id="message"></div>
+
+</body>
+</html>

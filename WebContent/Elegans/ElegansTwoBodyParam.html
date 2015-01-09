@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>JAT Servlet</title>
+
+<script src="../libjs/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="three.min.js"></script>
+<script type="text/javascript" src="d3.js"></script>
+<script type="text/javascript" src="elegans.js"></script>
+
+<script>
+	$(document).ready(
+			function() {
+				$('#twobodyParam-button').click(
+						function() {
+
+							var Eccentricity = document.getElementById('Eccentricity').value;
+							var Inclination = document.getElementById('Inclination').value;
+
+							$.post('/JATServlet/TwoBodyParam', {
+								Eccentricity : Eccentricity,
+								Inclination : Inclination
+							}, function(responseText) {
+								//$('#tb2message').text(responseText);
+
+								var obj = JSON.parse(responseText);
+								$('#orbitParamMessage').text(JSON.stringify(obj));
+
+								d3.select("#orbitParam").datum(obj.coords).call(
+										Elegans.LinePlot.data_name("orbit").thickness(5).colors(
+												[ "#dd1c77", "#dd1c77" ]));
+								//d3.select("#orbitParam").datum(responseText.coords).call(Elegans.LinePlot.data_name("orbit").thickness(5).colors([ "#dd1c77", "#dd1c77" ]));
+								//$('#orbitParamMessage').text(obj.message);
+							});
+						});
+			});
+</script>
+
+
+</head>
+
+<body bgcolor="white">
+	<br> Eccentricity:
+	<textarea rows="1" cols="12" name="Eccentricity" id="Eccentricity">0.3</textarea>
+	<br> Inclination:
+	<textarea rows="1" cols="12" name="Inclination" id="Inclination">0.5</textarea>
+	<button id="twobodyParam-button">Orbit</button>
+	<div id="orbitParam" style="width: 800px;"></div>
+	<br>
+	<div id="orbitParamMessage"></div>
+	<br>
+
+</body>
+</html>

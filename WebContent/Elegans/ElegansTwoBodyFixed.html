@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>JAT Servlet</title>
+
+<script src="../libjs/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="three.min.js"></script>
+<script type="text/javascript" src="d3.js"></script>
+<script type="text/javascript" src="elegans.js"></script>
+
+<script>
+	$(document).ready(
+			function() {
+				$('#twobodyFixed-button').click(
+						function() {
+							$.post('/JATServlet/TwoBodyFixed', function(responseText) {
+								$('#orbitFixedMessage').text(responseText);
+
+								var obj = JSON.parse(responseText);
+								//$('#tb2message').text(obj.x);
+
+								d3.select("#orbitFixed").datum(obj).call(
+										Elegans.LinePlot.data_name("orbit").thickness(5).colors(
+												[ "#dd1c77", "#dd1c77" ]));
+							});
+						});
+			});
+</script>
+
+
+</head>
+
+<body bgcolor="white">
+
+	<button id="twobodyFixed-button">Orbit</button>
+	<div id="orbitFixed" style="width: 800px;"></div>
+
+	<div id="orbitFixedMessage"></div>
+	<br>
+
+
+
+</body>
+</html>

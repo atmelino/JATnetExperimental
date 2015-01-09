@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>JAT Servlet</title>
+
+<script src="libjs/jquery-2.1.1.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$('#message-button').click(function() {
+			//alert('clicked');
+			$.get('/JATServlet/ButtonPress', function(responseText) {
+				$('#message').text(responseText);
+			});
+		});
+		$('#messageParam-button').click(function() {
+			var UserName = document.getElementById('userName').value;
+			//alert(UserName);
+			$.get('/JATServlet/ButtonPressParam', {
+				userName : UserName,
+				time : "2pm"
+			}, function(responseText) {
+				$('#messageParam').text(responseText);
+			});
+		});
+	});
+</script>
+
+
+</head>
+
+<body bgcolor="white">
+
+	<p>
+		<a href="JS3DPlot/index.html">JS3DPlot</a>
+	</p>
+	<p>
+		<a href="JSSurfacePlot/index.html">JSSurfacePlot</a>
+	</p>
+	<p>
+		<a href="MathBox">MathBox</a>
+	</p>
+	<p>
+		<a href="Elegans">Elegans</a>
+	</p>
+
+	<p>
+		<a href="HelloWorldLink">Show date and time</a>
+	</p>
+	<br>
+	<button id="message-button">Say Hello</button>
+	<br>
+	<div id="message"></div>
+	<p>
+		<a href="UseJarLink">use external jar file</a>
+	</p>
+	<p>
+		<a href="JulianDateLink">use JAT jar file</a>
+	</p>
+	<p>
+		<a href="FileReadSaveLink">File Read Save</a>
+	</p>
+	<p>
+		<a href="FileReadLink">File Read</a>
+	</p>
+	<p>
+		<a href="FileReadLink2">File Read 2</a>
+	</p>
+	<p>
+		<a href="FileReadLink3">File Read 3</a>
+	</p>
+	<p>
+		<a href="Ephemeris1Link">Ephemeris 1</a>
+	</p>
+	<br> User Name:
+	<textarea rows="1" cols="12" name="userName" id="userName"></textarea>
+	<button id="messageParam-button">Say Hello</button>
+	<br>
+	<div id="messageParam"></div>
+	<br>
+
+	<form action="CheckBox" method="POST" target="_blank">
+		<input type="checkbox" name="maths" checked="checked" /> Maths <input
+			type="checkbox" name="physics" /> Physics <input type="checkbox"
+			name="chemistry" checked="checked" /> Chemistry <input type="submit"
+			value="Select Subject" />
+	</form>
+	<p>
+		<a href="TwoBodyTextLink">Two body orbit text</a>
+	</p>
+
+</body>
+</html>
