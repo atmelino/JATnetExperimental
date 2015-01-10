@@ -1,0 +1,22 @@
+	<div id='messagesDiv'>
+		<textarea id="messages" style="width: 90%;" rows=4></textarea>
+	</div>
+	<div style="margin-left: 50px;">
+		<div style="clear: right; float: left;">
+			<br> Semimajor Axis:
+			<textarea rows="1" cols="12" name="SemimajorAxis" id="SemimajorAxis">10000</textarea>
+			<br> Eccentricity:
+			<textarea rows="1" cols="12" name="Eccentricity" id="Eccentricity">0.3</textarea>
+			<br> Inclination:
+			<textarea rows="1" cols="12" name="Inclination" id="Inclination">0.5</textarea>
+			<button id="twobodyParam-button">Orbit</button>
+			<br>
+			<button id="clearPlot">Clear</button>
+		</div>
+		<div style="clear: right; float: left;">
+			<div id="infoButton"></div>
+			<div id="infoBox" title="Demo Information">Use mouse to rotate</div>
+			<div id="ThreeJS" style="z-index: 1; position: relative; left: 0px; top: 0px"></div>
+		</div>
+	</div>
+	

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>JAT Orbit Viewer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link rel=stylesheet href="css/base.css" />
+</head>
+<body>
+	<div id="infoButton"></div>
+	<div id="infoBox" title="Demo Information">Use mouse to rotate</div>
+	<div id="ThreeJS" style="z-index: 1; position: relative; left: 0px; top: 0px"></div>
+
+	<script src="js/Three.js"></script>
+	<script src="js/Detector.js"></script>
+	<script src="js/Stats.js"></script>
+	<script src="js/OrbitControls.js"></script>
+	<script src="js/THREEx.KeyboardState.js"></script>
+	<script src="js/THREEx.FullScreen.js"></script>
+	<script src="js/THREEx.WindowResize.js"></script>
+	<script src="js/extra/axisLabels.js"></script>
+
+	<script type='text/javascript' src='js/DAT.GUI.min.js'></script>
+
+	<!-- load fonts -->
+	<script src="fonts/gentilis_bold.typeface.js"></script>
+	<script src="fonts/gentilis_regular.typeface.js"></script>
+	<script src="fonts/optimer_bold.typeface.js"></script>
+	<script src="fonts/optimer_regular.typeface.js"></script>
+	<script src="fonts/helvetiker_bold.typeface.js"></script>
+	<script src="fonts/helvetiker_regular.typeface.js"></script>
+	<script src="fonts/droid_sans_regular.typeface.js"></script>
+	<script src="fonts/droid_sans_bold.typeface.js"></script>
+	<script src="fonts/droid_serif_regular.typeface.js"></script>
+	<script src="fonts/droid_serif_bold.typeface.js"></script>
+
+	<!-- jQuery code to display an information button and box when clicked. -->
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<link rel=stylesheet href="css/jquery-ui.css" />
+	<link rel=stylesheet href="css/info.css" />
+	<script src="js/info.js"></script>
+
+	<script>
+		// standard global variables
+		var container, scene, camera, renderer, controls, stats;
+		var keyboard = new THREEx.KeyboardState();
+		var clock = new THREE.Clock();
+		// custom global variables
+		var cube;
+		var radius = 6370;
+		var gridSize = 10000;
+
+		// initialization
+		init();
+
+		// animation loop / game loop
+		animate();
+
+		function init() {
+			scene = new THREE.Scene();
+
+			var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+			// camera attributes
+			var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 200000;
+			// set up camera
+			camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+			// add the camera to the scene
+			scene.add(camera);
+			// the camera defaults to position (0,0,0)
+			// 	so pull it back (z = 400) and up (y = 100) and set the angle towards the scene origin
+			camera.position.set(radius, 1.5 * radius, 4 * radius);
+			camera.lookAt(scene.position);
+
+			// create and start the renderer; choose antialias setting.
+			if (Detector.webgl)
+				renderer = new THREE.WebGLRenderer({
+					antialias : true
+				});
+			else
+				renderer = new THREE.CanvasRenderer();
+
+			renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+			// attach div element to variable to contain the renderer
+			container = document.getElementById('ThreeJS');
+
+			// attach renderer to the container div
+			container.appendChild(renderer.domElement);
+
+			// automatically resize renderer
+			THREEx.WindowResize(renderer, camera);
+			// toggle full-screen on given key press
+			THREEx.FullScreen.bindKey({
+				charCode : 'm'.charCodeAt(0)
+			});
+
+			controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+			// displays current and past frames per second attained by scene
+			stats = new Stats();
+			stats.domElement.style.position = 'absolute';
+			stats.domElement.style.bottom = '0px';
+			stats.domElement.style.zIndex = 100;
+			container.appendChild(stats.domElement);
+
+			// create a light
+			var light = new THREE.PointLight(0xffffff);
+			light.position.set(0, 2.5 * gridSize, 0);
+			scene.add(light);
+			var ambientLight = new THREE.AmbientLight(0x111111);
+			// scene.add(ambientLight);
+
+			var gridXZ = new THREE.GridHelper(gridSize, gridSize / 2);
+			gridXZ.setColors(new THREE.Color(0x006600), new THREE.Color(0x006600));
+			gridXZ.position.set(0, -gridSize, 0);
+			//gridXZ.position.set(-gridSize / 2, -gridSize, -gridSize);
+			scene.add(gridXZ);
+
+			var gridXY = new THREE.GridHelper(gridSize, gridSize / 2);
+			gridXY.position.set(0, 0, -gridSize);
+			//gridXY.position.set(gridSize, gridSize, -gridSize);
+			gridXY.rotation.x = Math.PI / 2;
+			gridXY.setColors(new THREE.Color(0x000066), new THREE.Color(0x000066));
+			scene.add(gridXY);
+
+			var gridYZ = new THREE.GridHelper(gridSize, gridSize / 2);
+			gridYZ.position.set(-gridSize, 0, 0);
+			gridYZ.rotation.z = Math.PI / 2;
+			gridYZ.setColors(new THREE.Color(0x660000), new THREE.Color(0x660000));
+			scene.add(gridYZ);
+
+			// create a set of coordinate axes to help orient user
+			//    specify length in pixels in each direction
+			var axes = new THREE.AxisHelper(gridSize);
+			scene.add(axes);
+
+			makeAxisLabel(scene);
+
+			// make sure the camera's "far" value is large enough so that it will render the skyBox!
+			var skyBoxGeometry = new THREE.CubeGeometry(gridSize * 6, gridSize * 6, gridSize * 6);
+			// BackSide: render faces from inside of the cube, instead of from outside (default).
+			var skyBoxMaterial = new THREE.MeshBasicMaterial({
+				color : 0x9999ff,
+				side : THREE.BackSide
+			});
+			var skyBox = new THREE.Mesh(skyBoxGeometry, skyBoxMaterial);
+			scene.add(skyBox);
+
+			// fog must be added to scene before first render
+			//scene.fog = new THREE.FogExp2(0x9999ff, 0.00025);
+
+			// Create the Earth with nice texture
+			var sphereGeo = new THREE.SphereGeometry(radius, 64, 32);
+			var colors = THREE.ImageUtils.loadTexture("images/earth-day.jpg");
+			var earthMaterial = new THREE.MeshBasicMaterial({
+				color : 0xffffff,
+				map : colors
+			});
+			this.earthSphere = new THREE.Mesh(sphereGeo, earthMaterial);
+			scene.add(earthSphere);
+
+			var gui = new dat.GUI();
+
+			var parameters = {
+				a : 200, // numeric
+				b : 200, // numeric slider
+				c : "Hello, GUI!", // string
+				d : false, // boolean (checkbox)
+				e : "#ff8800", // color (hex)
+				f : function() {
+					alert("Hello!")
+				},
+				g : function() {
+					alert(parameters.c)
+				},
+				v : 0, // dummy value, only type is important
+				w : "...", // dummy value, only type is important
+				x : 0,
+				y : 0,
+				z : 0
+			};
+			// gui.add( parameters )
+			gui.add(parameters, 'a').name('Number');
+			gui.add(parameters, 'b').min(128).max(256).step(16).name('Slider');
+			gui.add(parameters, 'c').name('String');
+			gui.add(parameters, 'd').name('Boolean');
+
+			gui.addColor(parameters, 'e').name('Color');
+
+			var numberList = [ 1, 2, 3 ];
+			gui.add(parameters, 'v', numberList).name('List');
+
+			var stringList = [ "One", "Two", "Three" ];
+			gui.add(parameters, 'w', stringList).name('List');
+
+			gui.add(parameters, 'f').name('Say "Hello!"');
+			gui.add(parameters, 'g').name("Alert Message");
+
+			var folder1 = gui.addFolder('Coordinates');
+			folder1.add(parameters, 'x');
+			folder1.add(parameters, 'y');
+			folder1.close();
+			gui.open();
+
+		}
+
+		function animate() {
+			requestAnimationFrame(animate);
+			render();
+			update();
+		}
+
+		function update() {
+			// delta = change in time since last call (in seconds)
+			var delta = clock.getDelta();
+
+			// functionality provided by THREEx.KeyboardState.js
+			if (keyboard.pressed("1"))
+				document.getElementById('message').innerHTML = ' Have a nice day! - 1';
+			if (keyboard.pressed("2"))
+				document.getElementById('message').innerHTML = ' Have a nice day! - 2 ';
+
+			controls.update();
+			stats.update();
+		}
+
+		function render() {
+			renderer.render(scene, camera);
+		}
+	</script>
+</body>
+</html>

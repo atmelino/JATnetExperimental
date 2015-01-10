@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Three.js Tutorial</title>
+<link rel="stylesheet" href="main.css"></link>
+<script src="js/Three46.js"></script>
+<script src="js/Detector.js"></script>
+<script src="raf.js"></script>
+<script src="js/Stats.js"></script>
+
+
+<script>
+	function setup() {
+		if (!Detector.webgl) {
+			Detector.addGetWebGLMessage();
+			return;
+		}
+
+		var renderer = new THREE.WebGLRenderer({
+			antialias : true
+		});
+		renderer.setSize(document.body.clientWidth, document.body.clientHeight);
+		document.body.appendChild(renderer.domElement);
+
+		var stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+		document.body.appendChild(stats.domElement);
+
+		renderer.setClearColorHex(0x6393ED, 1.0);
+		renderer.clear();
+
+		var scene = new THREE.Scene();
+
+		var fov = 45; // camera field-of-view in degrees
+		var width = renderer.domElement.width;
+		var height = renderer.domElement.height;
+		var aspect = width / height; // view aspect ratio
+		var near = 1; // near clip plane
+		var far = 1000; // far clip plane
+		var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+		camera.position = new THREE.Vector3(0, 100, 480);
+		camera.lookAt(new THREE.Vector3(0, 0, 0));
+		scene.add(camera);
+
+		var c = document.createElement('canvas');
+		var ctx = c.getContext('2d');
+		ctx.font = '64px Arial';
+		var s = 'à¸ªà¸§à¸±à¸ªà¸”à¸µà¹€à¸ˆà¸µà¸¢à¸‡à¹ƒà¸«à¸¡à¹ˆ';
+		c.width = ctx.measureText(s).width;
+		c.height = Math.ceil(64 * 1.25);
+		ctx.font = '64px Arial';
+		ctx.fillStyle = "#FF0000";
+		ctx.fillText(s, 0, 64);
+
+		var tex = new THREE.Texture(c);
+		tex.needsUpdate = true;
+
+		var plane = new THREE.Mesh(new THREE.PlaneGeometry(c.width, c.height), new THREE.MeshBasicMaterial({
+			map : tex,
+			color : 0xFFFFFF,
+			opacity : 1
+		}));
+		plane.doubleSided = true;
+		scene.add(plane);
+
+		var directionalLight = new THREE.DirectionalLight();
+		directionalLight.position.set(1, 1, 1);
+		scene.add(directionalLight);
+
+		var ambientLight = new THREE.AmbientLight(0x808080);
+		scene.add(ambientLight);
+
+		renderer.render(scene, camera);
+		var paused = false;
+		var last = new Date().getTime();
+		var direction = 1.0;
+		function animate(t) {
+			if (!paused) {
+				var elapseTime = t - last;
+				last = t;
+
+				if (plane != undefined) {
+					plane.rotation.y = (t / 1000) * Math.PI / 2;
+				}
+
+				renderer.clear();
+				renderer.render(scene, camera);
+
+				stats.update();
+			}
+			window.requestAnimationFrame(animate, renderer.domElement);
+		}
+		;
+		animate(new Date().getTime());
+		onmessage = function(ev) {
+			paused = (ev.data == 'pause');
+		};
+	}
+</script>
+
+</head>
+<body onload="setup()">
+
+
+
+</body>
+</html>

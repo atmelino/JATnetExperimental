@@ -1,0 +1,120 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/JavaScript" src="../../../lib/jquery-2.1.1.js"></script>
+
+<script type="text/JavaScript">
+	(function($) {
+		$(document).ready(function() {
+			$('.has-sub').click(function(e) {
+				alert('clicked');
+				e.preventDefault();
+				$(this).parent().toggleClass('tap');
+			});
+			$('.myhome').click(function(e) {
+				alert('home clicked');
+			});
+
+		});
+	}(jQuery));
+</script>
+
+
+<style>
+ul.egmenu {
+	background: #333;
+	height: 30px;
+	width: 100%;
+}
+
+ul.egmenu>li {
+	float: left;
+	position: relative;
+}
+
+ul.egmenu ul {
+	background: #444;
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 100%;
+}
+
+ul.egmenu a {
+	cursor: pointer;
+	display: block;
+	color: white;
+	line-height: 30px;
+	padding: 0 10px;
+}
+
+ul.egmenu li {
+	list-style: none;
+}
+
+ul.egmenu li:hover {
+	background: #555;
+}
+
+ul.egmenu li:hover ul {
+	display: block;
+}
+
+@media all and (min-width: 481px) {
+	ul.egmenu li:hover {
+		background: #555;
+	}
+	ul.egmenu li:hover ul {
+		display: block;
+	}
+}
+
+@media all and (max-width: 480px) {
+	ul.egmenu {
+		height: auto;
+	}
+	ul.egmenu>li {
+		float: none;
+		width: 100%;
+	}
+	ul.egmenu a {
+		line-height: 40px;
+	}
+	ul.egmenu ul {
+		position: relative;
+	}
+	ul.egmenu li.tap {
+		background: #555;
+	}
+	ul.egmenu li.tap ul {
+		display: block;
+	}
+}
+</style>
+
+
+</head>
+<body>
+
+	<div>
+		<ul class="egmenu mobile desktop">
+			<li><a  class='myhome'>Home</a></li>
+			<li class=""><a href="" class="has-sub">Products</a>
+				<ul>
+					<li><a>Computers</a></li>
+					<li><a>Phones</a></li>
+					<li><a>Tablets</a></li>
+					<li><a>Beepers</a></li>
+				</ul></li>
+			<li><a>About</a></li>
+			<li><a>Contact</a></li>
+		</ul>
+
+	</div>
+
+</body>
+</html>
+

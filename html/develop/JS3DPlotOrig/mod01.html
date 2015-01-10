@@ -7,20 +7,14 @@
 <script type="text/javascript" src='jswebGL/SurfacePlot.js'></script>
 <script type="text/javascript" src='jswebGL/JSSurfacePlot.js'></script>
 <script type="text/javascript" src='jswebGL/GLText.js'></script>
-<script type="text/javascript" src='jswebGL/GLText2.js'></script>
 <script type="text/javascript" src='jswebGL/GLAxes.js'></script>
-<script type="text/javascript" src='jswebGL/GLAxes2.js'></script>
 <script type="text/javascript" src='jswebGL/GLSurface.js'></script>
 <script type="text/javascript" src='jswebGL/GLLines.js'></script>
 <script type="text/javascript" src='jswebGL/GLSphere.js'></script>
-<script type="text/javascript" src='jswebGL/GLTextureQuad.js'></script>
-<script type="text/javascript" src='jswebGL/GLTextureSphere.js'></script>
 <script type="text/javascript" src='jswebGL/ColourGradient.js'></script>
 <script type="text/javascript" src="jswebGL/glMatrix-0.9.5.min.js"></script>
 <script type="text/javascript" src="jswebGL/webgl-utils.js"></script>
-<script type="text/javascript" src="../libjs/functions.js"></script>
-<script src="../libjs/sprintf.js"></script>
-<script src="../libjs/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="functions.js"></script>
 
 <title>SurfacePlot test stub</title>
 
@@ -124,8 +118,6 @@
 <script type='text/javascript'>
 	var surfacePlot;
 	var data, options, basicPlotOptions, glOptions, animated, plot1, values;
-	var linePoints = [];
-	var plotBoxSize = 5000;
 
 	function setUp() {
 		var numRows = 2;
@@ -133,11 +125,15 @@
 
 		//printlnMessage('messages','setup');
 
+		
+		plotBoxSize=100;
+
 		// Axis labels.
 		var xAxisHeader = "X [km]";
 		var yAxisHeader = "Y [km]";
 		var zAxisHeader = "Z [km]";
-
+		
+		var linePoints = [];
 		var Point1 = [ 0, 0, 0 ];
 		var Point2 = [ 1, 0, 0 ];
 		var Point3 = [ .5, .6, 2.3 ];
@@ -149,7 +145,9 @@
 		linePoints = linePoints.concat(Point4);
 		linePoints = linePoints.concat(Point5);
 		printlnMessage('messages', 'mod01 linePoints' + JSON.stringify(linePoints));
-
+		
+		
+		
 		var tooltipStrings = new Array();
 		values = new Array();
 		data = {
@@ -209,6 +207,8 @@
 		};
 		var colours = [ colour1, colour2, colour3, colour4, colour5 ];
 
+
+
 		var renderDataPoints = false;
 		var background = '#ffffff';
 		var axisForeColour = '#000000';
@@ -228,12 +228,13 @@
 		// Options for the webGL plot.
 		//var xLabels = [ -0.5, 0, 0.5 ];
 		//var yLabels = [ -0.5, 0, 0.5 ];
-		//var zLabels = [ -0.5, 0, 0.5 ]; // These labels are used when autoCalcZScale is false;
+		//var zLabels = [ -0.5, 0, 0.5 ]; // These labels ar eused when autoCalcZScale is false;
 
 		var xLabels = [ -plotBoxSize, 0, plotBoxSize ];
 		var yLabels = [ -plotBoxSize, 0, plotBoxSize ];
-		var zLabels = [ -plotBoxSize, 0, plotBoxSize ]; // These labels are used when autoCalcZScale is false;
+		var zLabels = [ -plotBoxSize, 0, plotBoxSize ]; // These labels ar eused when autoCalcZScale is false;
 
+		
 		plotBoxSize
 		glOptions = {
 			xLabels : xLabels,
@@ -260,6 +261,7 @@
 			origin : chartOrigin
 		};
 
+
 		printlnMessage('messages', 'draw SurfacePlot()');
 		surfacePlot.draw(data, linePoints, options, basicPlotOptions, glOptions);
 
@@ -268,55 +270,11 @@
 	function toggleChart(chkbox) {
 		surfacePlot.draw(data, options, basicPlotOptions, glOptions);
 	}
-
-	$(document).ready(function() {
-		$('#twobodyParam-button').click(function() {
-
-			var Eccentricity = document.getElementById('Eccentricity').value;
-			var Inclination = document.getElementById('Inclination').value;
-
-			$.post('/JATServlet/TwoBodyParam', {
-				Eccentricity : Eccentricity,
-				Inclination : Inclination
-			}, function(responseText) {
-
-				var obj = JSON.parse(responseText);
-				//printlnMessage('messages', JSON.stringify(obj));
-				//printlnMessage('messages', obj.coords.x[0]);
-				printlnMessage('messages', JSON.stringify(obj.TBE));
-
-				factor = plotBoxSize * 2;
-				//var i=0;
-				for ( var i = 0; i < obj.coords.x.length; i++) {
-
-					point = [ obj.coords.x[i] / factor, obj.coords.y[i] / factor, obj.coords.z[i] / factor ];
-					linePoints = linePoints.concat(point);
-				}
-
-				printlnMessage('messages', 'draw SurfacePlot()');
-				//var Point1 = [ 0, 0, 0 ];
-				//linePoints = linePoints.concat(Point1);
-				//linePoints = linePoints.concat(point);
-				surfacePlot.draw(data, linePoints, options, basicPlotOptions, glOptions);
-
-				//d3.select("#orbitParam").datum(obj.coords).call(
-				//	Elegans.LinePlot.data_name("orbit").thickness(5).colors(
-				//		[ "#dd1c77", "#dd1c77" ]));
-			});
-		});
-
-		$('#clearPlot').click(function() {
-			printlnMessage('messages', 'clear Plot');
-			linePoints.length = 0;
-			surfacePlot.draw(data, linePoints, options, basicPlotOptions, glOptions);
-		});
-	});
 </script>
-
 
 </head>
 
-<body onLoad="setUp();" style="background: #ccc">
+<body onLoad="setUp();" style="background: #000">
 	<div id='messagesDiv'>
 		<textarea id="messages" style="width: 90%;" rows=10></textarea>
 		<!-- cols=60  -->
@@ -335,13 +293,7 @@
 			<input id="allowWebGL" type="checkbox" checked=""
 				onclick="toggleChart(this)"> <span style="color: #ffffff">Use
 				webGL</span> <span style="color: #ffffff"> Drag to rotate. Shift
-				drag to scale</span> <br> Eccentricity:
-			<textarea rows="1" cols="12" name="Eccentricity" id="Eccentricity">0.3</textarea>
-			<br> Inclination:
-			<textarea rows="1" cols="12" name="Inclination" id="Inclination">0.5</textarea>
-			<button id="twobodyParam-button">Orbit</button>
-			<br>
-			<button id="clearPlot">Clear</button>
+				drag to scale</span>
 		</div>
 	</div>
 

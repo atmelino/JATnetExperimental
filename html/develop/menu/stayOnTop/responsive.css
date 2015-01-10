@@ -1,0 +1,230 @@
+/*
+* Allure V1.0
+* Copyright 2012, Spacehead Concepts
+* www.spaceheadconcepts.com
+*/
+
+/* #Base Grid
+================================================== */
+
+    .container                                  { position: relative; width: 90%; min-width:960px;  margin: 0 auto; padding: 0; }
+    .container .column,
+    .container .columns                         { float: left; display: inline; padding-left: 1.985%; padding-right: 1.985%;}
+    .row                                        { padding: 1% 2%;}
+
+    /* Nested Column Classes */
+    .column.alpha, .columns.alpha               { padding-left: 0; }
+    .column.omega, .columns.omega               { padding-right: 0; }
+	
+	/* Base Grid */
+    .container .one.column,
+    .container .one.columns                     { width: 4.3333%;  }
+    .container .two.columns                     { width: 12.6667%; }
+    .container .three.columns                   { width: 21%; }
+    .container .four.columns                    { width: 29.3333%; }
+    .container .five.columns                    { width: 37.6667%; }
+    .container .six.columns                     { width: 46%; }
+    .container .seven.columns                   { width: 54.3333%; }
+    .container .eight.columns                   { width: 62.6667%; }
+    .container .nine.columns                    { width: 71%; }
+    .container .ten.columns                     { width: 79.3333%; }
+    .container .eleven.columns                  { width: 87.6667%; }
+    .container .twelve.columns                  { width: 96%; }
+   
+     /* Shortcode Column Padding Adjustment */
+    .sc_column {padding-left:0; margin-right:3.97%; float: left; display: inline; }
+    .sc_column.col_last {margin-right:0; }
+    
+    /* Shortcode Column Width Adjustment */
+
+	.sc_column.one_third.blubg,
+	.sc_column.one_third.grnbg,
+	.sc_column.one_third.yelbg		{width:26.5%;} 
+
+    .sc_column.one_fourth          	{ width: 21.9925%; }
+    .sc_column.one_third           	{ width: 30.6566333%; }
+    .sc_column.one_half            	{ width: 47.985%; }
+    .sc_column.two_third           	{ width: 65.3133666%; }
+    .sc_column.three_fourth			{ width: 73.9775%; }
+	
+	.priceTable .columns {padding:0;}
+	.priceTable .two.columns {width:50%;}
+	.priceTable .three.columns {width:33.33%;}
+	.priceTable .four.columns {width:25%;}
+	.priceTable .five.columns {width:20%;}
+	.priceTable .six.columns {width:16.66%;}
+
+
+    #notification, header, footer, #slideshow, #pageHeading, .content, #footerWidgets, .container .full.columns { width: 100%; margin:0; padding:0; }
+    #notification .one.column {position:absolute; right:0;}
+	.nav-main-full .row {padding-top:0; padding-bottom:0;}
+    .imageSingleColumn { width:50%;} 
+	#nav-main {display:block;}
+	#nav-mobile {display:none;}
+
+
+   
+
+/* #All mobile devices (Portrait)
+================================================== */
+	@media only screen and (max-width: 767px) {
+        .container                                  { width: 100%; min-width:inherit; }
+		
+		.sidebar {width:96% !important;}
+		
+		#latest-posts-widget-7 h4, #latest-posts-widget-8 h4, #latest-posts-widget-9 h4 {display:none;}
+	
+        
+		/* Nested Column Classes */
+    	.column.alpha, .columns.alpha               { padding-left: 1.985%; }
+    	.column.omega, .columns.omega               { padding-right: 1.985%; }
+    
+		header .row, header .columns {width:100% !important; margin-left:0 !important; margin-right:0 !important; padding-left:0 !important; padding-right:0 !important;}
+		#notification {position:relative;}
+		header {padding-top:0 !important;}
+		#logo a {text-align: center; }
+		#slideshow .container
+		#slideshow .row {margin:0;}
+		#slideshow-cycle-1 {border:none;}
+		#contactBox, #social-icons {position:inherit; float:none; }
+       	#logo, #logo img, header > div {float:none; margin:0 auto; text-align: center;width: auto;}
+       	#nav-main {display:none;}
+		#nav-mobile {display:block; background:#DEDEDE; margin-bottom:10px; padding:1px;}
+		#nav-mobile ul {display:none;}
+		#headerWidgets {position:static;}
+		#headerWidgets #contactBox, #headerWidgets .headerWidget {float:none;}
+		#headerWidgets .headerWidget {margin:0 auto; text-align: center; padding:10px; width:auto;}
+		#headerWidgets .headerWidget .search {text-align: center;}
+		#headerWidgets .headerWidget .socialIconsWidget ul,#headerWidgets .headerWidget .flagsLanguageSelector  {text-align:center;}
+		
+		#postGallery .three.columns, #postGallery .four.columns  { width: 46%; }
+
+		#flmenu {display:none !important;}
+
+		/* #contact {display: block;
+			    float: none;
+			    margin: 0 auto !important;
+			    padding: 20px 0 0;
+			    text-align: left;
+			    width: 240px !important;} */
+		#header .slogan {display:block;}
+		
+		#contact {display:none;}
+
+   }
+
+
+
+/*  #Mobile (Portrait)
+================================================== */
+
+    /* Note: Design for a width of 320px */
+
+    @media only screen and (max-width: 767px) {
+		
+		.container .one.column,
+        .container .one.columns,
+        .container .two.columns,
+        .container .three.columns,
+        .container .four.columns,
+        .container .five.columns,
+        .container .six.columns,
+        .container .seven.columns,
+        .container .eight.columns,
+        .container .nine.columns,
+        .container .ten.columns,
+        .container .eleven.columns,
+        .container .twelve.columns  { width: 96%; }
+		
+		#notification .one.column {position: inherit;}
+		
+		.footer-menu, #copyright { text-align: center;}
+		
+		/* Shortcode Column Padding Adjustment */
+	    .sc_column {padding-left: 0; padding-right: 0; }
+	    .sc_column.col_last {padding-right: 0; }
+	    
+	    /* Shortcode Column Width Adjustment */
+			
+	    .sc_column.one_fourth, .sc_column.one_third, .sc_column.one_half, .sc_column.two_third, .sc_column.three_fourth  { width: 100%; }
+		
+		.priceTable .columns {padding:0;}
+		.priceTable .two.columns,.priceTable .three.columns, .priceTable .four.columns, .priceTable .five.columns, .priceTable .six.columns {width:50%;}
+	
+	    #slideshow-cycle-2 {height:220px !important;}
+		#slideshow-cycle-2 .hideme {display:none;}
+		
+		#calltoaction h3 {font-size:16px !important;}
+		#calltoaction h1 {font-size:22px !important; line-height:28px;}
+	    
+		#slideshow-cycle-3 {height:630px !important;}
+		#slideshow-cycle-3 li .slideContent {display:block; width:100%; height:100%; left:0; position:absolute;}
+		#slideshow-cycle-3 li .slideHeadingText { z-index:2;  height:auto; }
+		#slideshow-cycle-3 li .slideCaptionText { z-index:2;  height:auto; }
+		#slideshow-cycle-3 .slideImage {top:240px; left:0; right:0; }
+		#slideshow-cycle-3 .slideImage img { float:none; margin:0 auto; display:block;}
+		
+		.slideshow-nav ul {background: none; }
+		.slideshow-nav li a {display:none;}
+		.slideshow-nav li a#prev, .slideshow-nav li a#next {display:none; background-color: rgba(0,0,0,0.7); } 
+		
+		.imageSingleColumn { width:100%;} 
+		
+	    #postGallery .three.columns                   { width: 21%; }
+	    #postGallery .four.columns                    { width: 29.3333%; }
+	    #postGallery .six.columns                     { width: 46%; }
+	    #postGallery .twelve.columns                  { width: 96%; }
+		
+
+	.sc_column.one_third.blubg,
+	.sc_column.one_third.grnbg,
+	.sc_column.one_third.yelbg		{width:auto;min-height:0;} 
+
+
+		
+		#comments {margin-top:0;}
+    }
+
+
+
+
+/* #Clearing
+================================================== */
+
+    /* Self Clearing Goodness */
+    .container:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
+
+    /* Use clearfix class on parent to clear nested columns,
+    or wrap each row of columns in a <div class="row"> */
+    .clearfix:before,
+    .clearfix:after,
+    .full.columns:before,
+    .full.columns:after,
+    .row:before,
+    .row:after {
+      content: '\0020';
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0; }
+    .row:after,
+    .full.columns:after,
+    .clearfix:after {
+      clear: both; }
+    .row,
+    .full.columns,
+    .clearfix {
+      zoom: 1; }
+
+    /* You can also use a <br class="clear" /> to clear columns */
+    .clear {
+      clear: both;
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
+
+ 

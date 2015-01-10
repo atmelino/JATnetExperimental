@@ -1,0 +1,200 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Editors & translators, please, edit menus.en.tmpl, not .html -->
+
+<html lang=en>
+<head profile="http://www.w3.org/2006/03/hcard">
+<title>CSS: fixed menus</title>
+
+<meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+<meta content="width=device-width" name=viewport>
+<link href="../../../" rel=home title=W3C>
+<style type="text/css">
+#menu {
+	position: fixed;
+	right: 0;
+	top: 50%;
+	width: 8em;
+	margin: -2.5em 0 0 0;
+	z-index: 5;
+	background: hsla(80, 90%, 40%, 0.7);
+	color: white;
+	font-weight: bold;
+	font-size: large;
+	text-align: left;
+	border: solid hsla(80, 90%, 40%, 0.5);
+	border-right: none;
+	padding: 0.5em 0.5em 0.5em 2.5em;
+	box-shadow: 0 1px 3px black;
+	border-radius: 3em 0.5em 0.5em 3em;
+}
+
+#menu li {
+	margin: 0
+}
+
+#menu a {
+	color: inherit
+}
+
+/* Make menu absolute, not fixed, on IE 5 & 6 */
+#menu {
+	position: absolute
+}
+
+*>#menu {
+	position: fixed
+}
+
+p.stb {
+	text-indent: 0;
+	margin-top: 0.83em
+}
+
+p.mtb {
+	text-indent: 0;
+	margin-top: 2.17em
+}
+
+p.ltb {
+	text-indent: 0;
+	margin-top: 3.08em
+}
+</style>
+<body>
+	<h1>
+		<em>Web Style Sheets</em> CSS tips &amp; tricks
+	</h1>
+
+	<div class=section id=intro>
+		<p>
+			See also the <a href="./">index</a> of all tips.
+		<p class=stb>On this page:
+		<ul>
+			<li><a href="#L384">A pinned-down menu</a>
+			<li><a href="#details">More details</a>
+			<li><a href="#FAQ">FAQ: IE 5 &amp; 6 on Windows?</a>
+		</ul>
+	</div>
+
+	<ul id=menu>
+		<li><a href="#L384">Section 1</a>
+		<li><a href="#details">Section 2</a>
+		<li><a href="#FAQ">Section 3</a>
+		<li><a href="http://www.google.com">Google</a>
+	</ul>
+
+
+	<div class=section id=L384>
+		<h2>A pinned-down menu</h2>
+
+		<p>The menu you see on the right on this page is simply a UL list.
+			But, it stays fixed when you scroll the page. (You may have to make
+			the window smaller to get a scroll bar first.) All the work to make
+			it stay in place is done by rules in the style sheet. Here is the
+			mark-up of the menu, it is taken straight from the source of this
+			page:
+		<pre>&lt;ul id=menu&gt;
+&lt;li&gt;&lt;a href="#L384"&gt;Section 1&lt;/a&gt;
+&lt;li&gt;&lt;a href="#details"&gt;Section 2&lt;/a&gt;
+&lt;li&gt;&lt;a href="#FAQ"&gt;Section 3&lt;/a&gt;
+&lt;/ul&gt;</pre>
+
+		<p>In a browser without CSS, or with CSS turned off, it will just
+			be a normal list with links. But with CSS, thanks to the rules below,
+			it will appear to “float” on top of the page, pinned to the right
+			side of the browser window:
+		<pre>#menu {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  width: 8em;
+  margin-top: -2.5em;
+}</pre>
+
+		<p>
+			The interesting rule here is the '
+			<code>position: fixed</code>
+			', that makes the DIV stay fixed on the screen. The '
+			<code>top: 50%</code>
+			' and '
+			<code>right: 0</code>
+			' determine where the DIV is displayed, in this case: 50% down from
+			the top of the window, and a constant 0px from the right. Other
+			properties, margins, borders, colors, etc., can be added according to
+			personal taste.
+		<p>There exist also 'left' and 'bottom' properties, to anchor the
+			element to the left or bottom of the screen.
+	</div>
+
+	<div class=section id=details>
+		<h2>More details</h2>
+
+		<p>
+			More precisely: Once an element has been fixed with '
+			<code>position: fixed</code>
+			', the three properties 'left', 'width' and 'right' together
+			determine the horizontal position and size, relative to the window.
+			(CSS uses the more general word <em>viewport;</em> a window is an
+			example of a viewport.)
+		<p>You need at most two of the three properties, i.e., left &amp;
+			width, right &amp; width, or left &amp; right. Setting just one of
+			the three, or none at all is also possible. In that case, CSS will
+			use the element's natural (“intrinsic”) size and/or position, as
+			needed, for any properties that are left at their default value
+			('auto').
+		<p>The same holds for the trio 'top', 'height' and 'bottom'. You
+			need to set at most two of them: 'top' if you want to control the
+			distance from the top of the window, 'bottom' to control the distance
+			from the bottom, and 'height' if you want to specify a fixed height.
+		<p>
+			If you look at the actual style sheet embedded in this page, you will
+			see some additional rules that appear to contradict each other. Those
+			are there to protect against bugs in a few older browsers. See <a
+				href="#FAQ">below.</a>
+	</div>
+
+	<div class=section id=FAQ>
+		<h2>FAQ: IE 5 &amp; 6 on Windows?</h2>
+
+		<p>If you look at this page with Microsoft Internet Explorer 5 or
+			6 on Windows (“WinIE5” and “WinIE6”), you'll notice that it doesn't
+			work. Many people ask me about that, so here is bit of explanation.
+			In brief: the bug is in the browser, not in this page.
+		<p>WinIE5 and WinIE6 don't implement 'fixed'. That is unfortunate,
+			but the bigger problem is that they also don't parse the 'position'
+			property correctly. A browser that doesn't know 'fixed' should throw
+			away the rule 'position: fixed' and fall back to whatever the
+			previous value of 'position' in the style sheet was. We could then
+			add 'position: absolute' just before the 'fixed' and the browser
+			would use that. But in WinIE 5 and 6 that is not what happens.
+			Apparently the keyword 'fixed' is somehow interpreted as 'static'.
+		<p>
+			You cannot make WinIE5 and 6 support 'fixed', but there is a
+			work-around for the parsing problem. Johannes Koch alerted me to this
+			trick (from his <a
+				href="http://w3development.de/css/hide_css_from_browsers/">collection
+				of work-arounds</a>). First replace the 'position: fixed' in the style
+			rules above by 'position: absolute' and then insert the following
+			rule in the style sheet:
+		<pre>*>#intro {position: fixed}</pre>
+
+		<p>The effect of this is that browsers that know about the '>'
+			(child) selector of CSS will use this rule, but browsers that don't,
+			in particular WinIE5 and WinIE6, will ignore it. The rule 'position:
+			absolute' will be used instead and the menu will be in the right
+			place, except that it will not stay fixed when you scroll.
+		<p>It is important that there are no spaces around the '>'.
+	</div>
+
+
+
+	<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-declaration:"~/SGML/HTML4.dcl"
+sgml-default-doctype-name:"html"
+sgml-minimize-attributes:t
+sgml-nofill-elements:("pre" "style" "br")
+End:
+-->

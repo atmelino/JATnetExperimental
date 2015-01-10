@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="../libjs/three.min.js"></script>
+<script type="text/javascript" src="../libjs/d3.js"></script>
+<script type="text/javascript" src="../libjs/elegans.js"></script>
+
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	function makePlotLine() {
+		var BEGIN = -20, END = 10, INTERVAL = 0.5;
+		var data = {
+			x : [],
+			y : [],
+			z : []
+		};
+
+		for ( var x = BEGIN; x <= END; x += INTERVAL) {
+			var y = -1 * x;
+			var z = x * x + y * y;
+			data.x.push(x);
+			data.y.push(y);
+			data.z.push(z);
+		}
+
+		//var stage = new Elegans.Stage(d3.select("#vis"));
+		//var surface = new Elegans.LinePlot(data);
+		//stage.add(surface);
+		//stage.render();
+
+		d3.select("#vis").datum(data).call(
+				Elegans.LinePlot.data_name("z = x^2 + y^2 (y = -x, x=-10..10)").thickness(5).colors(
+						[ "#dd1c77", "#dd1c77" ]));
+
+		//d3.select('#vis').datum(data).call(Elegans.SurfacePlot)
+
+	};
+
+	function makePlotMult() {
+		var BEGIN = -10, END = 10, INTERVAL = 0.5, DIFF_MAX = 4;
+		var line_data = {
+			x : [],
+			y : [],
+			z : []
+		};
+		var particles_data = {
+			x : [],
+			y : [],
+			z : []
+		};
+
+		for ( var x = BEGIN; x <= END; x += INTERVAL) {
+			var y = -1 * x;
+			var z = x * x + y * y;
+			line_data.x.push(x);
+			line_data.y.push(y);
+			line_data.z.push(z);
+		}
+
+		for ( var x = BEGIN; x <= END; x += INTERVAL * 1.5) {
+			var y = -1 * x;
+			var z = x * x + y * y;
+			particles_data.x.push(x + (Math.random() - 0.5) * DIFF_MAX);
+			particles_data.y.push(y + (Math.random() - 0.5) * DIFF_MAX);
+			particles_data.z.push(z + (Math.random() - 0.5) * DIFF_MAX);
+		}
+
+		var stage = new Elegans.Stage(d3.select("#vis")[0][0]);
+		var line = new Elegans.Line(line_data, {
+			name : "z = x^2 + y^2 (y = -x, x=-10..10)",
+			thickness : 5,
+			colors : [ "#dd1c77", "#dd1c77" ]
+		})
+		var particles = new Elegans.Particles(particles_data, {
+			name : "particles",
+			size : 0.8,
+			color : "#c994c7"
+		});
+		stage.add(particles);
+		stage.add(line);
+		stage.render();
+	};
+</script>
+
+</head>
+<body>
+
+	<button onclick="makePlotLine()">line plot</button>
+	<div id="vis" style="width: 800px;"></div>
+	<button onclick="makePlotMult()">multiple plot</button>
+	<div id="vis" style="width: 800px;"></div>
+
+
+</body>
+</html>
