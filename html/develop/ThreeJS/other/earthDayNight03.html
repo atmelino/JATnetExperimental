@@ -40,7 +40,7 @@ a {
 		<a href="http://github.com/mrdoob/three.js" target="_blank">three.js</a> - shader material demo. Earth night/day
 	</div>
 
-	<script src="../lib/js/Three49.js"></script>
+	<script src="../lib/js/Three.js"></script>
 	<script src="../lib/js/Detector.js"></script>
 	<script src="../lib/js/Stats.js"></script>
 
@@ -117,12 +117,17 @@ a {
 			scene = new THREE.Scene();
 
 			camera = new THREE.PerspectiveCamera(40, windowHalfX / windowHalfY, 1, 3000);
-			camera.position.z = 4;
+			camera.position.z = 4;			// LIGHT
+
 			scene.add(camera);
 
+			// LIGHT
 			directionalLight = new THREE.DirectionalLight(0xaaff33, 0);
 			directionalLight.position.set(-1, 1, 0.5).normalize();
 			scene.add(directionalLight);
+			var light = new THREE.PointLight(0xffffff);
+			light.position.set(100, 250, 100);
+			scene.add(light);
 
 			start_time = Date.now();
 
@@ -134,11 +139,13 @@ a {
 				dayTexture : {
 					type : "t",
 					value : 0,
+					color: 0xeeeeee,
 					texture : THREE.ImageUtils.loadTexture("../lib/images/earth-day2K.jpg")
 				},
 				nightTexture : {
 					type : "t",
 					value : 1,
+					color: 0xeeeeee,
 					texture : THREE.ImageUtils.loadTexture("../lib/images/earth-night2K.jpg")
 				}
 			};
@@ -160,9 +167,16 @@ a {
 			mesh = new THREE.Mesh(new THREE.SphereGeometry(size, 32, 16), material);
 			scene.add(mesh);
 
-			meshes.push(mesh);
-
-						
+			meshes.push(mesh);			
+			
+			var geometry = new THREE.SphereGeometry(0.9, 32, 16);
+			var material2 = new THREE.MeshLambertMaterial({
+				color : 0xaa33aa
+			});
+			mesh = new THREE.Mesh(geometry, material2);
+			mesh.position.set(0.6, 0, 0);
+			scene.add(mesh);
+			
 			renderer = new THREE.WebGLRenderer();
 			container.appendChild(renderer.domElement);
 
