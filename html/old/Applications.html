@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2>Applications</h2>
+	<p>
+		<iframe frameborder="1" height="1000" scrolling="yes"
+			src="jat/deploy/index.html" width="100%"></iframe>
+	</p>
+	<h3>Troubleshooting</h3>
+	<table border="1" cellpadding="2" cellspacing="2"
+		style="text-align: left;">
+		<tbody>
+			<tr>
+				<td valign="top"><b>Problem</b></td>
+				<td valign="top"><b>Solution</b></td>
+			</tr>
+			<tr>
+				<td valign="top">My problem is not listed here</td>
+				<td valign="top">Go to&nbsp;<a href="?q=node/3">Support</a>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">It takes a very long time for an application
+					to load</td>
+				<td valign="top">
+					<h3 style="font-size: 16.799999237060547px;">Run JAT
+						Applications locally for faster execution</h3>
+					<p>In the process of loading, some large files have to be
+						downloaded, which may create the impression that the application
+						has crashed. It is recommended instead to download the
+						applications to the local hard drive and run them locally.</p>
+					<p>Steps:</p>
+					<ul>
+						<li>Download&nbsp;<a href="jat/zip/jat.zip">JAT.zip</a>
+						</li>
+						<li>Extract the downloaded file</li>
+						<li>Within the extracted folders, navigate a web browser to
+							jat/deploy/index.html</li>
+						<li>Click on the desired application</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">&nbsp;</td>
+				<td valign="top">
+					<p>The applications listed here can be run directly from the
+						Internet. They have been tested to work with</p>
+					<p>
+						<a
+							href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
+							7</a>.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">I don&#39;t have Java3D on my computer.</td>
+				<td valign="top">Install Java3D. On Ubuntu, open the software
+					center and search for Java3D.</td>
+			</tr>
+			<tr>
+				<td valign="top">I try run a Jat3D application. It does not run
+					at all or I get a security warning.</td>
+				<td valign="top">Java&#39;s security policy does not allow a
+					browser to use native libraries (such has the 3D graphics library)
+					unless explicitly permitted. On Ubuntu Linux, this is accomplished
+					by creating a security policy file named &quot;.java.policy&quot;
+					or &quot;java.policy&quot; in your home directory. For simplicity,
+					you could grant Java all permissions to test the software, but you
+					should not leave this in place as it could compromise the security
+					of your system. Example:
+					<p>Contents of file /home/jatuser/.java.policy</p>
+					<p>
+						grant {<br /> &nbsp; permission java.security.AllPermission;<br />
+						};
+					</p>
+					<p>
+						You will have to close all open browser windows and restart the
+						web browser to enact the policy change.<br /> &nbsp;
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">I try run a Jat3D application. It does not run
+					at all or I get the error: java.lang.UnsatisfiedLinkError: no
+					j3dcore-ogl in java.library.path</td>
+				<td valign="top">The library may not be in the library path of
+					the web browser.<br /> Copy the library into the /lib folder. Open
+					a terminal and run
+					<p>sudo cp /usr/lib/jni/libj3dcore-ogl.so /lib/</p>
+					<p>Then, restart the browser.</p>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">I run a Jat3D application and when I try to
+					run another Jat3D application,<br /> I get the error:<br />
+					java.lang.UnsatisfiedLinkError: Native Library
+					/lib/libj3dcore-ogl.so already loaded in another classloader
+				</td>
+				<td valign="top">Close the web browser and restart it. Reload
+					index.html and the application.</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
