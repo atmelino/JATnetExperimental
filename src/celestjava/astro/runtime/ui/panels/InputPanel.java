@@ -54,11 +54,11 @@ public class InputPanel extends JPanel
     LDeg.setText("00");
     LDeg.setHorizontalAlignment(JTextField.RIGHT);
     LDeg.setPreferredSize(new Dimension(40, 20));
-    jLabel4.setText("�");
+    jLabel4.setText("\u00b0");
     LMin.setText("00.00");
     LMin.setHorizontalAlignment(JTextField.RIGHT);
     LMin.setPreferredSize(new Dimension(50, 20));
-    LSign.setPreferredSize(new Dimension(35, 20));
+    LSign.setPreferredSize(new Dimension(45, 20));
     LSign.addItem("N");
     LSign.addItem("S");
     StartStop.setText("Start");
@@ -69,7 +69,7 @@ public class InputPanel extends JPanel
           SS_actionPerformed(e);
         }
       });
-    GSign.setPreferredSize(new Dimension(35, 20));
+    GSign.setPreferredSize(new Dimension(45, 20));
     GSign.addItem("E");
     GSign.addItem("W");
     GMin.setText("00.00");
@@ -78,7 +78,7 @@ public class InputPanel extends JPanel
     GDeg.setText("000");
     GDeg.setHorizontalAlignment(JTextField.RIGHT);
     GDeg.setPreferredSize(new Dimension(40, 20));
-    jLabel5.setText("�");
+    jLabel5.setText("\u00b0");
     jLabel6.setText("Eye height above sea level:");
     jLabel7.setText(" meter(s)");
     eyeHeight.setText("2.0");

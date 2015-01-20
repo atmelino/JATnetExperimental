@@ -148,8 +148,10 @@ public class Data
   String DoW;
 
 //private final static char DEG_SYMBOL = (char)248;
-  private final static char DEG_SYMBOL = (char)'�';
-  
+ // private final static char DEG_SYMBOL = (char)'�';
+private final static String DEG_SYMBOL = "\u00b0";
+
+
   public Data()
   {
   }

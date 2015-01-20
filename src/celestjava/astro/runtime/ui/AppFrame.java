@@ -41,7 +41,7 @@ public class AppFrame extends JFrame
   {
     this.getContentPane().setLayout(layoutMain);
     panelCenter.setLayout(borderLayout1);
-    this.setSize(new Dimension(550, 480));
+    this.setSize(new Dimension(550, 520));
     this.setTitle("Real Time Dead Reckoning");
     statusBar.setText("");
     this.getContentPane().add(statusBar, BorderLayout.NORTH);
