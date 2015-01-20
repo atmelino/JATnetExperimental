@@ -177,14 +177,14 @@ p.ltb {
 				of work-arounds</a>). First replace the 'position: fixed' in the style
 			rules above by 'position: absolute' and then insert the following
 			rule in the style sheet:
-		<pre>*>#intro {position: fixed}</pre>
+		<pre>intro {position: fixed}</pre>
 
-		<p>The effect of this is that browsers that know about the '>'
+		<p>The effect of this is that browsers that know about the '&gt;'
 			(child) selector of CSS will use this rule, but browsers that don't,
 			in particular WinIE5 and WinIE6, will ignore it. The rule 'position:
 			absolute' will be used instead and the menu will be in the right
 			place, except that it will not stay fixed when you scroll.
-		<p>It is important that there are no spaces around the '>'.
+		<p>It is important that there are no spaces around the '&gt;'.
 	</div>
 
 

@@ -78,12 +78,12 @@ Array.prototype.clone = function() {
 		}
 	}
 	return arr;
-}
+};
 
 
 SurfacePlot.prototype.getChart = function() {
 	return this.surfacePlot;
-}
+};
 
 SurfacePlot.prototype.cleanUp = function() {
 	if (this.surfacePlot == null)
@@ -91,7 +91,7 @@ SurfacePlot.prototype.cleanUp = function() {
 
 	this.surfacePlot.cleanUp();
 	this.surfacePlot = null;
-}
+};
 
 /**
  * Given two coordinates, return the Euclidean distance between them
@@ -176,7 +176,7 @@ Matrix3d = function() {
 
 	this.toString = function() {
 		return this.matrix.toString();
-	}
+	};
 
 	this.init();
 };
@@ -510,7 +510,7 @@ Tooltip = function(useExplicitPositions, tooltipColour) {
 		if (!ie) {
 			clearInterval(tt.timer);
 			tt.timer = setInterval(function() {
-				fade(-1)
+				fade(-1);
 			}, timer);
 		} else {
 			tt.style.display = 'none';
@@ -523,20 +523,20 @@ degToRad = function(degrees) {
 };
 
 function hexToR(h) {
-	return parseInt((cutHex(h)).substring(0, 2), 16)
+	return parseInt((cutHex(h)).substring(0, 2), 16);
 }
 
 function hexToG(h) {
-	return parseInt((cutHex(h)).substring(2, 4), 16)
-}
+	return parseInt((cutHex(h)).substring(2, 4), 16);
+};
 
 function hexToB(h) {
-	return parseInt((cutHex(h)).substring(4, 6), 16)
-}
+	return parseInt((cutHex(h)).substring(4, 6), 16);
+};
 
 function cutHex(h) {
-	return (h.charAt(0) == "#") ? h.substring(1, 7) : h
-}
+	return (h.charAt(0) == "#") ? h.substring(1, 7) : h;
+};
 
 log = function(base, value) {
 	return Math.log(value) / Math.log(base);
