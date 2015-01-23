@@ -7,6 +7,7 @@ import java.util.SimpleTimeZone;
 import solarpositioning.AzimuthZenithAngle;
 import solarpositioning.SPA;
 
+
 public class SPATestloop {
 
 	public static void main(final String[] args) {
@@ -15,7 +16,6 @@ public class SPATestloop {
 		double az, alt;
 		double dec, HA;
 		String s = String.format("%-12s%-12s%-12s%-12s%-12s", "hour", "az", "alt", "dec", "HA");
-
 		System.out.println(s);
 
 		for (int hour = 1; hour < 25; hour++) {
