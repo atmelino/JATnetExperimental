@@ -8,12 +8,12 @@ public class PracticalAstronomyTest26 {
 
 	public static void main(final String[] args) {
 
-		System.out.println("Practical Astronomy horizon to equtorial coordinates conversion");
+		System.out.println("Practical Astronomy horizon to equatorial coordinates conversion");
 
 		ReferenceFrame rf = new ReferenceFrame();
 		double az = org.apache.commons.math3.util.FastMath.toRadians(283.271111);
 		double alt = org.apache.commons.math3.util.FastMath.toRadians(19.334444);
-		rf.horCoord = new S2Point(az, alt);
+		rf.horizontalCoord = new S2Point(az, alt);
 		rf.lat=org.apache.commons.math3.util.FastMath.toRadians(52);
 		rf.horizonToEquatorial();
 
