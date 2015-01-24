@@ -6,6 +6,7 @@ import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.MutableDateTime;
 import org.joda.time.Weeks;
+import jat.core.coordinates.*;
 
 public class ReferenceFrame {
 
@@ -17,6 +18,9 @@ public class ReferenceFrame {
 
 	// right ascension, declination
 	public S2Point equatorialCoord = new S2Point(0, 0);
+
+	// ecliptic longitude lambda, ecliptic latitude beta
+	public S2Point eclipticCoord = new S2Point(0, 0);
 
 	public void horizonToEquatorial() {
 		System.out.println("horizonToEquatorial");
@@ -61,21 +65,49 @@ public class ReferenceFrame {
 		// System.out.println("Months Since Epoch: " + months.getMonths());
 
 		Days days = Days.daysBetween(epoch, dt);
-		Weeks weeks = Weeks.weeksBetween(epoch, dt);
-		Months months = Months.monthsBetween(epoch, dt);
+		//Weeks weeks = Weeks.weeksBetween(epoch, dt);
+		//Months months = Months.monthsBetween(epoch, dt);
 
 		System.out.println("Days Since Epoch: " + days.getDays());
-		System.out.println("Weeks Since Epoch: " + weeks.getWeeks());
-		System.out.println("Months Since Epoch: " + months.getMonths());
-		int daysInt = Math.abs(days.getDays());
-		System.out.println("daysInt: " + daysInt);
+		//System.out.println("Weeks Since Epoch: " + weeks.getWeeks());
+		//System.out.println("Months Since Epoch: " + months.getMonths());
+		//int daysInt = Math.abs(days.getDays());
+		//System.out.println("daysInt: " + daysInt);
 
-		double N = 360 / 365.242191 * days.getDays();
-		System.out.println("N: " + N);
+		double N0 = 360 / 365.242191 * days.getDays();
+		//System.out.println("N: " + N0);
 
-		for (int i = 0; i < 11; i++)
-			System.out.println("N in range: " + (N + i * 360));
+		double N1 = N0 % 360;
+		double N;
 
+		if (N1 < 0)
+			N = N1 + 360;
+		else
+			N = N1;
+		// for (int i = 0; i < 11; i++)
+		// System.out.println("N in range: " + (N + i * 360));
+		System.out.println("N: " + N % 360);
+
+		// mean anomaly
+		double M0 = N + Constants.eps_g_1990 - Constants.omega_g_1990;
+		double M;
+		if (M0 < 0)
+			M = M0 + 360;
+		else
+			M = M0;
+		System.out.println("M: " + M);
+		double MRad = org.apache.commons.math3.util.FastMath.toRadians(M);
+
+		// true anomaly
+		double E_c = (360 / Math.PI) * Constants.e_earth * Math.sin(MRad);
+		System.out.println("E_c: " + E_c);
+
+		// Sun's geocentric ecliptic longitude
+		double lambda0=N+E_c+Constants.eps_g_1990;
+		//System.out.println("lambda: " + lambda0);
+		
+		double lambda=lambda0%360;
+		System.out.println("lambda: " + lambda);
 	}
 
 }
