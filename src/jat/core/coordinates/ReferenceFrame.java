@@ -4,13 +4,12 @@ import org.apache.commons.math3.geometry.spherical.twod.S2Point;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-
 public class ReferenceFrame {
 
 	public double lat;
 
 	DateTime currentDateTime;
-	
+
 	// azimuth angle θ in the x-y plane as the first coordinate, and the polar
 	// angle φ as the second coordinate
 	public S2Point horizontalCoord = new S2Point(0, 0);
@@ -19,7 +18,18 @@ public class ReferenceFrame {
 	public S2Point equatorialCoord = new S2Point(0, 0);
 
 	// ecliptic longitude lambda, ecliptic latitude beta
-	public S2Point eclipticCoord = new S2Point(0, 0);
+	// public S2Point eclipticCoord = new S2Point(0, 0);
+	public EclipticCoord eclipticCoord = new EclipticCoord(new Angle(true, 139, 41, 10, Angle.ARCDEGREES), new Angle(true, 4, 52, 31, Angle.ARCDEGREES));
+
+	public void eclipticToEquatorial() {
+		System.out.println("eclipticToEquatorial");
+
+		Angle lambda = eclipticCoord.lambda;
+		Angle beta = eclipticCoord.beta;
+
+		lambda.println();
+		beta.println();
+	}
 
 	public void horizonToEquatorial() {
 		System.out.println("horizonToEquatorial");
@@ -48,27 +58,17 @@ public class ReferenceFrame {
 
 	}
 
-	
-	public void eclipticToEquatorial() {
-		System.out.println("eclipticToEquatorial");
-
-		double lambda=eclipticCoord.getTheta();	
-		double beta=eclipticCoord.getPhi();	
-		
-		
-	}
-	
 	public void sunPosition(DateTime epoch, DateTime dt) {
 		System.out.println("sunPosition");
 
-		currentDateTime=dt;
-		
+		currentDateTime = dt;
+
 		Days days = Days.daysBetween(epoch, dt);
 
 		System.out.println("Days Since Epoch: " + days.getDays());
 
 		double N0 = 360 / 365.242191 * days.getDays();
-		//System.out.println("N: " + N0);
+		// System.out.println("N: " + N0);
 
 		double N1 = N0 % 360;
 		double N;
@@ -96,14 +96,15 @@ public class ReferenceFrame {
 		System.out.println("E_c: " + E_c);
 
 		// Sun's geocentric ecliptic longitude
-		double lambda0=N+E_c+Constants.eps_g_1990;
-		//System.out.println("lambda: " + lambda0);
-		
-		double lambda=lambda0%360;
+		double lambda0 = N + E_c + Constants.eps_g_1990;
+		// System.out.println("lambda: " + lambda0);
+
+		double lambda = lambda0 % 360;
 		System.out.println("lambda: " + lambda);
-		
-		eclipticCoord = new S2Point(lambda, 0);
-		
+
+		// eclipticCoord = new S2Point(lambda, 0);
+		eclipticCoord = new EclipticCoord(new Angle(lambda, Angle.DEGREES), new Angle(0, Angle.DEGREES));
+
 	}
 
 }

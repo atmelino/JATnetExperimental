@@ -1,11 +1,8 @@
 package jat.examples.coordinates;
 
-import org.apache.commons.math3.geometry.spherical.twod.S2Point;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-//import org.apache.commons.math3.util.FastMath;
 import jat.core.coordinates.*;
-import org.joda.time.DateTimeZone;
 
 
 public class PracticalAstronomyTest46 {

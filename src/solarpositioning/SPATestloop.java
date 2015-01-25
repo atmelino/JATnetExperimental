@@ -16,14 +16,14 @@ public class SPATestloop {
 
 		double lat = 30.25;
 		double latRad;
-		double az, alt;
-		double azRad, altRad;
+		double az, zen, alt;
+		double azRad, zenRad, altRad;
 		double decRad, HA;
 		String t;
 
 		// String s = String.format("%-12s%-12s%-12s%-12s%-12s", "hour", "az",
 		// "alt", "dec", "HA");
-		String s = String.format("%-12s%-12s%-12s%-12s%-12s%-12s", "hour", "az", "alt", "x", "y", "z");
+		String s = String.format("%-12s%-12s%-12s%-12s%-12s%-12s%-12s", "hour", "az", "zen", "alt", "x", "y", "z");
 		System.out.println(s);
 
 		for (int hour = 1; hour < 25; hour++) {
@@ -32,8 +32,10 @@ public class SPATestloop {
 			time.set(2015, Calendar.JUNE, 19, hour, 00, 00);
 			AzimuthZenithAngle result = SPA.calculateSolarPosition(time, lat, -97.75, 1830.14, 67, 820, 11);
 			az = result.getAzimuth();
+			zen = result.getZenithAngle();
 			alt = 90 - result.getZenithAngle();
-			azRad = org.apache.commons.math3.util.FastMath.toRadians(az);
+			azRad = Math.toRadians(az);
+			zenRad = org.apache.commons.math3.util.FastMath.toRadians(zen);
 			altRad = org.apache.commons.math3.util.FastMath.toRadians(alt);
 			latRad = org.apache.commons.math3.util.FastMath.toRadians(lat);
 
@@ -42,18 +44,18 @@ public class SPATestloop {
 			// HA = 0.7;
 			// String t = String.format("%-12d%-12.5f%-12.5f%-12.5f%-12.5f",
 			// hour, az, alt, dec, HA);
-			// System.out.println(t);			azRad = org.apache.commons.math3.util.FastMath.toRadians(az);
-			altRad = org.apache.commons.math3.util.FastMath.toRadians(alt);
+			// System.out.println(t); azRad =
+			// org.apache.commons.math3.util.FastMath.toRadians(az);
 
-
-			SphericalCoordinates rs = new SphericalCoordinates(100, azRad, altRad);
+			SphericalCoordinates rs = new SphericalCoordinates(100, azRad, zenRad);
 			Vector3D r = rs.getCartesian();
 			double x = r.getX();
 			double y = r.getY();
 			double z = r.getZ();
 
-			//t = String.format("%-12d%-12.5f%-12.5f%-12.5f%-12.5f%-12.5f", hour, az, alt, x, y, z);
-			t = String.format("%-12d%-12.5f%-12.5f%-12.0f%-12.0f%-12.0f", hour, az, alt, x, y, z);
+			// t = String.format("%-12d%-12.5f%-12.5f%-12.5f%-12.5f%-12.5f",
+			// hour, az, alt, x, y, z);
+			t = String.format("%-12d%-12.5f%-12.5f%-12.5f%-12.0f%-12.0f%-12.0f", hour, az, zen, alt, x, y, z);
 			System.out.println(t);
 
 		}
