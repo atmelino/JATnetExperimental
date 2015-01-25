@@ -2,6 +2,7 @@ package jat.core.coordinates;
 
 import org.apache.commons.math3.geometry.spherical.twod.S2Point;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 import org.joda.time.Days;
 
 public class ReferenceFrame {
@@ -19,16 +20,48 @@ public class ReferenceFrame {
 
 	// ecliptic longitude lambda, ecliptic latitude beta
 	// public S2Point eclipticCoord = new S2Point(0, 0);
-	public EclipticCoord eclipticCoord = new EclipticCoord(new Angle(true, 139, 41, 10, Angle.ARCDEGREES), new Angle(true, 4, 52, 31, Angle.ARCDEGREES));
+	public EclipticCoord eclipticCoord = new EclipticCoord(new Angle(true, 139, 41, 10, Angle.ARCDEGREES), new Angle(
+			true, 4, 52, 31, Angle.ARCDEGREES));
 
-	public void eclipticToEquatorial() {
+	public void eclipticToEquatorial(DateTime currentDateTime) {
 		System.out.println("eclipticToEquatorial");
+
+		this.currentDateTime = currentDateTime;
+		long millis = currentDateTime.getMillis();
+		double JD_cur = DateTimeUtils.toJulianDay(millis);
+		System.out.println("JD " + JD_cur);
+
+		DateTime epochDateTime = new DateTime(2000, 1, 1, 6, 0);
+		millis = epochDateTime.getMillis();
+		double JD_epoch = DateTimeUtils.toJulianDay(millis);
+		System.out.println("JD epoch " + JD_epoch);
+
+		// number of centuries since epoch
+		double T = (JD_cur - JD_epoch) / 36525;
+		System.out.println("T " + T);
+		double eps = 23. + (26 + 21.45 / 60.) / 60. + T * (-46.815 + T * (-0.0006 + T * 0.00181)) / 3600.;
+		double epsRad = Math.toRadians(eps);
+		System.out.println("eps " + eps);
+
+		double cosEps = Math.cos(epsRad);
+		double sinEps = Math.sin(epsRad);
 
 		Angle lambda = eclipticCoord.lambda;
 		Angle beta = eclipticCoord.beta;
 
-		lambda.println();
-		beta.println();
+		// lambda.println();
+		System.out.println("lambda " + lambda.degrees);
+		// beta.println();
+		System.out.println("beta " + beta.degrees);
+
+		double sinLambda=Math.sin(lambda.radians);
+		double sinBeta=Math.sin(beta.radians);
+		double cosBeta=Math.cos(beta.radians);
+		double tanBeta=Math.tan(beta.radians);
+		
+		double term1=sinBeta*cosEps+cosBeta*sinEps*sinLambda;
+		System.out.println("term1 " + term1);
+		
 	}
 
 	public void horizonToEquatorial() {
@@ -58,12 +91,12 @@ public class ReferenceFrame {
 
 	}
 
-	public void sunPosition(DateTime epoch, DateTime dt) {
+	public void sunPosition(DateTime epoch, DateTime currentDateTime) {
 		System.out.println("sunPosition");
 
-		currentDateTime = dt;
+		this.currentDateTime = currentDateTime;
 
-		Days days = Days.daysBetween(epoch, dt);
+		Days days = Days.daysBetween(epoch, currentDateTime);
 
 		System.out.println("Days Since Epoch: " + days.getDays());
 

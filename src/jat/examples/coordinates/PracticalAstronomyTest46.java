@@ -13,9 +13,9 @@ public class PracticalAstronomyTest46 {
 
 		ReferenceFrame rf = new ReferenceFrame();
 		DateTime epoch = new DateTime(1990, 1, 1, 0, 0, DateTimeZone.forID("UTC"));
-		DateTime dt = new DateTime(1980, 7, 27, 0, 0);
+		DateTime currentDateTime = new DateTime(1980, 7, 27, 0, 0);
 		//DateTime dt = new DateTime(2004, 7, 27, 0, 0);
-		rf.sunPosition(epoch, dt);
+		rf.sunPosition(epoch, currentDateTime);
 
 	}
 }
