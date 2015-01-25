@@ -11,4 +11,11 @@ public class EquatorialCoord {
 		this.RA = RA;
 		this.dec = dec;
 	}
+
+
+	public void println()
+	{
+		RA.println("Right Ascension");
+		dec.println("Declination");
+	}
 }

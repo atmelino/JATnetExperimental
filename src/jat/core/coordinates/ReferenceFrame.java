@@ -16,12 +16,12 @@ public class ReferenceFrame {
 	public S2Point horizontalCoord = new S2Point(0, 0);
 
 	// right ascension, declination
-	public S2Point equatorialCoord = new S2Point(0, 0);
+	// public S2Point equatorialCoord = new S2Point(0, 0);
+	public EquatorialCoord equatorialCoord;
 
 	// ecliptic longitude lambda, ecliptic latitude beta
 	// public S2Point eclipticCoord = new S2Point(0, 0);
-	public EclipticCoord eclipticCoord = new EclipticCoord(new Angle(true, 139, 41, 10, Angle.ARCDEGREES), new Angle(
-			true, 4, 52, 31, Angle.ARCDEGREES));
+	public EclipticCoord eclipticCoord = new EclipticCoord(new Angle(true, 139, 41, 10, Angle.ARCDEGREES), new Angle(true, 4, 52, 31, Angle.ARCDEGREES));
 
 	public void eclipticToEquatorial(DateTime currentDateTime) {
 		System.out.println("eclipticToEquatorial");
@@ -29,39 +29,51 @@ public class ReferenceFrame {
 		this.currentDateTime = currentDateTime;
 		long millis = currentDateTime.getMillis();
 		double JD_cur = DateTimeUtils.toJulianDay(millis);
-		System.out.println("JD " + JD_cur);
+		//System.out.println("JD " + JD_cur);
 
 		DateTime epochDateTime = new DateTime(2000, 1, 1, 6, 0);
 		millis = epochDateTime.getMillis();
 		double JD_epoch = DateTimeUtils.toJulianDay(millis);
-		System.out.println("JD epoch " + JD_epoch);
+		//System.out.println("JD epoch " + JD_epoch);
 
 		// number of centuries since epoch
 		double T = (JD_cur - JD_epoch) / 36525;
-		System.out.println("T " + T);
+		//System.out.println("T " + T);
 		double eps = 23. + (26 + 21.45 / 60.) / 60. + T * (-46.815 + T * (-0.0006 + T * 0.00181)) / 3600.;
 		double epsRad = Math.toRadians(eps);
-		System.out.println("eps " + eps);
-
-		double cosEps = Math.cos(epsRad);
-		double sinEps = Math.sin(epsRad);
+		//System.out.println("eps " + eps);
 
 		Angle lambda = eclipticCoord.lambda;
 		Angle beta = eclipticCoord.beta;
 
 		// lambda.println();
-		System.out.println("lambda " + lambda.degrees);
+		//System.out.println("lambda " + lambda.degrees);
 		// beta.println();
-		System.out.println("beta " + beta.degrees);
+		//System.out.println("beta " + beta.degrees);
 
-		double sinLambda=Math.sin(lambda.radians);
-		double sinBeta=Math.sin(beta.radians);
-		double cosBeta=Math.cos(beta.radians);
-		double tanBeta=Math.tan(beta.radians);
-		
-		double term1=sinBeta*cosEps+cosBeta*sinEps*sinLambda;
-		System.out.println("term1 " + term1);
-		
+		double cosEps = Math.cos(epsRad);
+		double sinEps = Math.sin(epsRad);
+		double sinLambda = Math.sin(lambda.radians);
+		double cosLambda = Math.cos(lambda.radians);
+		double sinBeta = Math.sin(beta.radians);
+		double cosBeta = Math.cos(beta.radians);
+		double tanBeta = Math.tan(beta.radians);
+
+		double termDec = sinBeta * cosEps + cosBeta * sinEps * sinLambda;
+		//System.out.println("termDec " + termDec);
+		double decRad = Math.asin(termDec);
+
+		double termRAy = (sinLambda * cosEps - tanBeta * sinEps);
+		double termRAx =  cosLambda;
+		//System.out.println("termRAy " + termRAy);
+		//System.out.println("termRAx " + termRAx);
+		double RARad = Math.atan2(termRAy, termRAx);
+		//double RARad = Math.atan(termRAy / termRAx);
+		//System.out.println("RARad " + RARad);
+
+		equatorialCoord = new EquatorialCoord(new Angle(RARad, Angle.RADIANS), new Angle(decRad, Angle.RADIANS));
+
+		equatorialCoord.println();
 	}
 
 	public void horizonToEquatorial() {
