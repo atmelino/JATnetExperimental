@@ -15,7 +15,7 @@ public class EquatorialCoord {
 
 	public void println()
 	{
-		RA.println("Right Ascension");
-		dec.println("Declination");
+		RA.println("Right Ascension",Angle.DEGREES);
+		dec.println("Declination",Angle.DEGREES);
 	}
 }

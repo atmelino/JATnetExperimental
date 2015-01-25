@@ -1,3 +1,43 @@
+
+import org.apache.commons.math3.geometry.spherical.twod.S2Point;
+
+		double decDeg = Math.toDegrees(decRad);
+	
+			rf.horizontalCoord = new S2Point(az, alt);
+			double az = org.apache.commons.math3.util.FastMath.toRadians(283.271111);
+		double alt = org.apache.commons.math3.util.FastMath.toRadians(19.334444);
+	import org.apache.commons.math3.geometry.spherical.twod.S2Point;
+//import org.apache.commons.math3.util.FastMath;
+			double azDeg = org.apache.commons.math3.util.FastMath.toDegrees(horizontalCoord.getTheta());
+		double altDeg = org.apache.commons.math3.util.FastMath.toDegrees(horizontalCoord.getPhi());
+		double latDeg = org.apache.commons.math3.util.FastMath.toDegrees(lat);
+			double decDeg = org.apache.commons.math3.util.FastMath.toDegrees(dec);
+		double HADeg = org.apache.commons.math3.util.FastMath.toDegrees(HA);
+		s = String.format("%-12s%-12s", "dec(deg)", "HA(deg)");
+		System.out.println(s);
+		t = String.format("%-12.5f%-12.5f", decDeg, HADeg);
+		System.out.println(t);
+			String s = String.format("%-12s%-12s%-12s", "az(rad)", "alt(rad)", "lat(rad)");
+		System.out.println(s);
+		String t = String.format("%-12.5f%-12.5f%-12.5f", az, alt, lat);
+		System.out.println(t);
+		s = String.format("%-12s%-12s%-12s", "az(deg)", "alt(deg)", "lat(deg)");
+		System.out.println(s);
+		double azDeg = horizontalCoord.azimuth.degrees;
+		double altDeg = horizontalCoord.altitude.radians;
+		double latDeg = org.apache.commons.math3.util.FastMath.toDegrees(lat);
+		t = String.format("%-12.5f%-12.5f%-12.5f", azDeg, altDeg, latDeg);
+		System.out.println(t);
+		
+	
+	
+		// azimuth angle θ in the x-y plane as the first coordinate, and the polar
+	// angle φ as the second coordinate
+	public S2Point horizontalCoord = new S2Point(0, 0);
+	
+		// public S2Point equatorialCoord = new S2Point(0, 0);
+		// public S2Point eclipticCoord = new S2Point(0, 0);
+	
 		// MutableDateTime epoch = new MutableDateTime();
 		// epoch.setDate(0); //Set to Epoch time
 		// DateTime now = new DateTime();
