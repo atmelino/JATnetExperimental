@@ -28,7 +28,7 @@ public class SPATestloop {
 
 		for (int hour = 1; hour < 25; hour++) {
 			GregorianCalendar time = new GregorianCalendar(new SimpleTimeZone(-6 * 60 * 60 * 1000, "LST"));
-			// time.set(2015, Calendar.JUNE, 19, hour, 00, 00);
+			//time.set(2015, Calendar.DECEMBER, 19, hour, 00, 00);
 			time.set(2015, Calendar.JUNE, 19, hour, 00, 00);
 			AzimuthZenithAngle result = SPA.calculateSolarPosition(time, lat, -97.75, 1830.14, 67, 820, 11);
 			az = result.getAzimuth();

@@ -19,35 +19,50 @@ public class ReferenceFrame {
 	// ecliptic longitude lambda, ecliptic latitude beta
 	public EclipticCoord eclipticCoord;
 
-	String s,t;
-	
+	String s, t;
+
 	public void horizonToEquatorial() {
 		System.out.println("horizonToEquatorial");
 
 		horizontalCoord.println();
-		
+
 		double azRad = horizontalCoord.azimuth.radians;
 		double altRad = horizontalCoord.altitude.radians;
-		double latRad=Math.toRadians(latDeg);
-				
-		double decRad = Math.asin(Math.sin(altRad) * Math.sin(latRad) + Math.cos(altRad) * Math.cos(latRad) * Math.cos(azRad));
-		double decDeg = Math.toDegrees(decRad);
-		double HARad = Math.acos((Math.sin(altRad) - Math.sin(latRad) * Math.sin(decRad)) / (Math.cos(latRad) * Math.cos(decRad)));
-		double HADeg = Math.toDegrees(HARad);
+		double latRad = Math.toRadians(latDeg);
 
-		s = String.format("%-12s%-12s", "dec(deg)", "HA(deg)");
+		double sinAlt = Math.sin(altRad);
+		double cosAlt = Math.cos(altRad);
+		double sinLat = Math.sin(latRad);
+		double cosLat = Math.cos(latRad);
+		double sinAz = Math.sin(azRad);
+		double cosAz = Math.cos(azRad);
+
+		double decRad = Math.asin(sinAlt * sinLat + cosAlt * cosLat * cosAz);
+		double HAprimeRad = Math.acos((sinAlt - sinLat * Math.sin(decRad)) / (cosLat * Math.cos(decRad)));
+
+		double HARad;
+		
+		System.out.println(sinAz);
+		if(sinAz<0)
+			HARad=HAprimeRad;
+		else
+			HARad=2*Math.PI-HAprimeRad;
+			
+		double decDeg = Math.toDegrees(decRad);
+		double HADeg = Math.toDegrees(HARad);
+		double HAHours = HADeg/15.;
+
+		
+		s = String.format("%-12s%-12s%-12s", "dec(deg)", "HA(deg)", "HA(hours)");
 		System.out.println(s);
-		t = String.format("%-12.5f%-12.5f", decDeg, HADeg);
+		t = String.format("%-12.5f%-12.5f%-12.5f", decDeg, HADeg,HAHours);
 		System.out.println(t);
 
 		equatorialCoord = new EquatorialCoord(new Angle(HARad, Angle.RADIANS), new Angle(decRad, Angle.RADIANS));
-
 		equatorialCoord.println();
 
 	}
 
-
-	
 	public void eclipticToEquatorial(DateTime currentDateTime) {
 		System.out.println("eclipticToEquatorial");
 
