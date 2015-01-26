@@ -1,5 +1,10 @@
 package jat.core.coordinates;
 
+/**
+ * @author Tobias Berthold
+ *
+ * 
+ */
 public class Angle
 {
 	public final static int RADIANS = 1, DEGREES = 2, DECIMALHOURS = 3;

@@ -23,7 +23,7 @@ public class ReferenceFrame {
 	String s, t;
 
 	public void horizonToEquatorial() {
-		//System.out.println("horizonToEquatorial");
+		// System.out.println("horizonToEquatorial");
 
 		double azRad = horizontalCoord.azimuth.radians;
 		double altRad = horizontalCoord.altitude.radians;
@@ -41,15 +41,15 @@ public class ReferenceFrame {
 
 		double HARad;
 
-		//System.out.println(sinAz);
+		// System.out.println(sinAz);
 		if (sinAz < 0)
 			HARad = HAprimeRad;
 		else
 			HARad = 2 * Math.PI - HAprimeRad;
 
-		//double decDeg = Math.toDegrees(decRad);
-		//double HADeg = Math.toDegrees(HARad);
-		//double HAHours = HADeg / 15.;
+		// double decDeg = Math.toDegrees(decRad);
+		// double HADeg = Math.toDegrees(HARad);
+		// double HAHours = HADeg / 15.;
 		// s = String.format("%-12s%-12s%-12s", "dec(deg)", "HA(deg)",
 		// "HA(hours)");
 		// System.out.println(s);
@@ -61,24 +61,44 @@ public class ReferenceFrame {
 		equatorialCoord = new EquatorialCoord(HA, null, dec);
 
 	}
-	
+
 	public void horizonToEquatorial(double LST) {
 		horizonToEquatorial();
-	
+
 		double RARad;
-		//equatorialCoord.HA.println("HA");
-		double temp=LST-equatorialCoord.HA.hours;
-		
-		if(temp<0)
-			RARad=temp+24;
+		// equatorialCoord.HA.println("HA");
+		double temp = LST - equatorialCoord.HA.hours;
+
+		if (temp < 0)
+			RARad = temp + 24;
 		else
-			RARad=temp;
+			RARad = temp;
 		Angle RA = new Angle(RARad, Angle.DECIMALHOURS);
 		Angle dec = equatorialCoord.dec;
 		equatorialCoord = new EquatorialCoord(null, RA, dec);
-		
+
 	}
-	
+
+	public void equatorialToHorizon() {
+		double HARAd = equatorialCoord.HA.radians;
+		double decRad = equatorialCoord.dec.radians;
+		double latRad = Math.toRadians(latDeg);
+
+
+		
+		double sinDec = Math.sin(decRad);
+		double cosDec = Math.cos(decRad);
+		double sinPhi = Math.sin(latRad);
+		double cosPhi = Math.cos(latRad);
+		double cosHA = Math.cos(HARAd);
+		
+		double altRad=sinDec*sinPhi+cosDec*cosPhi*cosHA;
+		System.out.println(altRad);
+
+		
+
+	}
+
 	public void eclipticToEquatorial(DateTime currentDateTime) {
 		System.out.println("eclipticToEquatorial");
 
