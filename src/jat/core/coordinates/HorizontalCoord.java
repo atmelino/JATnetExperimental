@@ -13,7 +13,7 @@ public class HorizontalCoord {
 	}
 
 	public void println() {
-		azimuth.println("horizontal plane azimuth", Angle.DEGREES);
-		altitude.println("horizontal plane altitude", Angle.DEGREES);
+		azimuth.println("horizontal coordinate azimuth", Angle.DEGREES);
+		altitude.println("horizontal coordinate altitude", Angle.DEGREES);
 	}
 }

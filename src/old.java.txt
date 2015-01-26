@@ -1,4 +1,32 @@
 
+
+		// Chronology chrono = JulianChronology.getInstance();
+		// Chronology chrono = GJChronology.getInstance();
+		// Chronology chrono = ISOChronology.getInstance();
+		// Chronology chrono =
+		// GregorianChronology.getInstance(DateTimeZone.forID("UTC"));
+		// Chronology chrono = GregorianChronology.getInstance();
+		// DateTime currentDateTime = new DateTime(1979, 12, 30,18, 0, chrono);
+		// DateTime currentDateTime = new DateTime(1980, 1, 1,0, 0);
+//		DateTime dt2 = new DateTime(1979, 12, 31, 0, 0, DateTimeZone.forID("UTC"));
+//		millis = dt2.getMillis();
+//		JD = DateTimeUtils.toJulianDay(millis);
+//		System.out.println("JD 2 =" + JD);
+long millis;
+		double JD;
+				millis = currentDateTime.getMillis();
+		JD = DateTimeUtils.toJulianDay(millis);
+		System.out.println("JD 1 =" + JD);
+		import org.joda.time.DateTimeUtils;
+		import org.joda.time.Chronology;
+		//import org.joda.time.chrono.GJChronology;
+import org.joda.time.chrono.GregorianChronology;
+//import org.joda.time.chrono.ISOChronology;
+//import org.joda.time.chrono.JulianChronology;
+		
+		horizontalCoord.println();
+		
+
 import org.apache.commons.math3.geometry.spherical.twod.S2Point;
 
 		double decDeg = Math.toDegrees(decRad);

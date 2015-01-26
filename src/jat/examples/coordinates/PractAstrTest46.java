@@ -5,7 +5,7 @@ import org.joda.time.DateTimeZone;
 import jat.core.coordinates.*;
 
 
-public class PracticalAstronomyTest46 {
+public class PractAstrTest46 {
 
 	public static void main(final String[] args) {
 

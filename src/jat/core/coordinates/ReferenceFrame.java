@@ -2,6 +2,7 @@ package jat.core.coordinates;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 
 public class ReferenceFrame {
@@ -22,9 +23,7 @@ public class ReferenceFrame {
 	String s, t;
 
 	public void horizonToEquatorial() {
-		System.out.println("horizonToEquatorial");
-
-		horizontalCoord.println();
+		//System.out.println("horizonToEquatorial");
 
 		double azRad = horizontalCoord.azimuth.radians;
 		double altRad = horizontalCoord.altitude.radians;
@@ -41,28 +40,45 @@ public class ReferenceFrame {
 		double HAprimeRad = Math.acos((sinAlt - sinLat * Math.sin(decRad)) / (cosLat * Math.cos(decRad)));
 
 		double HARad;
-		
-		System.out.println(sinAz);
-		if(sinAz<0)
-			HARad=HAprimeRad;
+
+		//System.out.println(sinAz);
+		if (sinAz < 0)
+			HARad = HAprimeRad;
 		else
-			HARad=2*Math.PI-HAprimeRad;
-			
-		double decDeg = Math.toDegrees(decRad);
-		double HADeg = Math.toDegrees(HARad);
-		double HAHours = HADeg/15.;
+			HARad = 2 * Math.PI - HAprimeRad;
 
-		
-		s = String.format("%-12s%-12s%-12s", "dec(deg)", "HA(deg)", "HA(hours)");
-		System.out.println(s);
-		t = String.format("%-12.5f%-12.5f%-12.5f", decDeg, HADeg,HAHours);
-		System.out.println(t);
+		//double decDeg = Math.toDegrees(decRad);
+		//double HADeg = Math.toDegrees(HARad);
+		//double HAHours = HADeg / 15.;
+		// s = String.format("%-12s%-12s%-12s", "dec(deg)", "HA(deg)",
+		// "HA(hours)");
+		// System.out.println(s);
+		// t = String.format("%-12.5f%-12.5f%-12.5f", decDeg, HADeg, HAHours);
+		// System.out.println(t);
 
-		equatorialCoord = new EquatorialCoord(new Angle(HARad, Angle.RADIANS), new Angle(decRad, Angle.RADIANS));
-		equatorialCoord.println();
+		Angle HA = new Angle(HARad, Angle.RADIANS);
+		Angle dec = new Angle(decRad, Angle.RADIANS);
+		equatorialCoord = new EquatorialCoord(HA, null, dec);
 
 	}
-
+	
+	public void horizonToEquatorial(double LST) {
+		horizonToEquatorial();
+	
+		double RARad;
+		//equatorialCoord.HA.println("HA");
+		double temp=LST-equatorialCoord.HA.hours;
+		
+		if(temp<0)
+			RARad=temp+24;
+		else
+			RARad=temp;
+		Angle RA = new Angle(RARad, Angle.DECIMALHOURS);
+		Angle dec = equatorialCoord.dec;
+		equatorialCoord = new EquatorialCoord(null, RA, dec);
+		
+	}
+	
 	public void eclipticToEquatorial(DateTime currentDateTime) {
 		System.out.println("eclipticToEquatorial");
 
@@ -71,18 +87,20 @@ public class ReferenceFrame {
 		double JD_cur = DateTimeUtils.toJulianDay(millis);
 		// System.out.println("JD " + JD_cur);
 
-		DateTime epochDateTime = new DateTime(2000, 1, 1, 6, 0);
+		DateTime epochDateTime = new DateTime(2000, 1, 1, 12, 0, DateTimeZone.forID("UTC"));
 		millis = epochDateTime.getMillis();
 		double JD_epoch = DateTimeUtils.toJulianDay(millis);
 		// System.out.println("JD epoch " + JD_epoch);
 
 		// number of centuries since epoch
+		// double daysDiff=JD_cur - JD_epoch;
+		// System.out.println("daysDiff " + daysDiff);
 		double T = (JD_cur - JD_epoch) / 36525;
 		// System.out.println("T " + T);
 		double eps = 23. + (26 + 21.45 / 60.) / 60. + T * (-46.815 + T * (-0.0006 + T * 0.00181)) / 3600.;
 		double epsRad = Math.toRadians(eps);
 		// System.out.println("eps " + eps);
-		eclipticCoord.println();
+
 		Angle lambda = eclipticCoord.lambda;
 		Angle beta = eclipticCoord.beta;
 
@@ -110,10 +128,10 @@ public class ReferenceFrame {
 		double RARad = Math.atan2(termRAy, termRAx);
 		// double RARad = Math.atan(termRAy / termRAx);
 		// System.out.println("RARad " + RARad);
+		Angle RA = new Angle(RARad, Angle.RADIANS);
+		Angle dec = new Angle(decRad, Angle.RADIANS);
+		equatorialCoord = new EquatorialCoord(null, RA, dec);
 
-		equatorialCoord = new EquatorialCoord(new Angle(RARad, Angle.RADIANS), new Angle(decRad, Angle.RADIANS));
-
-		equatorialCoord.println();
 	}
 
 	public void sunPosition(DateTime epoch, DateTime currentDateTime) {

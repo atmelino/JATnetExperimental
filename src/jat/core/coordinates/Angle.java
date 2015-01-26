@@ -120,7 +120,7 @@ public class Angle
 		else
 			System.out.print("-");
 		System.out.println(h.hours + " hours " + h.minutes + " minutes " + h.seconds + " seconds");
-		//System.out.println(decimalhours + " Decimal hours");
+		System.out.println(hours + " Decimal hours");
 	}
 
 	public void println()

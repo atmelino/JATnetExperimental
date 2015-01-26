@@ -8,16 +8,18 @@ public class EquatorialCoord {
 	public EquatorialCoord() {
 	}
 
-	public EquatorialCoord(Angle HA, Angle dec) {
+	public EquatorialCoord(Angle HA, Angle RA, Angle dec) {
 		this.HA = HA;
+		this.RA = RA;
 		this.dec = dec;
 	}
 
 	public void println() {
-		HA.println("Hour Angle", Angle.HOURANGLE);
-		if (RA!=null)
-			RA.println("Right Ascension", Angle.DEGREES);
-		dec.println("Declination", Angle.DEGREES);
+		if (HA != null)
+			HA.println("Hour Angle", Angle.HOURANGLE);
+		if (RA != null)
+			RA.println("Right Ascension", Angle.HOURANGLE);
+		dec.println("Declination", Angle.ARCDEGREES);
 
 	}
 }
