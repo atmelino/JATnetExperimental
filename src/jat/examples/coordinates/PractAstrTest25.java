@@ -19,7 +19,10 @@ public class PractAstrTest25 {
 		rf.horizontalCoord.println();
 
 		
-		System.out.println("RA and dec for latitude 52 deg and longitude 0 and GST= 0h 24m 05s:");		
+		System.out.println("Azimuth and altitude for latitude 52 deg and longitude 0 and GST= 0h 24m 05s:");		
+		Angle RA = new Angle(true, 5, 51, 44, Angle.HOURANGLE);
+		rf.equatorialCoord = new EquatorialCoord(null, RA, dec);
+		rf.equatorialCoord.println();
 		rf.equatorialToHorizon(0.401389);
 		
 		

@@ -1,4 +1,13 @@
 
+		// double decDeg = Math.toDegrees(decRad);
+		// double HADeg = Math.toDegrees(HARad);
+		// double HAHours = HADeg / 15.;
+		// s = String.format("%-12s%-12s%-12s", "dec(deg)", "HA(deg)",
+		// "HA(hours)");
+		// System.out.println(s);
+		// t = String.format("%-12.5f%-12.5f%-12.5f", decDeg, HADeg, HAHours);
+		// System.out.println(t);
+
 
 		// Chronology chrono = JulianChronology.getInstance();
 		// Chronology chrono = GJChronology.getInstance();

@@ -8,9 +8,10 @@ import org.joda.time.Days;
 /**
  * @author Tobias Berthold
  * 
- * equatorial coordinates: you can get the hour angle if you have the latitude of the observer.
- * you also need the Local Sidereal Time LST if you want the Right Ascension. 
- *
+ *         equatorial coordinates: you can get the hour angle if you have the
+ *         latitude of the observer. you also need the Local Sidereal Time LST
+ *         if you want the Right Ascension.
+ * 
  */
 public class ReferenceFrame {
 
@@ -32,8 +33,8 @@ public class ReferenceFrame {
 	public void horizonToEquatorial() {
 		// System.out.println("horizonToEquatorial");
 
-		double azRad = horizontalCoord.azimuth.radians;
-		double altRad = horizontalCoord.altitude.radians;
+		double azRad = horizontalCoord.azimuth.getRadians();
+		double altRad = horizontalCoord.altitude.getRadians();
 		double latRad = Math.toRadians(latDeg);
 
 		double sinAlt = Math.sin(altRad);
@@ -54,15 +55,6 @@ public class ReferenceFrame {
 		else
 			HARad = 2 * Math.PI - HAprimeRad;
 
-		// double decDeg = Math.toDegrees(decRad);
-		// double HADeg = Math.toDegrees(HARad);
-		// double HAHours = HADeg / 15.;
-		// s = String.format("%-12s%-12s%-12s", "dec(deg)", "HA(deg)",
-		// "HA(hours)");
-		// System.out.println(s);
-		// t = String.format("%-12.5f%-12.5f%-12.5f", decDeg, HADeg, HAHours);
-		// System.out.println(t);
-
 		Angle HA = new Angle(HARad, Angle.RADIANS);
 		Angle dec = new Angle(decRad, Angle.RADIANS);
 		equatorialCoord = new EquatorialCoord(HA, null, dec);
@@ -74,7 +66,7 @@ public class ReferenceFrame {
 
 		double RARad;
 		// equatorialCoord.HA.println("HA");
-		double temp = LST - equatorialCoord.HA.hours;
+		double temp = LST - equatorialCoord.HA.getHours();
 
 		if (temp < 0)
 			RARad = temp + 24;
@@ -87,8 +79,8 @@ public class ReferenceFrame {
 	}
 
 	public void equatorialToHorizon() {
-		double HARAd = equatorialCoord.HA.radians;
-		double decRad = equatorialCoord.dec.radians;
+		double HARAd = equatorialCoord.HA.getRadians();
+		double decRad = equatorialCoord.dec.getRadians();
 		double latRad = Math.toRadians(latDeg);
 
 		double sinDec = Math.sin(decRad);
@@ -99,9 +91,9 @@ public class ReferenceFrame {
 		double cosHA = Math.cos(HARAd);
 
 		double sinAltRad = sinDec * sinPhi + cosDec * cosPhi * cosHA;
-		//System.out.println(sinAltRad);
+		// System.out.println(sinAltRad);
 		double altRad = Math.asin(sinAltRad);
-		//System.out.println(Math.toDegrees(altRad));
+		// System.out.println(Math.toDegrees(altRad));
 
 		double tanAzy = -cosDec * cosPhi * sinHA;
 		double tanAzx = sinDec - sinPhi * sinAltRad;
@@ -109,18 +101,22 @@ public class ReferenceFrame {
 		double azRad = Math.atan2(tanAzy, tanAzx);
 		if (azRad < 0)
 			azRad += 2 * Math.PI;
-		//System.out.println(Math.toDegrees(azRad));
+		// System.out.println(Math.toDegrees(azRad));
 
 		Angle az = new Angle(azRad, Angle.RADIANS);
-		Angle alt=new Angle(altRad,Angle.RADIANS);
+		Angle alt = new Angle(altRad, Angle.RADIANS);
 		horizontalCoord = new HorizontalCoord(az, alt);
 
 	}
 
 	public void equatorialToHorizon(double LST) {
-		
+		// equatorialCoord.HA.radians=equatorialCoord.RA.
+		Angle tmpLST = new Angle(LST,Angle.DECIMALHOURS);
+		Angle tmp = equatorialCoord.RA.subtract(tmpLST);
+
+		tmp.println();
 	}
-	
+
 	public void eclipticToEquatorial(DateTime currentDateTime) {
 		System.out.println("eclipticToEquatorial");
 
@@ -153,11 +149,11 @@ public class ReferenceFrame {
 
 		double cosEps = Math.cos(epsRad);
 		double sinEps = Math.sin(epsRad);
-		double sinLambda = Math.sin(lambda.radians);
-		double cosLambda = Math.cos(lambda.radians);
-		double sinBeta = Math.sin(beta.radians);
-		double cosBeta = Math.cos(beta.radians);
-		double tanBeta = Math.tan(beta.radians);
+		double sinLambda = Math.sin(lambda.getRadians());
+		double cosLambda = Math.cos(lambda.getRadians());
+		double sinBeta = Math.sin(beta.getRadians());
+		double cosBeta = Math.cos(beta.getRadians());
+		double tanBeta = Math.tan(beta.getRadians());
 
 		double termDec = sinBeta * cosEps + cosBeta * sinEps * sinLambda;
 		// System.out.println("termDec " + termDec);
