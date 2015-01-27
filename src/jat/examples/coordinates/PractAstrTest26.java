@@ -14,10 +14,12 @@ public class PractAstrTest26 {
 		rf.horizontalCoord = new HorizontalCoord(Az, Alt);
 		rf.horizontalCoord.println();
 		rf.latDeg = 52;
-		rf.horizonToEquatorial();
-		System.out.println("hour angle for latitude 52 deg:");
+		
+		System.out.println("hour angle and dec for latitude 52 deg:");
+		rf.horizonToEquatorial();		
 		rf.equatorialCoord.println();
-		System.out.println("RA for latitude 52 deg and longitude 0 and GST= 0h 24m 05s:");		
+		
+		System.out.println("RA and dec for latitude 52 deg and longitude 0 and GST= 0h 24m 05s:");		
 		rf.horizonToEquatorial(0.401389);
 		rf.equatorialCoord.println();
 		rf.equatorialCoord.RA.println("RA decimal hours", Angle.DECIMALHOURS);

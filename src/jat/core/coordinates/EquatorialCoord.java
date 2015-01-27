@@ -16,10 +16,10 @@ public class EquatorialCoord {
 
 	public void println() {
 		if (HA != null)
-			HA.println("Hour Angle", Angle.HOURANGLE);
+			HA.println("Equatorial coordinates Hour Angle", Angle.HOURANGLE);
 		if (RA != null)
-			RA.println("Right Ascension", Angle.HOURANGLE);
-		dec.println("Declination", Angle.ARCDEGREES);
+			RA.println("Equatorial coordinates Right Ascension", Angle.HOURANGLE);
+		dec.println("Equatorial coordinates Declination", Angle.ARCDEGREES);
 
 	}
 }

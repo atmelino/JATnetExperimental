@@ -5,6 +5,13 @@ import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 
+/**
+ * @author Tobias Berthold
+ * 
+ * equatorial coordinates: you can get the hour angle if you have the latitude of the observer.
+ * you also need the Local Sidereal Time LST if you want the Right Ascension. 
+ *
+ */
 public class ReferenceFrame {
 
 	public double latDeg;
@@ -84,21 +91,36 @@ public class ReferenceFrame {
 		double decRad = equatorialCoord.dec.radians;
 		double latRad = Math.toRadians(latDeg);
 
-
-		
 		double sinDec = Math.sin(decRad);
 		double cosDec = Math.cos(decRad);
 		double sinPhi = Math.sin(latRad);
 		double cosPhi = Math.cos(latRad);
+		double sinHA = Math.sin(HARAd);
 		double cosHA = Math.cos(HARAd);
-		
-		double altRad=sinDec*sinPhi+cosDec*cosPhi*cosHA;
-		System.out.println(altRad);
 
-		
+		double sinAltRad = sinDec * sinPhi + cosDec * cosPhi * cosHA;
+		//System.out.println(sinAltRad);
+		double altRad = Math.asin(sinAltRad);
+		//System.out.println(Math.toDegrees(altRad));
+
+		double tanAzy = -cosDec * cosPhi * sinHA;
+		double tanAzx = sinDec - sinPhi * sinAltRad;
+
+		double azRad = Math.atan2(tanAzy, tanAzx);
+		if (azRad < 0)
+			azRad += 2 * Math.PI;
+		//System.out.println(Math.toDegrees(azRad));
+
+		Angle az = new Angle(azRad, Angle.RADIANS);
+		Angle alt=new Angle(altRad,Angle.RADIANS);
+		horizontalCoord = new HorizontalCoord(az, alt);
 
 	}
 
+	public void equatorialToHorizon(double LST) {
+		
+	}
+	
 	public void eclipticToEquatorial(DateTime currentDateTime) {
 		System.out.println("eclipticToEquatorial");
 
