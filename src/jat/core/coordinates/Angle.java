@@ -114,7 +114,10 @@ public class Angle {
 	}
 
 	public Angle subtract(Angle b) {
-		Angle result = new Angle(radians - b.radians, RADIANS);
+		double tmpRadians=radians - b.radians;
+		if(tmpRadians<0)
+			tmpRadians+=2*Math.PI;
+		Angle result = new Angle(tmpRadians, RADIANS);
 		result.convert();
 		return result;
 	}

@@ -63,10 +63,12 @@ public final class SPA {
 		final double[] lTerms = calculateLBRTerms(jme, TERMS_L);
 		final double lDegrees = limitDegreesTo360(toDegrees(calculateLBRPolynomial(jme, lTerms)));
 
+		
 		// calculate Earth heliocentric latitude, B
 		final double[] bTerms = calculateLBRTerms(jme, TERMS_B);
 		final double bDegrees = toDegrees(calculateLBRPolynomial(jme, bTerms));
 
+		
 		// calculate Earth radius vector, R
 		final double[] rTerms = calculateLBRTerms(jme, TERMS_R);
 		final double r = calculateLBRPolynomial(jme, rTerms);
@@ -77,6 +79,9 @@ public final class SPA {
 		final double betaDegrees = -bDegrees;
 		final double beta = toRadians(betaDegrees);
 
+		//System.out.println("geocentric longitude "+thetaDegrees+" geocentric latitude "+betaDegrees);
+
+		
 		// calculate nutation
 		final double xTerms[] = calculateNutationTerms(jce);
 		final double[] deltaPsiI = calculateDeltaPsiI(jce, xTerms);
@@ -108,6 +113,10 @@ public final class SPA {
 		final double hDegrees = limitDegreesTo360(nuDegrees + longitude - alphaDegrees);
 		final double h = toRadians(hDegrees);
 
+		
+		System.out.println("geocentric sun RA "+alphaDegrees+" dec "+deltaDegrees);
+
+		
 		// Calculate the topocentric sun right ascension and sun declination
 		final double xiDegrees = 8.794 / (3600 * r);
 		final double xi = toRadians(xiDegrees);

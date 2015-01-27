@@ -28,7 +28,7 @@ public class SPATest {
 		AzimuthZenithAngle result = SPA.calculateSolarPosition(time, 30.25, -97.75, 1830.14, 67, 820, 11);
 
 		System.out.println(result.getAzimuth());
-		System.out.println(-(result.getZenithAngle()-90));
+		System.out.println(90-result.getZenithAngle());
 	}
 
 }

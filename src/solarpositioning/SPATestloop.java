@@ -39,8 +39,8 @@ public class SPATestloop {
 			altRad = org.apache.commons.math3.util.FastMath.toRadians(alt);
 			latRad = org.apache.commons.math3.util.FastMath.toRadians(lat);
 
-			decRad = Math.asin(Math.sin(altRad) * Math.sin(latRad) + Math.cos(altRad) * Math.cos(latRad) * Math.cos(azRad));
-			HA = Math.acos((Math.sin(altRad) - Math.sin(latRad) * Math.sin(decRad)) / Math.cos(latRad) * Math.cos(decRad));
+			//decRad = Math.asin(Math.sin(altRad) * Math.sin(latRad) + Math.cos(altRad) * Math.cos(latRad) * Math.cos(azRad));
+			//HA = Math.acos((Math.sin(altRad) - Math.sin(latRad) * Math.sin(decRad)) / Math.cos(latRad) * Math.cos(decRad));
 			// HA = 0.7;
 			// String t = String.format("%-12d%-12.5f%-12.5f%-12.5f%-12.5f",
 			// hour, az, alt, dec, HA);

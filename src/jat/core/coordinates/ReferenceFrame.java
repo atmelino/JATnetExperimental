@@ -110,15 +110,20 @@ public class ReferenceFrame {
 	}
 
 	public void equatorialToHorizon(double LST) {
-		// equatorialCoord.HA.radians=equatorialCoord.RA.
-		Angle tmpLST = new Angle(LST,Angle.DECIMALHOURS);
-		Angle tmp = equatorialCoord.RA.subtract(tmpLST);
 
-		tmp.println();
+		Angle tmpLST = new Angle(LST, Angle.DECIMALHOURS);
+		Angle HA = tmpLST.subtract(equatorialCoord.RA);
+		// equatorialCoord.RA.println("RA", Angle.DECIMALHOURS);
+		// tmpLST.println("LST", Angle.DECIMALHOURS);
+		// HA.println("HA", Angle.HOURANGLE);
+		Angle dec = equatorialCoord.dec;
+		equatorialCoord = new EquatorialCoord(HA, null, dec);
+		//equatorialCoord.println();
+		equatorialToHorizon();
 	}
 
 	public void eclipticToEquatorial(DateTime currentDateTime) {
-		System.out.println("eclipticToEquatorial");
+		//System.out.println("eclipticToEquatorial");
 
 		this.currentDateTime = currentDateTime;
 		long millis = currentDateTime.getMillis();
@@ -173,13 +178,13 @@ public class ReferenceFrame {
 	}
 
 	public void sunPosition(DateTime epoch, DateTime currentDateTime) {
-		System.out.println("sunPosition");
+		//System.out.println("sunPosition");
 
 		this.currentDateTime = currentDateTime;
 
 		Days days = Days.daysBetween(epoch, currentDateTime);
 
-		System.out.println("Days Since Epoch: " + days.getDays());
+		//System.out.println("Days Since Epoch: " + days.getDays());
 
 		double N0 = 360 / 365.242191 * days.getDays();
 		// System.out.println("N: " + N0);
@@ -193,7 +198,7 @@ public class ReferenceFrame {
 			N = N1;
 		// for (int i = 0; i < 11; i++)
 		// System.out.println("N in range: " + (N + i * 360));
-		System.out.println("N: " + N % 360);
+		//System.out.println("N: " + N % 360);
 
 		// mean anomaly
 		double M0 = N + Constants.eps_g_1990 - Constants.omega_g_1990;
@@ -202,22 +207,25 @@ public class ReferenceFrame {
 			M = M0 + 360;
 		else
 			M = M0;
-		System.out.println("M: " + M);
+		//System.out.println("M: " + M);
 		double MRad = org.apache.commons.math3.util.FastMath.toRadians(M);
 
 		// true anomaly
 		double E_c = (360 / Math.PI) * Constants.e_earth * Math.sin(MRad);
-		System.out.println("E_c: " + E_c);
+		//System.out.println("E_c: " + E_c);
 
 		// Sun's geocentric ecliptic longitude
 		double lambda0 = N + E_c + Constants.eps_g_1990;
 		// System.out.println("lambda: " + lambda0);
 
-		double lambda = lambda0 % 360;
-		System.out.println("lambda: " + lambda);
+		double lambda1 = lambda0 % 360;
+		//System.out.println("lambda: " + lambda1);
 
 		// eclipticCoord = new S2Point(lambda, 0);
-		eclipticCoord = new EclipticCoord(new Angle(lambda, Angle.DEGREES), new Angle(0, Angle.DEGREES));
+		Angle lambda = new Angle(lambda1, Angle.DEGREES);
+		Angle beta = new Angle(0, Angle.DEGREES);
+
+		eclipticCoord = new EclipticCoord(lambda, beta);
 
 	}
 
