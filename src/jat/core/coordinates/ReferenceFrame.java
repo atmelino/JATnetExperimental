@@ -1,5 +1,7 @@
 package jat.core.coordinates;
 
+import static java.lang.Math.floor;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
@@ -99,8 +101,10 @@ public class ReferenceFrame {
 		double tanAzx = sinDec - sinPhi * sinAltRad;
 
 		double azRad = Math.atan2(tanAzy, tanAzx);
-		if (azRad < 0)
-			azRad += 2 * Math.PI;
+
+		azRad=this.limitRadiansTo2PI(azRad);
+		// if (azRad < 0)
+		// azRad += 2 * Math.PI;
 		// System.out.println(Math.toDegrees(azRad));
 
 		Angle az = new Angle(azRad, Angle.RADIANS);
@@ -118,12 +122,12 @@ public class ReferenceFrame {
 		// HA.println("HA", Angle.HOURANGLE);
 		Angle dec = equatorialCoord.dec;
 		equatorialCoord = new EquatorialCoord(HA, null, dec);
-		//equatorialCoord.println();
+		// equatorialCoord.println();
 		equatorialToHorizon();
 	}
 
 	public void eclipticToEquatorial(DateTime currentDateTime) {
-		//System.out.println("eclipticToEquatorial");
+		// System.out.println("eclipticToEquatorial");
 
 		this.currentDateTime = currentDateTime;
 		long millis = currentDateTime.getMillis();
@@ -178,13 +182,13 @@ public class ReferenceFrame {
 	}
 
 	public void sunPosition(DateTime epoch, DateTime currentDateTime) {
-		//System.out.println("sunPosition");
+		// System.out.println("sunPosition");
 
 		this.currentDateTime = currentDateTime;
 
 		Days days = Days.daysBetween(epoch, currentDateTime);
 
-		//System.out.println("Days Since Epoch: " + days.getDays());
+		// System.out.println("Days Since Epoch: " + days.getDays());
 
 		double N0 = 360 / 365.242191 * days.getDays();
 		// System.out.println("N: " + N0);
@@ -198,7 +202,7 @@ public class ReferenceFrame {
 			N = N1;
 		// for (int i = 0; i < 11; i++)
 		// System.out.println("N in range: " + (N + i * 360));
-		//System.out.println("N: " + N % 360);
+		// System.out.println("N: " + N % 360);
 
 		// mean anomaly
 		double M0 = N + Constants.eps_g_1990 - Constants.omega_g_1990;
@@ -207,19 +211,19 @@ public class ReferenceFrame {
 			M = M0 + 360;
 		else
 			M = M0;
-		//System.out.println("M: " + M);
+		// System.out.println("M: " + M);
 		double MRad = org.apache.commons.math3.util.FastMath.toRadians(M);
 
 		// true anomaly
 		double E_c = (360 / Math.PI) * Constants.e_earth * Math.sin(MRad);
-		//System.out.println("E_c: " + E_c);
+		// System.out.println("E_c: " + E_c);
 
 		// Sun's geocentric ecliptic longitude
 		double lambda0 = N + E_c + Constants.eps_g_1990;
 		// System.out.println("lambda: " + lambda0);
 
 		double lambda1 = lambda0 % 360;
-		//System.out.println("lambda: " + lambda1);
+		// System.out.println("lambda: " + lambda1);
 
 		// eclipticCoord = new S2Point(lambda, 0);
 		Angle lambda = new Angle(lambda1, Angle.DEGREES);
@@ -229,4 +233,15 @@ public class ReferenceFrame {
 
 	}
 
+	private double limitDegreesTo360(double degrees) {
+		double dividedDegrees = degrees / 360.0;
+		double limited = 360.0 * (dividedDegrees - floor(dividedDegrees));
+		return (limited < 0) ? limited + 360.0 : limited;
+	}
+
+	private double limitRadiansTo2PI(double radians) {
+		double dividedradians = radians / (2*Math.PI);
+		double limited = 2*Math.PI * (dividedradians - floor(dividedradians));
+		return (limited < 0) ? limited + 2*Math.PI : limited;
+	}
 }

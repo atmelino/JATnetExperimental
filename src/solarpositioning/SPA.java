@@ -19,6 +19,11 @@ import java.util.GregorianCalendar;
 public class SPA {
 	private static double alphaDegrees;
 	private static double deltaDegrees;
+	private static double nuDegrees;
+	
+	public static double getNuDegrees() {
+		return nuDegrees;
+	}
 
 	public static double getAlphaDegrees() {
 		return alphaDegrees;
@@ -116,7 +121,7 @@ public class SPA {
 		final double lambda = toRadians(lambdaDegrees);
 
 		// Calculate the apparent sidereal time at Greenwich
-		final double nuDegrees = calculateApparentSiderealTimeAtGreenwich(jd, deltaPsi, epsilonDegrees);
+		nuDegrees = calculateApparentSiderealTimeAtGreenwich(jd, deltaPsi, epsilonDegrees);
 
 		// Calculate the geocentric sun right ascension
 		alphaDegrees = calculateGeocentricSunRightAscension(beta, epsilon, lambda);
@@ -127,10 +132,6 @@ public class SPA {
 		// Calculate observer local hour angle
 		final double hDegrees = limitDegreesTo360(nuDegrees + longitude - alphaDegrees);
 		final double h = toRadians(hDegrees);
-
-		
-		//System.out.println("geocentric sun RA "+alphaDegrees+" dec "+deltaDegrees);
-
 		
 		// Calculate the topocentric sun right ascension and sun declination
 		final double xiDegrees = 8.794 / (3600 * r);

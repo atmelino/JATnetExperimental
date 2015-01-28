@@ -1,4 +1,18 @@
 
+
+
+			// DateTime dt = new DateTime(2004, 7, 27, 0, 0);
+			// System.out.println("azimuth " + result.getAzimuth());
+			// System.out.println("altitude " + (90 - result.getZenithAngle()));
+			//rf.equatorialCoord.RA.println("RA", Angle.DEGREES);
+			//rf.equatorialCoord.dec.println("dec", Angle.DEGREES);
+
+		
+		//System.out.println("geocentric sun RA "+alphaDegrees+" dec "+deltaDegrees);
+
+
+
+
 		// double decDeg = Math.toDegrees(decRad);
 		// double HADeg = Math.toDegrees(HARad);
 		// double HAHours = HADeg / 15.;

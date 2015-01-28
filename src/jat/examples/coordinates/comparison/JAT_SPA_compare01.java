@@ -1,15 +1,11 @@
 package jat.examples.coordinates.comparison;
 
-import jat.core.coordinates.Angle;
 import jat.core.coordinates.ReferenceFrame;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-
 import solarpositioning.AzimuthZenithAngle;
 import solarpositioning.SPA;
 
@@ -28,9 +24,9 @@ public class JAT_SPA_compare01 {
 		String s, t;
 
 		// System.out.println(month);
-		 System.out.println("SPA vs. JAT");
+		System.out.println("SPA vs. JAT");
 
-		s = String.format("%-4s%-8s%-8s%-8s%-8s%-8s%-8s", "hr", "RA", "dec", "az", "alt", "RA", "dec");
+		s = String.format("%-4s%-8s%-8s%-8s%-8s%-8s%-8s%-8s%-8s%-8s", "hr", "GST", "RA", "dec", "az", "alt", "RA", "dec", "az", "alt");
 		System.out.println(s);
 		for (int hour = 0; hour < 24; hour++) {
 			// System.out.println("hour " + hour);
@@ -43,30 +39,21 @@ public class JAT_SPA_compare01 {
 
 			AzimuthZenithAngle result = SPA.calculateSolarPosition(time, latitude, longitude, elevation, 67, 820, 11);
 
-			// System.out.println("azimuth " + result.getAzimuth());
-			// System.out.println("altitude " + (90 - result.getZenithAngle()));
-
 			ReferenceFrame rf = new ReferenceFrame();
 			DateTime epoch = new DateTime(1990, 1, 1, 0, 0, DateTimeZone.forID("UTC"));
 			DateTime currentDateTime = new DateTime(year, month + 1, day, hour, 0);
-			// DateTime dt = new DateTime(2004, 7, 27, 0, 0);
 			rf.sunPosition(epoch, currentDateTime);
 			// rf.eclipticCoord.println();
 			rf.eclipticToEquatorial(currentDateTime);
-			// rf.equatorialCoord.println();
-			rf.equatorialCoord.RA.println("RA", Angle.DEGREES);
-			rf.equatorialCoord.dec.println("dec", Angle.DEGREES);
-			System.out.println(rf.equatorialCoord.RA.getDegrees());
+			rf.equatorialCoord.println();
+			double RA = rf.equatorialCoord.RA.getDegrees();
 			rf.equatorialToHorizon(hour);
 			// rf.horizontalCoord.println();
 
-			
-
-			
-			t = String.format("%-4d%-7.2f%-7.2f%-7.2f%-7.2f", hour, SPA.getAlphaDegrees(), SPA.getDeltaDegrees(), result.getAzimuth(), 90 - result.getZenithAngle(),rf.equatorialCoord.RA.getDegrees(),rf.equatorialCoord.dec.getDegrees());
+			t = String.format("%-4d%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f", hour, SPA.getNuDegrees(), SPA.getAlphaDegrees(), SPA.getDeltaDegrees(), result.getAzimuth(),
+					90 - result.getZenithAngle(), RA, rf.equatorialCoord.dec.getDegrees(), rf.horizontalCoord.azimuth.getDegrees(), rf.horizontalCoord.altitude.getDegrees());
 			System.out.println(t);
 
 		}
 	}
-
 }
