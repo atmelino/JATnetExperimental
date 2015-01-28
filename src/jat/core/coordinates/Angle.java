@@ -56,9 +56,16 @@ public class Angle {
 	}
 
 	public void setHours(double hours) {
-		//this.hours = hours;
-		//double tmpdegrees = 15. * hours;
 		this.radians = Math.toRadians(15.*hours);
+		convert();
+	}
+
+	public double getDegrees() {
+		return degrees;
+	}
+
+	public void setDegrees(double degrees) {
+		this.radians = Math.toRadians(degrees);
 		convert();
 	}
 

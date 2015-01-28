@@ -28,8 +28,9 @@ public class JAT_SPA_compare01 {
 		String s, t;
 
 		// System.out.println(month);
+		 System.out.println("SPA vs. JAT");
 
-		s = String.format("%-4s%-7s%-12s", "hr", "az", "HA(hours)");
+		s = String.format("%-4s%-8s%-8s%-8s%-8s%-8s%-8s", "hr", "RA", "dec", "az", "alt", "RA", "dec");
 		System.out.println(s);
 		for (int hour = 0; hour < 24; hour++) {
 			// System.out.println("hour " + hour);
@@ -55,10 +56,14 @@ public class JAT_SPA_compare01 {
 			// rf.equatorialCoord.println();
 			rf.equatorialCoord.RA.println("RA", Angle.DEGREES);
 			rf.equatorialCoord.dec.println("dec", Angle.DEGREES);
+			System.out.println(rf.equatorialCoord.RA.getDegrees());
 			rf.equatorialToHorizon(hour);
 			// rf.horizontalCoord.println();
 
-			t = String.format("%-4d%-6.2f%-12.5f", hour, result.getAzimuth(), 1.);
+			
+
+			
+			t = String.format("%-4d%-7.2f%-7.2f%-7.2f%-7.2f", hour, SPA.getAlphaDegrees(), SPA.getDeltaDegrees(), result.getAzimuth(), 90 - result.getZenithAngle(),rf.equatorialCoord.RA.getDegrees(),rf.equatorialCoord.dec.getDegrees());
 			System.out.println(t);
 
 		}

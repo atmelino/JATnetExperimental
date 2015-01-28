@@ -16,11 +16,26 @@ import java.util.GregorianCalendar;
  * @author Klaus Brunner
  * 
  */
-public final class SPA {
-	
+public class SPA {
+	private static double alphaDegrees;
+	private static double deltaDegrees;
+
+	public static double getAlphaDegrees() {
+		return alphaDegrees;
+	}
+
+	public static double getDeltaDegrees() {
+		return deltaDegrees;
+	}
+
+
+
 	private SPA() {
 	}
 
+	
+	
+	
 	/**
 	 * Calculate topocentric solar position, i.e. the location of the sun on the sky for a certain point in time on a
 	 * certain point of the Earth's surface.
@@ -104,17 +119,17 @@ public final class SPA {
 		final double nuDegrees = calculateApparentSiderealTimeAtGreenwich(jd, deltaPsi, epsilonDegrees);
 
 		// Calculate the geocentric sun right ascension
-		final double alphaDegrees = calculateGeocentricSunRightAscension(beta, epsilon, lambda);
+		alphaDegrees = calculateGeocentricSunRightAscension(beta, epsilon, lambda);
 
 		// Calculate geocentric sun declination
-		final double deltaDegrees = toDegrees(calculateGeocentricSunDeclination(beta, epsilon, lambda));
+		deltaDegrees = toDegrees(calculateGeocentricSunDeclination(beta, epsilon, lambda));
 
 		// Calculate observer local hour angle
 		final double hDegrees = limitDegreesTo360(nuDegrees + longitude - alphaDegrees);
 		final double h = toRadians(hDegrees);
 
 		
-		System.out.println("geocentric sun RA "+alphaDegrees+" dec "+deltaDegrees);
+		//System.out.println("geocentric sun RA "+alphaDegrees+" dec "+deltaDegrees);
 
 		
 		// Calculate the topocentric sun right ascension and sun declination
