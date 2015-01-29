@@ -14,8 +14,7 @@ public class PractAstrTest25 {
 		Angle dec = new Angle(true, 23, 13, 10, Angle.ARCDEGREES);
 		rf.equatorialCoord = new EquatorialCoord(HA, null, dec);
 		rf.equatorialCoord.println();
-		rf.latDeg = 52;
-		rf.equatorialToHorizon();
+		rf.equatorialToHorizonDS(52);
 		rf.horizontalCoord.println();
 
 		
@@ -23,7 +22,7 @@ public class PractAstrTest25 {
 		Angle RA = new Angle(true, 18, 32, 21, Angle.HOURANGLE);
 		rf.equatorialCoord = new EquatorialCoord(null, RA, dec);
 		rf.equatorialCoord.println();
-		rf.equatorialToHorizon(0.401389);
+		rf.equatorialToHorizonDS(0.401389);
 		rf.horizontalCoord.println();
 		
 		

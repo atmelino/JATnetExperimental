@@ -13,10 +13,9 @@ public class PractAstrTest26 {
 		Angle Alt = new Angle(19.334444, Angle.DEGREES);
 		rf.horizontalCoord = new HorizontalCoord(Az, Alt);
 		rf.horizontalCoord.println();
-		rf.latDeg = 52;
 		
 		System.out.println("hour angle and dec for latitude 52 deg:");
-		rf.horizonToEquatorial();		
+		rf.horizonToEquatorial(52);		
 		rf.equatorialCoord.println();
 		
 		System.out.println("RA and dec for latitude 52 deg and longitude 0 and GST= 0h 24m 05s:");		
