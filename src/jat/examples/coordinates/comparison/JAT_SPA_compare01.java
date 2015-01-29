@@ -23,10 +23,10 @@ public class JAT_SPA_compare01 {
 		double elevation = 1830.14;
 		String s, t;
 
-//		year = 2015;
-//		month = Calendar.JANUARY;
-//		day=28;
-//		latitude=30.;
+		year = 2015;
+		month = Calendar.JANUARY;
+		day=29;
+		latitude=30.;
 //		longitude=-97;
 		
 		// System.out.println(month);
@@ -54,7 +54,7 @@ public class JAT_SPA_compare01 {
 			double rfRA = rf.equatorialCoord.RA.getDegrees();
 			double rfdec = rf.equatorialCoord.dec.getDegrees();
 			rf.equatorialToHorizon(year, month + 1, day, hour, minute, second, longitude, latitude);
-			// //rf.equatorialCoord.println();
+			rf.equatorialCoord.println();
 			//rf.equatorialToHorizonDS(hour - 3.7, latitude);
 			// rf.horizontalCoord.println();
 
