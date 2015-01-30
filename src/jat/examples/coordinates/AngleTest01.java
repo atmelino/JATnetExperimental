@@ -2,23 +2,20 @@ package jat.examples.coordinates;
 
 import jat.core.coordinates.Angle;
 
-
-
-
 public class AngleTest01 {
 
 	public static void main(final String[] args) {
 
 		System.out.println("Angle class test");
 
-		//Angle alpha = new Angle(1.5, Angle.RADIANS);
+		// Angle alpha = new Angle(1.5, Angle.RADIANS);
 		Angle alpha = new Angle(59.51, Angle.DEGREES);
 		alpha.println();
 
 		System.out.println(1002.23 + " arcseconds ");
 		Angle beta = new Angle(true, 0, 0, 1002.23, Angle.ARCDEGREES);
-		//		Angle beta = new Angle(0,16,42.23, Angle.ARCDEGREES);
-		//		Angle beta = new Angle(0,0,20.04, Angle.ARCDEGREES);
+		// Angle beta = new Angle(0,16,42.23, Angle.ARCDEGREES);
+		// Angle beta = new Angle(0,0,20.04, Angle.ARCDEGREES);
 		beta.println();
 
 		// Example from Duffett-Smith
@@ -38,5 +35,7 @@ public class AngleTest01 {
 		Angle a2 = new Angle(45., Angle.DEGREES);
 		a1.add(a2).println();
 
+		Angle outOfRange = new Angle(-1.34,Angle.RADIANS);
+		outOfRange.println();
 	}
 }

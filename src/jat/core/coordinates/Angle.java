@@ -1,5 +1,7 @@
 package jat.core.coordinates;
 
+import static java.lang.Math.floor;
+
 /**
  * @author Tobias Berthold
  * 
@@ -19,6 +21,8 @@ public class Angle {
 	private HourAngle h = new HourAngle();
 	private ArcDegrees a = new ArcDegrees();
 	private ArcDegrees sha = new ArcDegrees();
+	public boolean angleInRange = true; // automatically convert angle to be in range 0..2pi for radians, 
+	// 0..360 for degrees, 0:0:0 .. 23:59:59 for hour, 0..23.9999 for hour
 
 	public Angle(double angle, int mode) {
 		if (mode == RADIANS)
@@ -56,7 +60,7 @@ public class Angle {
 	}
 
 	public void setHours(double hours) {
-		this.radians = Math.toRadians(15.*hours);
+		this.radians = Math.toRadians(15. * hours);
 		convert();
 	}
 
@@ -73,6 +77,9 @@ public class Angle {
 		double tmpdegrees;
 		double shadegrees;
 
+		if(angleInRange)
+			radians=limitRadiansTo2PI(radians);
+		
 		degrees = Math.toDegrees(radians);
 		hours = degrees / 15.;
 
@@ -121,9 +128,9 @@ public class Angle {
 	}
 
 	public Angle subtract(Angle b) {
-		double tmpRadians=radians - b.radians;
-		if(tmpRadians<0)
-			tmpRadians+=2*Math.PI;
+		double tmpRadians = radians - b.radians;
+		if (tmpRadians < 0)
+			tmpRadians += 2 * Math.PI;
 		Angle result = new Angle(tmpRadians, RADIANS);
 		result.convert();
 		return result;
@@ -139,6 +146,12 @@ public class Angle {
 
 	public double cos(Angle a) {
 		return Math.cos(a.radians);
+	}
+
+	private double limitRadiansTo2PI(double radians) {
+		double dividedradians = radians / (2 * Math.PI);
+		double limited = 2 * Math.PI * (dividedradians - floor(dividedradians));
+		return (limited < 0) ? limited + 2 * Math.PI : limited;
 	}
 
 	public void print() {

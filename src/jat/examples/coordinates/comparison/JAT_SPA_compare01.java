@@ -25,15 +25,14 @@ public class JAT_SPA_compare01 {
 
 		year = 2015;
 		month = Calendar.JANUARY;
-		day=29;
-		latitude=30.;
-//		longitude=-97;
-		
+		day = 29;
+		latitude = 30.;
+		//longitude=-97;
+
 		// System.out.println(month);
 		System.out.println("SPA vs. JAT");
 
-		s = String.format("%-4s%-8s%-8s%-8s%-8s%-8s%-8s%-8s%-8s%-8s", "hr", "GST", "RA", "dec", "az", "alt", "RA",
-				"dec", "az", "alt");
+		s = String.format("%-4s%-8s%-8s%-10s%-8s%-8s%-8s%-8s%-8s%-8s%-8s", "hr", "GST", "RA", "RA(h)", "dec", "az", "alt", "RA", "dec", "az", "alt");
 		System.out.println(s);
 		for (int hour = 0; hour < 24; hour++) {
 			// System.out.println("hour " + hour);
@@ -54,18 +53,39 @@ public class JAT_SPA_compare01 {
 			double rfRA = rf.equatorialCoord.RA.getDegrees();
 			double rfdec = rf.equatorialCoord.dec.getDegrees();
 			rf.equatorialToHorizon(year, month + 1, day, hour, minute, second, longitude, latitude);
-			rf.equatorialCoord.println();
-			//rf.equatorialToHorizonDS(hour - 3.7, latitude);
+			// rf.equatorialCoord.RA.println();
+			//rf.equatorialCoord.println();
+			// rf.equatorialToHorizonDS(hour - 3.7, latitude);
 			// rf.horizontalCoord.println();
 
+			double SPAnu = SPA.getNuDegrees();
+			double SPARA = SPA.getAlphaDegrees();
+			//System.out.println(SPARA);
+			double SPARAhdec = SPARA / 15;
+			double tmpminutes = 60. * Frac(SPARAhdec);
+
+			String SPARAh = String.format("%2d:%2d:%2d", (int) SPARAhdec, (int) (60. * Frac(SPARAhdec)), (int) (60. * Frac(tmpminutes)));
+			//System.out.println(SPARAh);
+			double SPAdec = SPA.getDeltaDegrees();
+			double SPAaz = result.getAzimuth();
+			double SPAalt = 90 - result.getZenithAngle();
 			double rfaz = rf.horizontalCoord.azimuth.getDegrees();
 			double rfalt = rf.horizontalCoord.altitude.getDegrees();
 
-			t = String.format("%-4d%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f", hour, SPA.getNuDegrees(),
-					SPA.getAlphaDegrees(), SPA.getDeltaDegrees(), result.getAzimuth(), 90 - result.getZenithAngle(),
-					rfRA, rfdec, rfaz, rfalt);
+			// t =
+			// String.format("%-4d%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f",
+			// hour, SPA.getNuDegrees(), SPA.getAlphaDegrees(),
+			// SPA.getDeltaDegrees(), result.getAzimuth(),
+			// 90 - result.getZenithAngle(), rfRA, rfdec, rfaz, rfalt);
+			String tf = "%-4d%-8.2f%-8.2f%-10s%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f";
+			t = String.format(tf, hour, SPAnu, SPARA, SPARAh, SPAdec, SPAaz, SPAalt, rfRA, rfdec, rfaz, rfalt);
 			System.out.println(t);
 
 		}
+
+	}
+
+	private static double Frac(double x) {
+		return x - Math.floor(x);
 	}
 }
