@@ -10,8 +10,8 @@ public class PractAstrTest25 {
 
 		ReferenceFrame rf = new ReferenceFrame();
 
-		Angle HA = new Angle(true, 5, 51, 44, Angle.HOURANGLE);
-		Angle dec = new Angle(true, 23, 13, 10, Angle.ARCDEGREES);
+		Angle HA = new Angle( 5, 51, 44, Angle.HOURANGLE);
+		Angle dec = new Angle( 23, 13, 10, Angle.ARCDEGREES);
 		rf.equatorialCoord = new EquatorialCoord(HA, null, dec);
 		rf.equatorialCoord.println();
 		rf.equatorialToHorizonDS(52);
@@ -19,7 +19,7 @@ public class PractAstrTest25 {
 
 		
 		System.out.println("Azimuth and altitude for latitude 52 deg and longitude 0 and GST= 0h 24m 05s:");		
-		Angle RA = new Angle(true, 18, 32, 21, Angle.HOURANGLE);
+		Angle RA = new Angle( 18, 32, 21, Angle.HOURANGLE);
 		rf.equatorialCoord = new EquatorialCoord(null, RA, dec);
 		rf.equatorialCoord.println();
 		rf.equatorialToHorizonDS(0.401389);

@@ -12,8 +12,8 @@ public class PractAstrTest27 {
 
 		DateTime currentDateTime = new DateTime(1979, 12, 31, 0, 0, DateTimeZone.forID("UTC"));
 		ReferenceFrame rf = new ReferenceFrame();
-		Angle lambda = new Angle(true, 139, 41, 10, Angle.ARCDEGREES);
-		Angle beta = new Angle(true, 4, 52, 31, Angle.ARCDEGREES);
+		Angle lambda = new Angle( 139, 41, 10, Angle.ARCDEGREES);
+		Angle beta = new Angle( 4, 52, 31, Angle.ARCDEGREES);
 		rf.eclipticCoord = new EclipticCoord(lambda, beta);
 		rf.eclipticCoord.println();
 		rf.eclipticToEquatorial(currentDateTime);

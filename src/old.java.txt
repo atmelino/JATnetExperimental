@@ -1,5 +1,30 @@
 
 
+		if (h.positive)
+			System.out.print("+");
+		else
+			System.out.print("-");
+			if (h.positive)
+				System.out.print("+");
+			else
+				System.out.print("-");
+
+
+		if (radians > 0.) {
+			a.positive = true;
+			sha.positive = true;
+			h.positive = true;
+			tmpdegrees = degrees;
+			shadegrees = 360. - degrees;
+		} else {
+			a.positive = false;
+			sha.positive = false;
+			h.positive = false;
+			tmpdegrees = -degrees;
+			shadegrees = -degrees;
+		}
+
+
 
 			// DateTime dt = new DateTime(2004, 7, 27, 0, 0);
 			// System.out.println("azimuth " + result.getAzimuth());
