@@ -27,7 +27,7 @@ public class JAT_SPA_compare01 {
 		month = Calendar.JANUARY;
 		day = 29;
 		latitude = 30.;
-		//longitude=-97;
+		longitude=-10;
 
 		// System.out.println(month);
 		System.out.println("SPA vs. JAT");

@@ -8,18 +8,20 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 
 /**
+ * Astronomical reference frames: Ecliptic, Equatorial, Horizontal
+ * and conversions
+ *  equatorial coordinates: you can get the hour
+ * angle if you have the latitude of the observer. you also need the Local
+ * Sidereal Time LST if you want the Right Ascension.
+ * 
  * @author Tobias Berthold
  * 
- *         equatorial coordinates: you can get the hour angle if you have the
- *         latitude of the observer. you also need the Local Sidereal Time LST
- *         if you want the Right Ascension.
  * 
  */
 public class ReferenceFrame {
 
 	private double latDeg;
-	private double altDeg = 9;
-	private double azDeg = 9;
+
 	// private DateTime currentDateTime;
 
 	// azimuth, altitude
@@ -33,7 +35,8 @@ public class ReferenceFrame {
 
 	String s, t;
 
-	public void equatorialToHorizon(int year, int month, int day, int hour, int minute, int second, double longitude, double latitude) {
+	public void equatorialToHorizon(int year, int month, int day, int hour, int minute, int second, double longitude,
+			double latitude) {
 		this.latDeg = latitude;
 		double haDeg, haRad;
 		double decRad;
@@ -56,11 +59,12 @@ public class ReferenceFrame {
 		double sin_alt = Math.sin(decRad) * Math.sin(latRad) + Math.cos(decRad) * Math.cos(latRad) * Math.cos(haRad);
 		double altRad = Math.asin(sin_alt);
 
-		double cos_azm = (Math.sin(decRad) - Math.sin(altRad) * Math.sin(latRad)) / (Math.cos(altRad) * Math.cos(latRad));
+		double cos_azm = (Math.sin(decRad) - Math.sin(altRad) * Math.sin(latRad))
+				/ (Math.cos(altRad) * Math.cos(latRad));
 		double azRad = Math.acos(cos_azm);
 
-		altDeg = Math.toDegrees(altRad);
-		azDeg = Math.toDegrees(azRad);
+		double altDeg = Math.toDegrees(altRad);
+		double azDeg = Math.toDegrees(azRad);
 
 		// hemisphere
 		if (Math.sin(haRad) > 0.0)
@@ -100,41 +104,60 @@ public class ReferenceFrame {
 		double DFs = Math.toRadians(93.27191 + 483202.017538 * jt - 0.0036825 * jt2 + jt3 / 327270);
 		double OMs = Math.toRadians(125.04452 - 1934.136261 * jt + 0.0020708 * jt2 + jt3 / 450000);
 
-		double deltaPsi = -(171996 + 174.2 * jt) * Math.sin(OMs) - (13187 + 1.6 * jt) * Math.sin(-2 * Ds + 2 * DFs + 2 * OMs) - (2274 + 0.2 * jt) * Math.sin(2 * DFs + 2 * OMs) + (2062 + 0.2 * jt)
-				* Math.sin(2 * OMs) + (1426 - 3.4 * jt) * Math.sin(Ms) + (712 + 0.1 * jt) * Math.sin(M1s);
-		deltaPsi += (-517 + 1.2 * jt) * Math.sin(-2 * Ds + Ms + 2 * DFs + 2 * OMs) - (386 + 0.4 * jt) * Math.sin(2 * DFs + OMs) - 301 * Math.sin(M1s + 2 * DFs + 2 * OMs) + (217 - 0.5 * jt)
+		double deltaPsi = -(171996 + 174.2 * jt) * Math.sin(OMs) - (13187 + 1.6 * jt)
+				* Math.sin(-2 * Ds + 2 * DFs + 2 * OMs) - (2274 + 0.2 * jt) * Math.sin(2 * DFs + 2 * OMs)
+				+ (2062 + 0.2 * jt) * Math.sin(2 * OMs) + (1426 - 3.4 * jt) * Math.sin(Ms) + (712 + 0.1 * jt)
+				* Math.sin(M1s);
+		deltaPsi += (-517 + 1.2 * jt) * Math.sin(-2 * Ds + Ms + 2 * DFs + 2 * OMs) - (386 + 0.4 * jt)
+				* Math.sin(2 * DFs + OMs) - 301 * Math.sin(M1s + 2 * DFs + 2 * OMs) + (217 - 0.5 * jt)
 				* Math.sin(-2 * Ds - Ms + 2 * DFs + 2 * OMs) - 158 * Math.sin(-2 * Ds + M1s);
-		deltaPsi += (129 + 0.1 * jt) * Math.sin(-2 * Ds + 2 * DFs + OMs) + 123 * Math.sin(-M1s + 2 * DFs + 2 * OMs) + 63 * Math.sin(2 * Ds) + (63 + 0.1 * jt) * Math.sin(M1s + OMs) - 59
+		deltaPsi += (129 + 0.1 * jt) * Math.sin(-2 * Ds + 2 * DFs + OMs) + 123 * Math.sin(-M1s + 2 * DFs + 2 * OMs)
+				+ 63 * Math.sin(2 * Ds) + (63 + 0.1 * jt) * Math.sin(M1s + OMs) - 59
 				* Math.sin(2 * Ds - M1s + 2 * DFs + 2 * OMs) - (58 + 0.1 * jt) * Math.sin(-M1s + OMs);
 		deltaPsi -= 51 * Math.sin(M1s + 2 * DFs + OMs);
-		deltaPsi += 48 * Math.sin(-2 * Ds + 2 * M1s) + 46 * Math.sin(-2 * M1s + 2 * DFs + OMs) - 38 * Math.sin(2 * Ds + 2 * DFs + 2 * OMs) - 31 * Math.sin(2 * M1s + 2 * DFs + 2 * OMs) + 29
+		deltaPsi += 48 * Math.sin(-2 * Ds + 2 * M1s) + 46 * Math.sin(-2 * M1s + 2 * DFs + OMs) - 38
+				* Math.sin(2 * Ds + 2 * DFs + 2 * OMs) - 31 * Math.sin(2 * M1s + 2 * DFs + 2 * OMs) + 29
 				* Math.sin(2 * M1s) + 29 * Math.sin(-2 * Ds + M1s + 2 * DFs + 2 * OMs) + 26 * Math.sin(2 * DFs);
-		deltaPsi -= 22 * Math.sin(2 * DFs - 2 * Ds) + 21 * Math.sin(2 * DFs - M1s) + (17 - 0.1 * jt) * Math.sin(2 * Ms) + 16 * Math.sin(2 * Ds - M1s + OMs) - (16 - 0.1 * jt)
-				* Math.sin(2 * (OMs + DFs + Ms - Ds)) - 15 * Math.sin(Ms + OMs) - 13 * Math.sin(OMs + M1s - 2 * Ds) - 12 * Math.sin(OMs - Ms);
-		deltaPsi += 11 * Math.sin(2 * (M1s - DFs)) - 10 * Math.sin(2 * Ds - M1s + 2 * DFs) - 8 * Math.sin(2 * Ds + M1s + 2 * DFs + 2 * OMs) + 7 * Math.sin(Ms + 2 * DFs + 2 * OMs) - 7
-				* Math.sin(Ms + M1s - 2 * Ds) - 7 * Math.sin(2 * DFs + 2 * OMs - Ms) - 7 * Math.sin(2 * Ds + 2 * DFs + OMs);
+		deltaPsi -= 22 * Math.sin(2 * DFs - 2 * Ds) + 21 * Math.sin(2 * DFs - M1s) + (17 - 0.1 * jt) * Math.sin(2 * Ms)
+				+ 16 * Math.sin(2 * Ds - M1s + OMs) - (16 - 0.1 * jt) * Math.sin(2 * (OMs + DFs + Ms - Ds)) - 15
+				* Math.sin(Ms + OMs) - 13 * Math.sin(OMs + M1s - 2 * Ds) - 12 * Math.sin(OMs - Ms);
+		deltaPsi += 11 * Math.sin(2 * (M1s - DFs)) - 10 * Math.sin(2 * Ds - M1s + 2 * DFs) - 8
+				* Math.sin(2 * Ds + M1s + 2 * DFs + 2 * OMs) + 7 * Math.sin(Ms + 2 * DFs + 2 * OMs) - 7
+				* Math.sin(Ms + M1s - 2 * Ds) - 7 * Math.sin(2 * DFs + 2 * OMs - Ms) - 7
+				* Math.sin(2 * Ds + 2 * DFs + OMs);
 		deltaPsi += 6 * Math.sin(2 * Ds + M1s);
-		deltaPsi += 6 * Math.sin(2 * (OMs + DFs + M1s - Ds)) + 6 * Math.sin(OMs + 2 * DFs + M1s - 2 * Ds) - 6 * Math.sin(2 * Ds - 2 * M1s + OMs) - 6 * Math.sin(2 * Ds + OMs) + 5 * Math.sin(M1s - Ms)
-				- 5 * Math.sin(OMs + 2 * DFs - Ms - 2 * Ds) - 5 * Math.sin(OMs - 2 * Ds) - 5 * Math.sin(OMs + 2 * DFs + 2 * M1s);
-		deltaPsi += 4 * Math.sin(OMs - 2 * M1s - 2 * Ds) + 4 * Math.sin(OMs + 2 * DFs + Ms - 2 * Ds) + 4 * Math.sin(M1s - 2 * DFs) - 4 * Math.sin(M1s - Ds) - 4 * Math.sin(Ms - 2 * Ds) - 4
-				* Math.sin(Ds) + 3 * Math.sin(2 * DFs + M1s) - 3 * Math.sin(2 * (OMs + DFs - M1s)) - 3 * Math.sin(M1s - Ms - Ds);
+		deltaPsi += 6 * Math.sin(2 * (OMs + DFs + M1s - Ds)) + 6 * Math.sin(OMs + 2 * DFs + M1s - 2 * Ds) - 6
+				* Math.sin(2 * Ds - 2 * M1s + OMs) - 6 * Math.sin(2 * Ds + OMs) + 5 * Math.sin(M1s - Ms) - 5
+				* Math.sin(OMs + 2 * DFs - Ms - 2 * Ds) - 5 * Math.sin(OMs - 2 * Ds) - 5
+				* Math.sin(OMs + 2 * DFs + 2 * M1s);
+		deltaPsi += 4 * Math.sin(OMs - 2 * M1s - 2 * Ds) + 4 * Math.sin(OMs + 2 * DFs + Ms - 2 * Ds) + 4
+				* Math.sin(M1s - 2 * DFs) - 4 * Math.sin(M1s - Ds) - 4 * Math.sin(Ms - 2 * Ds) - 4 * Math.sin(Ds) + 3
+				* Math.sin(2 * DFs + M1s) - 3 * Math.sin(2 * (OMs + DFs - M1s)) - 3 * Math.sin(M1s - Ms - Ds);
 		deltaPsi -= 3 * Math.sin(M1s + Ms);
-		deltaPsi -= 3 * Math.sin(2 * OMs + 2 * DFs + M1s - Ms) - 3 * Math.sin(2 * OMs + 2 * DFs - M1s - Ms + 2 * Ds) - 3 * Math.sin(2 * OMs + 2 * DFs + 3 * M1s) - 3
-				* Math.sin(2 * OMs + 2 * DFs - Ms + 2 * Ds);
+		deltaPsi -= 3 * Math.sin(2 * OMs + 2 * DFs + M1s - Ms) - 3 * Math.sin(2 * OMs + 2 * DFs - M1s - Ms + 2 * Ds)
+				- 3 * Math.sin(2 * OMs + 2 * DFs + 3 * M1s) - 3 * Math.sin(2 * OMs + 2 * DFs - Ms + 2 * Ds);
 		deltaPsi *= 0.0001 / 3600;
 
-		double deltaEps = (92025 + 8.9 * jt) * Math.cos(OMs) + (5736 - 3.1 * jt) * Math.cos(-2 * Ds + 2 * DFs + 2 * OMs) + (977 - 0.5 * jt) * Math.cos(2 * DFs + 2 * OMs) + (-895 + 0.5 * jt)
-				* Math.cos(2 * OMs) + (54 - 0.1 * jt) * Math.cos(Ms) - 7 * Math.cos(M1s);
-		deltaEps += (224 - 0.6 * jt) * Math.cos(-2 * Ds + Ms + 2 * DFs + 2 * OMs) + 200 * Math.cos(2 * DFs + OMs) + (129 - 0.1 * jt) * Math.cos(M1s + 2 * DFs + 2 * OMs) + (-95 + 0.3 * jt)
+		double deltaEps = (92025 + 8.9 * jt) * Math.cos(OMs) + (5736 - 3.1 * jt)
+				* Math.cos(-2 * Ds + 2 * DFs + 2 * OMs) + (977 - 0.5 * jt) * Math.cos(2 * DFs + 2 * OMs)
+				+ (-895 + 0.5 * jt) * Math.cos(2 * OMs) + (54 - 0.1 * jt) * Math.cos(Ms) - 7 * Math.cos(M1s);
+		deltaEps += (224 - 0.6 * jt) * Math.cos(-2 * Ds + Ms + 2 * DFs + 2 * OMs) + 200 * Math.cos(2 * DFs + OMs)
+				+ (129 - 0.1 * jt) * Math.cos(M1s + 2 * DFs + 2 * OMs) + (-95 + 0.3 * jt)
 				* Math.cos(-2 * Ds - Ms + 2 * DFs + 2 * OMs) - 70 * Math.cos(-2 * Ds + 2 * DFs + OMs);
-		deltaEps -= 53 * Math.cos(-M1s + 2 * DFs + 2 * OMs) - 33 * Math.cos(M1s + OMs) + 26 * Math.cos(2 * Ds - M1s + 2 * DFs + 2 * OMs) + 32 * Math.cos(-M1s + OMs) + 27
+		deltaEps -= 53 * Math.cos(-M1s + 2 * DFs + 2 * OMs) - 33 * Math.cos(M1s + OMs) + 26
+				* Math.cos(2 * Ds - M1s + 2 * DFs + 2 * OMs) + 32 * Math.cos(-M1s + OMs) + 27
 				* Math.cos(M1s + 2 * DFs + OMs) - 24 * Math.cos(-2 * M1s + 2 * DFs + OMs);
-		deltaEps += 16 * Math.cos(2 * (Ds + DFs + OMs)) + 13 * Math.cos(2 * (M1s + DFs + OMs)) - 12 * Math.cos(2 * OMs + 2 * DFs + M1s - 2 * Ds) - 10 * Math.cos(OMs + 2 * DFs - M1s) - 8
+		deltaEps += 16 * Math.cos(2 * (Ds + DFs + OMs)) + 13 * Math.cos(2 * (M1s + DFs + OMs)) - 12
+				* Math.cos(2 * OMs + 2 * DFs + M1s - 2 * Ds) - 10 * Math.cos(OMs + 2 * DFs - M1s) - 8
 				* Math.cos(2 * Ds - M1s + OMs) + 7 * Math.cos(2 * (OMs + DFs + Ms - Ds)) + 9 * Math.cos(Ms + OMs);
-		deltaEps += 7 * Math.cos(OMs + M1s - 2 * Ds) + 6 * Math.cos(OMs - Ms) + 5 * Math.cos(OMs + 2 * DFs - M1s + 2 * Ds) + 3 * Math.cos(2 * OMs + 2 * DFs + M1s + 2 * Ds) - 3
-				* Math.cos(2 * OMs + 2 * DFs + Ms) + 3 * Math.cos(2 * OMs + 2 * DFs - Ms) + 3 * Math.cos(OMs + 2 * DFs + 2 * Ds);
-		deltaEps -= 3 * Math.cos(2 * (OMs + DFs + M1s - Ds)) - 3 * Math.cos(OMs + 2 * DFs + M1s - 2 * Ds) + 3 * Math.cos(OMs - 2 * M1s + 2 * Ds) + 3 * Math.cos(OMs + 2 * Ds) + 3
-				* Math.cos(OMs + 2 * DFs - Ms - 2 * Ds) + 3 * Math.cos(OMs - 2 * Ds) + 3 * Math.cos(OMs + 2 * DFs + 2 * M1s);
+		deltaEps += 7 * Math.cos(OMs + M1s - 2 * Ds) + 6 * Math.cos(OMs - Ms) + 5
+				* Math.cos(OMs + 2 * DFs - M1s + 2 * Ds) + 3 * Math.cos(2 * OMs + 2 * DFs + M1s + 2 * Ds) - 3
+				* Math.cos(2 * OMs + 2 * DFs + Ms) + 3 * Math.cos(2 * OMs + 2 * DFs - Ms) + 3
+				* Math.cos(OMs + 2 * DFs + 2 * Ds);
+		deltaEps -= 3 * Math.cos(2 * (OMs + DFs + M1s - Ds)) - 3 * Math.cos(OMs + 2 * DFs + M1s - 2 * Ds) + 3
+				* Math.cos(OMs - 2 * M1s + 2 * Ds) + 3 * Math.cos(OMs + 2 * Ds) + 3
+				* Math.cos(OMs + 2 * DFs - Ms - 2 * Ds) + 3 * Math.cos(OMs - 2 * Ds) + 3
+				* Math.cos(OMs + 2 * DFs + 2 * M1s);
 		deltaEps *= 0.0001 / 3600;
 
 		double eps = (21.448 / 60 + 26) / 60 + 23 + (-46.815 * jt - 0.00059 * jt2 + 0.001813 * jt3) / 3600;
