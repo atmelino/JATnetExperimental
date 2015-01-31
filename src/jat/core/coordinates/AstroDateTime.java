@@ -9,7 +9,8 @@ import org.joda.time.chrono.GregorianChronology;
 /**
  * 
  * Local Time<br>
- * Coordinated Universal Time (UTC)<br>
+ * Coordinated Universal Time (UTC)<br>		convert();
+
  * Julian Date (JD)<br>
  * Greenwich apparent sidereal time (GAST)<br>
  * Greenwich mean sidereal time (GMST)<br>
@@ -35,11 +36,7 @@ public class AstroDateTime {
 	public AstroDateTime(int year, int month, int day, int hour, int minute, int second, String TZString) {
 
 		Chronology chrono = GregorianChronology.getInstance(DateTimeZone.forID(TZString));
-		localDateTime = new DateTime(year, month, day, hour, minute, second, chrono);
-		//DateTimeZone tz = DateTimeZone.getDefault();
-		//this.UTCDateTime = new DateTime(tz.convertUTCToLocal(localDateTime),false);
-		UTCDateTime = new DateTime(localDateTime.getMillis());
-		
+		localDateTime = new DateTime(year, month, day, hour, minute, second, chrono);		
 		convert();
 	}
 
@@ -49,6 +46,7 @@ public class AstroDateTime {
 
 	public void setUTCDateTime(DateTime uTCDateTime) {
 		UTCDateTime = uTCDateTime;
+		convert();
 	}
 
 	public double getJD() {
@@ -62,6 +60,7 @@ public class AstroDateTime {
 
 	private void convert() {
 
+		UTCDateTime = new DateTime(localDateTime.toDateTime(DateTimeZone.forID("UTC")));
 		julianDate();
 	}
 
