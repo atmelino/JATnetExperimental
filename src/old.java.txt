@@ -1,4 +1,124 @@
+		
+		
+		
+		
+				t = String.format("%-24s%-12.2f%-12.2f%-12.2f", "2/17/1985 06:00:00 UTC", 2446113.75, JD_joda_UTC, adt_MST.getJD());
+		
+		
+				chrono = GregorianChronology.getInstance(DateTimeZone.forID("HST"));
+		currentDateTime = new DateTime(1985, 2, 17, 6, 0, chrono);
+		millis = currentDateTime.getMillis();
+		JD_joda_HST = DateTimeUtils.toJulianDay(millis);
+		chrono = GregorianChronology.getInstance(DateTimeZone.forID("MST"));
+		currentDateTime = new DateTime(1985, 2, 17, 6, 0, chrono);
+		millis = currentDateTime.getMillis();
+		JD_joda_MST = DateTimeUtils.toJulianDay(millis);
+		chrono = GregorianChronology.getInstance(DateTimeZone.forID("CST6CDT"));
+		currentDateTime = new DateTime(1985, 2, 17, 6, 0, chrono);
+		millis = currentDateTime.getMillis();
+		JD_joda_CST = DateTimeUtils.toJulianDay(millis);
+		chrono = GregorianChronology.getInstance(DateTimeZone.forID("EST"));
+		currentDateTime = new DateTime(1985, 2, 17, 6, 0, chrono);
+		millis = currentDateTime.getMillis();
+		JD_joda_EST = DateTimeUtils.toJulianDay(millis);
+		chrono = GregorianChronology.getInstance(DateTimeZone.forID("UTC"));
+		currentDateTime = new DateTime(1985, 2, 17, 6, 0, chrono);
+		millis = currentDateTime.getMillis();
+		JD_joda_UTC = DateTimeUtils.toJulianDay(millis);
+		
+			private void julianDate() {
 
+		int year = localDateTime.get(Calendar.YEAR);
+		int month = localDateTime.get(Calendar.MONTH) + 1;
+		int day = localDateTime.get(Calendar.DAY_OF_MONTH);
+		int hour = localDateTime.get(Calendar.HOUR_OF_DAY);
+		int minute = localDateTime.get(Calendar.MINUTE);
+		int second = localDateTime.get(Calendar.SECOND);
+
+		// if (month <= 2) {
+		// year -= 1;
+		// month += 12;
+		// }
+		// double A = Math.floor(year / 100);
+		// double B = 2 - A + Math.floor(A / 4);
+		// JD0h = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 *
+		// (month + 1)) + day + B - 1524.5;
+		// JD = JD0h + dayfraction;
+
+		/* after Oct 15th, 1582 */
+		long j_year = year;
+		long j_month = month;
+		long A, B, C, D;
+
+		if (month == 1 || month == 2) {
+			j_month = month + 12;
+			j_year = year - 1;
+		}
+		A = (long) (j_year / 100);
+		B = 2 - A + (long) (A / 4);
+		C = (long) (365.25 * j_year);
+		D = (long) (30.6001 * (j_month + 1));
+		JD = B + C + D + decimal_day(day, hour, minute, second) + 1720994.5;
+
+	}
+
+	private double decimal_day(long day, long hour, long minute, long second) {
+		double temp = day + decimal_hour(hour, minute, second) / 24;
+		return temp;
+	}
+
+	private double decimal_hour(long hour, long minute, long second) {
+		double temp = (double) hour + (double) minute / 60 + (double) second / 3600;
+		return temp;
+	}
+
+	// GregorianCalendar time = new GregorianCalendar(new
+	// SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
+		
+		
+			public GregorianCalendar getLocalDateTime() {
+		return localDateTime;
+	}
+
+	public void setLocalDateTime(GregorianCalendar localDateTime) {
+		this.localDateTime = localDateTime;
+		convert();
+	}
+		
+			private GregorianCalendar localDateTime;
+		
+		
+				GregorianCalendar gc_MST = new GregorianCalendar(TimeZone.getTimeZone("MST"));
+		gc_MST.set(1985, Calendar.FEBRUARY, 17, 6, 0);
+		AstroDateTime adt_MST = new AstroDateTime(gc_MST);
+
+		GregorianCalendar gc_CST = new GregorianCalendar(TimeZone.getTimeZone("CST"));
+		gc_CST.set(1985, Calendar.FEBRUARY, 17, 6, 0);
+		AstroDateTime adt_CST = new AstroDateTime(gc_CST);
+
+		GregorianCalendar gc_EST = new GregorianCalendar(TimeZone.getTimeZone("EST"));
+		gc_EST.set(1985, Calendar.FEBRUARY, 17, 6, 0);
+		AstroDateTime adt_EST = new AstroDateTime(gc_EST);
+		
+		
+	private GregorianCalendar UTCDateTime;
+		
+		
+		// localDateTime.computeTime();
+
+		long millis = localDateTime.getTimeInMillis();
+		System.out.println(millis);
+		UTCDateTime=new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+		UTCDateTime.setTimeInMillis(millis);
+		
+		DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd hh:mm:ss");
+		formatter.setLenient(false);
+		Date utc = UTCDateTime.getTime();
+
+		//System.out.println(formatter.format(utc));  
+		System.out.println(UTCDateTime);  
+		
+		
 	// int localYear;
 	// int localMonth;
 	// int localDay;

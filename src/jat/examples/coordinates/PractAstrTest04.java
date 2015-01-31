@@ -1,49 +1,35 @@
 package jat.examples.coordinates;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import jat.core.coordinates.AstroDateTime;
-
-import org.joda.time.Chronology;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
-import org.joda.time.DateTimeZone;
-import org.joda.time.chrono.GregorianChronology;
 
 public class PractAstrTest04 {
 
 	public static void main(final String[] args) {
 		String s, t;
-		Chronology chrono;
-		DateTime currentDateTime;
-		long millis;
-		double JD_joda1, JD_joda2;
+
+		double JD_HST, JD_MST, JD_CST, JD_EST, JD_UTC;
 
 		System.out.println("Practical Astronomy 04 Julian Day Numbers");
 
-		chrono = GregorianChronology.getInstance(DateTimeZone.forID("UTC"));
-		currentDateTime = new DateTime(1985, 2, 17, 6, 0, chrono);
-		millis = currentDateTime.getMillis();
-		JD_joda1 = DateTimeUtils.toJulianDay(millis);
-		// System.out.println("Julian Day Number "+JD_joda);
+		JD_HST = (new AstroDateTime(1985, 2, 17, 6, 0, 0, "HST")).getJD();
+		JD_MST = (new AstroDateTime(1985, 2, 17, 6, 0, 0, "MST")).getJD();
+		JD_CST = (new AstroDateTime(1985, 2, 17, 6, 0, 0, "CST6CDT")).getJD();
+		JD_EST = (new AstroDateTime(1985, 2, 17, 6, 0, 0, "EST")).getJD();
+		JD_UTC = (new AstroDateTime(1985, 2, 17, 6, 0, 0, "UTC")).getJD();
 
-		GregorianCalendar gc = new GregorianCalendar(1985, Calendar.FEBRUARY, 17, 6, 0);
-		AstroDateTime adt = new AstroDateTime(gc);
-
-		chrono = GregorianChronology.getInstance(DateTimeZone.forID("EST"));
-		currentDateTime = new DateTime(1985, 2, 17, 6, 0, chrono);
-		millis = currentDateTime.getMillis();
-		JD_joda2 = DateTimeUtils.toJulianDay(millis);
-
-		
-		
-		s = String.format("%-24s%-12s%-12s%-12s", "", "Expected", "Joda", "Astro");
+		s = String.format("%-24s%-12s%-12s", "", "Expected", "JAT");
 		System.out.println(s);
-		t = String.format("%-24s%-12.2f%-12.2f%-12.2f", "2/17/1985 17:06:00 UT", 2446113.75, JD_joda1, adt.getJD());
+		t = String.format("%-24s%-12.2f%-12.2f", "2/17/1985 06:00:00 HST", 2446114.17, JD_HST);
 		System.out.println(t);
-		t = String.format("%-24s%-12.2f%-12.2f%-12.2f", "2/17/1985 17:06:00 EST", 2446113.75, JD_joda2, adt.getJD());
+		t = String.format("%-24s%-12.2f%-12.2f", "2/17/1985 06:00:00 MST", 2446114.04, JD_MST);
+		System.out.println(t);
+		t = String.format("%-24s%-12.2f%-12.2f", "2/17/1985 06:00:00 CST", 2446114.00, JD_CST);
+		System.out.println(t);
+		t = String.format("%-24s%-12.2f%-12.2f", "2/17/1985 06:00:00 EST", 2446113.96, JD_EST);
+		System.out.println(t);
+		t = String.format("%-24s%-12.2f%-12.2f", "2/17/1985 06:00:00 UTC", 2446113.75, JD_UTC);
 		System.out.println(t);
 
 	}
 }
+
