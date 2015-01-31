@@ -27,18 +27,28 @@ public class AstroDateTime {
 	private double JD;
 
 	private DateTime localDateTime;
+	private DateTime UTCDateTime;
 
 	// Angle localLongitude;
 
-	public AstroDateTime(DateTime localDateTime) {
-		this.localDateTime = localDateTime;
-	}
 
 	public AstroDateTime(int year, int month, int day, int hour, int minute, int second, String TZString) {
 
 		Chronology chrono = GregorianChronology.getInstance(DateTimeZone.forID(TZString));
 		localDateTime = new DateTime(year, month, day, hour, minute, second, chrono);
+		//DateTimeZone tz = DateTimeZone.getDefault();
+		//this.UTCDateTime = new DateTime(tz.convertUTCToLocal(localDateTime),false);
+		UTCDateTime = new DateTime(localDateTime.getMillis());
+		
 		convert();
+	}
+
+	public DateTime getUTCDateTime() {
+		return UTCDateTime;
+	}
+
+	public void setUTCDateTime(DateTime uTCDateTime) {
+		UTCDateTime = uTCDateTime;
 	}
 
 	public double getJD() {
