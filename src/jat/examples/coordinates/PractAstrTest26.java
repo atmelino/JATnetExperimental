@@ -8,7 +8,7 @@ public class PractAstrTest26 {
 
 		System.out.println("Practical Astronomy 26 horizon to equatorial coordinates conversion");
 
-		ReferenceFrame rf = new ReferenceFrame();
+		AstroCoordinate rf = new AstroCoordinate();
 		Angle Az = new Angle(283.271111, Angle.DEGREES);
 		Angle Alt = new Angle(19.334444, Angle.DEGREES);
 		rf.horizontalCoord = new HorizontalCoord(Az, Alt);

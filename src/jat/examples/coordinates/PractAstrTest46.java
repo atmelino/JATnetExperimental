@@ -10,7 +10,7 @@ public class PractAstrTest46 {
 
 		System.out.println("Practical Astronomy sun position");
 
-		ReferenceFrame rf = new ReferenceFrame();
+		AstroCoordinate rf = new AstroCoordinate();
 		DateTime epoch = new DateTime(1990, 1, 1, 0, 0, DateTimeZone.forID("UTC"));
 		DateTime currentDateTime = new DateTime(1980, 7, 27, 0, 0);
 		// DateTime dt = new DateTime(2004, 7, 27, 0, 0);

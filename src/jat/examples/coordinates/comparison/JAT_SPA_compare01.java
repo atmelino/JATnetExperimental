@@ -1,6 +1,6 @@
 package jat.examples.coordinates.comparison;
 
-import jat.core.coordinates.ReferenceFrame;
+import jat.core.coordinates.AstroCoordinate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
@@ -27,7 +27,7 @@ public class JAT_SPA_compare01 {
 		month = Calendar.JANUARY;
 		day = 29;
 		latitude = 30.;
-		longitude=-10;
+		longitude=0;
 
 		// System.out.println(month);
 		System.out.println("SPA vs. JAT");
@@ -44,7 +44,7 @@ public class JAT_SPA_compare01 {
 
 			AzimuthZenithAngle result = SPA.calculateSolarPosition(time, latitude, longitude, elevation, 67, 820, 11);
 
-			ReferenceFrame rf = new ReferenceFrame();
+			AstroCoordinate rf = new AstroCoordinate();
 			DateTime epoch = new DateTime(1990, 1, 1, 0, 0, DateTimeZone.forID("UTC"));
 			DateTime currentDateTime = new DateTime(year, month + 1, day, hour, 0);
 			rf.sunPosition(epoch, currentDateTime);
