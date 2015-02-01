@@ -50,7 +50,7 @@ public class AstroCoordinate {
 		// System.out.println(t);
 		haDeg = MST(year, month, day, hour, minute, second, longitude) - RADeg;
 
-		haDeg = limitDegreesTo360(haDeg);
+		haDeg = AstroUtil.limitDegreesTo360(haDeg);
 
 		haRad = Math.toRadians(haDeg);
 		decRad = Math.toRadians(decDeg);
@@ -146,7 +146,7 @@ public class AstroCoordinate {
 
 		double gst = 280.46061837 + (360.98564736629 * jd) + (0.000387933 * jt2) - (jt3 / 38710000);
 		gst += deltaPsi * Math.cos(epsRad);
-		gst = limitDegreesTo360(gst);
+		gst = AstroUtil.limitDegreesTo360(gst);
 		// System.out.println("gst" + gst / 15);
 
 		double d1 = ((gst / 15 - Math.floor(gst / 15)) * 60);
@@ -155,7 +155,7 @@ public class AstroCoordinate {
 		// Math.floor(d1) + "m" + d2 + "s");
 
 		double mst = gst + longitude;
-		mst = limitDegreesTo360(mst);
+		mst = AstroUtil.limitDegreesTo360(mst);
 		// System.out.println("mst" + mst / 15);
 
 		d1 = ((mst / 15 - Math.floor(mst / 15)) * 60);
@@ -238,7 +238,7 @@ public class AstroCoordinate {
 
 		double azRad = Math.atan2(tanAzy, tanAzx);
 
-		azRad = this.limitRadiansTo2PI(azRad);
+		azRad = AstroUtil.limitRadiansTo2PI(azRad);
 		// if (azRad < 0)
 		// azRad += 2 * Math.PI;
 		// System.out.println(Math.toDegrees(azRad));
@@ -312,7 +312,7 @@ public class AstroCoordinate {
 		double RARad = Math.atan2(termRAy, termRAx);
 		// double RARad = Math.atan(termRAy / termRAx);
 		// System.out.println("RARad " + RARad);
-		RARad = limitRadiansTo2PI(RARad);
+		RARad = AstroUtil.limitRadiansTo2PI(RARad);
 		Angle RA = new Angle(RARad, Angle.RADIANS);
 		Angle dec = new Angle(decRad, Angle.RADIANS);
 		equatorialCoord = new EquatorialCoord(null, RA, dec);
@@ -371,15 +371,5 @@ public class AstroCoordinate {
 
 	}
 
-	private double limitDegreesTo360(double degrees) {
-		double dividedDegrees = degrees / 360.0;
-		double limited = 360.0 * (dividedDegrees - floor(dividedDegrees));
-		return (limited < 0) ? limited + 360.0 : limited;
-	}
 
-	private double limitRadiansTo2PI(double radians) {
-		double dividedradians = radians / (2 * Math.PI);
-		double limited = 2 * Math.PI * (dividedradians - floor(dividedradians));
-		return (limited < 0) ? limited + 2 * Math.PI : limited;
-	}
 }
