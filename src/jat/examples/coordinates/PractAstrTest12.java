@@ -9,10 +9,10 @@ public class PractAstrTest12 {
 
 		System.out.println("Practical Astronomy 12 UT to GST");
 
-		AstroDateTime adt= new AstroDateTime(1980, 4, 22, 14, 36, 52, "UTC");
-
-		double GST=adt.getGST().getHours();
-		String GSTString=adt.getGST().getHAString();
+		AstroDateTime adt = new AstroDateTime(1980, 4, 22, 14, 36, 52, "UTC");
+		//adt.println();
+		double GST = adt.getGST().getHours();
+		String GSTString = adt.getGST().getHAString();
 		s = String.format("%-24s%-12s%-12s", "", "Expected", "JAT");
 		System.out.println(s);
 		t = String.format("%-24s%-12.2f%-12.2f", "4/22/1980 14:36:52 UTC", 4.668, GST);
@@ -22,4 +22,3 @@ public class PractAstrTest12 {
 
 	}
 }
-

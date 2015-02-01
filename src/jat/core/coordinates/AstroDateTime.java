@@ -37,6 +37,15 @@ public class AstroDateTime {
 		convert();
 	}
 
+	public DateTime getLocalDateTime() {
+		return localDateTime;
+	}
+
+	public void setLocalDateTime(DateTime localDateTime) {
+		this.localDateTime = localDateTime;
+		convert();
+	}
+
 	public DateTime getUTCDateTime() {
 		return UTCDateTime;
 	}
@@ -111,5 +120,20 @@ public class AstroDateTime {
 
 	}
 
+	public void println()
+	{
+		String s;
+
+		s = String.format("%-30s%-25s","localDateTime",localDateTime);
+		System.out.println(s);
+		s = String.format("%-30s%-25s","UTCDateTime",UTCDateTime);
+		System.out.println(s);
+		s = String.format("%-30s%-25s","Julian Date",JD);
+		System.out.println(s);
+		s = String.format("%-30s%-25s","Greenwich mean sidereal time",GST.getHAString());
+		System.out.println(s);
+				
+	}
+	
 
 }
