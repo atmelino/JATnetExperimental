@@ -103,7 +103,7 @@ public class AstroDateTime {
 		julianDate();
 		GST();
 		if (localLongitude != null) {
-			System.out.println("localLongitude found");
+			//System.out.println("localLongitude found");
 			LST();
 		}
 	}
@@ -151,7 +151,8 @@ public class AstroDateTime {
 
 	private void LST() {
 		try {
-			System.out.println(localLongitude.getDegrees());
+			localLongitude.getHAString();
+			//System.out.println(localLongitude.getDegrees());
 		} catch (NullPointerException e) {
 			System.out.println("Observer longitude not set!");
 			e.printStackTrace();

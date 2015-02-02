@@ -2,6 +2,43 @@
 		
 		
 		
+		
+		
+		
+		
+		
+		
+					//ac.equatorialToHorizon(ds.year, ds.month + 1, ds.day, hour, ds.minute, ds.second, ds.longitude, ds.latitude);
+		
+		
+					// System.out.println(SPARA);
+					// System.out.println(SPARAh);
+		
+		
+		
+					// // rf.eclipticCoord.println();
+		
+		
+		
+					// rf.equatorialCoord.RA.println();
+			// rf.equatorialCoord.println();
+			// rf.equatorialToHorizonDS(hour - 3.7, latitude);
+			// rf.horizontalCoord.println();
+		
+		// t =
+			// String.format("%-4d%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f%-8.2f",
+			// hour, SPA.getNuDegrees(), SPA.getAlphaDegrees(),
+			// SPA.getDeltaDegrees(), result.getAzimuth(),
+			// 90 - result.getZenithAngle(), rfRA, rfdec, rfaz, rfalt);
+		
+				// equatorialCoord.RA.println("RA", Angle.DECIMALHOURS);
+		// tmpLST.println("LST", Angle.DECIMALHOURS);
+		// HA.println("HA", Angle.HOURANGLE);
+				//Angle tmpLST = new Angle(LST, Angle.DECIMALHOURS);
+		
+			// if (azRad < 0)
+		// azRad += 2 * Math.PI;
+		// System.out.println(Math.toDegrees(azRad));	
 				t = String.format("%-24s%-12.2f%-12.2f%-12.2f", "2/17/1985 06:00:00 UTC", 2446113.75, JD_joda_UTC, adt_MST.getJD());
 		
 		

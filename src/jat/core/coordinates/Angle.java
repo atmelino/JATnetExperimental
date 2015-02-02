@@ -99,10 +99,9 @@ public class Angle {
 	}
 
 	void convert() {
-		
+
 		degrees = Math.toDegrees(radians);
 		hours = degrees / 15.;
-
 
 		// Angle expressed as SHA in degrees, minutes, seconds
 		// double shadegrees=360.-degrees;
@@ -171,12 +170,7 @@ public class Angle {
 	public void print() {
 		System.out.println(radians + " Radians");
 		System.out.println(degrees + " Decimal degrees");
-		if (arcDeg.positive)
-			System.out.print("+");
-		else
-			System.out.print("-");
 		System.out.println(arcDeg.degrees + " degrees " + arcDeg.minutes + " minutes " + arcDeg.seconds + " seconds");
-
 		System.out.println(HA.hours + " hours " + HA.minutes + " minutes " + HA.seconds + " seconds");
 		System.out.println(hours + " Decimal hours");
 	}
@@ -204,17 +198,10 @@ public class Angle {
 			System.out.println(hours + " Decimal hours");
 			break;
 		case ARCDEGREES:
-			if (arcDeg.positive)
-				System.out.print("+");
-			else
-				System.out.print("-");
-			System.out.println(arcDeg.degrees + " Degrees " + arcDeg.minutes + " Minutes " + arcDeg.seconds + " Seconds");
+			System.out.println(arcDeg.degrees + " Degrees " + arcDeg.minutes + " Minutes " + arcDeg.seconds
+					+ " Seconds");
 			break;
 		case SHA:
-			if (sha.positive)
-				System.out.print("+");
-			else
-				System.out.print("-");
 			System.out.println(sha.degrees + " Degrees " + sha.minutes + " Minutes " + sha.seconds + " Seconds");
 			break;
 		case HOURANGLE:

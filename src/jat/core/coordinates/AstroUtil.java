@@ -21,5 +21,17 @@ public class AstroUtil {
 		double limited = 24. * (dividedhours - floor(dividedhours));
 		return (limited < 0) ? limited + 24. : limited;
 	}
+
+	
+	public static double Frac(double x) {
+		return x - Math.floor(x);
+	}
+
+	public static Angle rightAscensionToHourAngle(AstroDateTime LST, Angle RA)
+	{
+		Angle HA=LST.getLST().subtract(RA);
+		return HA;		
+	}
+	
 	
 }
