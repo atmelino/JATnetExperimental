@@ -53,7 +53,7 @@ public class JAT_SPA_compare01 {
 		dataSet ds;
 
 		dataSet Greenwich = jsp.new dataSet(0,"UTC", 1980, Calendar.JANUARY, 27, 12, 0, 0, 52., 0., 1830.14);
-		dataSet Austin = jsp.new dataSet(-6, "CST6CDT",2015, Calendar.JANUARY, 31, 12, 0, 0, 30., -97., 1830.14);
+		dataSet Austin = jsp.new dataSet(-6, "CST6CDT",2015, Calendar.FEBRUARY, 2, 12, 0, 0, 30., -97., 1830.14);
 		ds = Greenwich;
 		ds = Austin;
 
