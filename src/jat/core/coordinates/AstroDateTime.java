@@ -31,14 +31,28 @@ public class AstroDateTime {
 	private Angle localLongitude;
 
 	public AstroDateTime(int year, int month, int day, int hour, int minute, int second, String TZString) {
-
 		Chronology chrono = GregorianChronology.getInstance(DateTimeZone.forID(TZString));
 		localDateTime = new DateTime(year, month, day, hour, minute, second, chrono);
 		convert();
 	}
 
+	public AstroDateTime(int year, int month, int day, int hour, int minute, int second, int millis, String TZString) {
+		Chronology chrono = GregorianChronology.getInstance(DateTimeZone.forID(TZString));
+		localDateTime = new DateTime(year, month, day, hour, minute, second, millis, chrono);
+		convert();
+	}
+
 	public AstroDateTime(int year, int month, int day, int hour, int minute, int second, String TZString, Angle localLongitude) {
-		this(year, month, day, hour, minute, second, TZString);
+		// this(year, month, day, hour, minute, second, TZString);
+		Chronology chrono = GregorianChronology.getInstance(DateTimeZone.forID(TZString));
+		localDateTime = new DateTime(year, month, day, hour, minute, second, chrono);
+		this.localLongitude = localLongitude;
+		convert();
+	}
+
+	public AstroDateTime(int year, int month, int day, int hour, int minute, int second, int millis, String TZString, Angle localLongitude) {
+		Chronology chrono = GregorianChronology.getInstance(DateTimeZone.forID(TZString));
+		localDateTime = new DateTime(year, month, day, hour, minute, second, millis, chrono);
 		this.localLongitude = localLongitude;
 		convert();
 	}
@@ -103,7 +117,7 @@ public class AstroDateTime {
 		julianDate();
 		GST();
 		if (localLongitude != null) {
-			//System.out.println("localLongitude found");
+			// System.out.println("localLongitude found");
 			LST();
 		}
 	}
@@ -123,45 +137,37 @@ public class AstroDateTime {
 		DateTime dtZeroHour = new DateTime(y, m, d, 0, 0, 0, chrono);
 		long millis = dtZeroHour.getMillis();
 		double JDZeroHour = DateTimeUtils.toJulianDay(millis);
-
-		// System.out.println("JDZeroHour=" + JDZeroHour);
-
 		double T = (JDZeroHour - 2451545.0) / 36525.0;
-		// System.out.println("T=" + T);
-
 		double T0a = 6.697374558 + T * (2400.051336 + T * 0.000025862);
-		// System.out.println("T0a=" + T0a);
-
 		double T0 = AstroUtil.limitHoursTo24(T0a);
-		// System.out.println("T0=" + T0);
-
-		// double
-		// UTDecimalHours=UTCDateTime.getHourOfDay()+UTCDateTime.getMinuteOfHour();
-		double UTDecimalHours = UTCDateTime.getSecondOfDay() / 3600.;
-		// System.out.println("UTDecimalHours=" + UTDecimalHours);
-
+		double UTDecimalHours = UTCDateTime.getMillisOfDay() / 3600000.;
 		double sum = T0 + UTDecimalHours * 1.002737909;
-		// System.out.println("sum=" + sum);
-
 		double sumLim = AstroUtil.limitHoursTo24(sum);
 
 		GST = new Angle(sumLim, Angle.DECIMALHOURS);
+		
+		// System.out.println("JDZeroHour=" + JDZeroHour);
+		// System.out.println("T=" + T);
+		// System.out.println("T0a=" + T0a);
+		// System.out.println("T0=" + T0);
+		// System.out.println("UTDecimalHours=" + UTDecimalHours);
+		// System.out.println("sum=" + sum);
+		// System.out.println("sumLim=" + sumLim);
 
 	}
 
 	private void LST() {
 		try {
 			localLongitude.getHAString();
-			//System.out.println(localLongitude.getDegrees());
+			// System.out.println(localLongitude.getDegrees());
 		} catch (NullPointerException e) {
 			System.out.println("Observer longitude not set!");
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
-		
-		LST=GST.add(localLongitude);
-		
+
+		LST = GST.add(localLongitude);
+
 	}
 
 	public void println() {
