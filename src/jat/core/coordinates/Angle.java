@@ -67,7 +67,7 @@ public class Angle {
 	}
 
 	public String getArcDegString() {
-		return String.format("%2d %2d'%2d''", arcDeg.degrees, arcDeg.minutes, (int) arcDeg.seconds);
+		return String.format("%2d %2d'%2d''", arcDeg.degrees, arcDeg.minutes, (int) Math.round(arcDeg.seconds));
 	}
 
 	public void setArcDeg(ArcDegrees arcDeg) {
@@ -90,7 +90,7 @@ public class Angle {
 
 	public String getHAString() {
 
-		return String.format("%2d:%2d:%2d", HA.hours, HA.minutes, (int) HA.seconds);
+		return String.format("%2d:%2d:%2d", HA.hours, HA.minutes, (int) Math.round(HA.seconds));
 	}
 
 	public void setHA(HourAngle hA) {
