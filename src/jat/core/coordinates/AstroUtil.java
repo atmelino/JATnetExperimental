@@ -32,6 +32,12 @@ public class AstroUtil {
 		Angle HA=LST.getLST().subtract(RA);
 		return HA;		
 	}
+
+	public static Angle hourAngleToRightAscension(AstroDateTime LST, Angle HA)
+	{
+		Angle RA=LST.getLST().subtract(HA);
+		return RA;		
+	}
 	
 	
 }
