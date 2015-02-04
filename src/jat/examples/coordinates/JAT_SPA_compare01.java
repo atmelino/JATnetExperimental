@@ -2,7 +2,7 @@ package jat.examples.coordinates;
 
 import jat.core.coordinates.Angle;
 import jat.core.coordinates.AstroCoordinate;
-import jat.core.coordinates.AstroDateTime;
+import jat.core.coordinates.AstroDateTimeLocation;
 import jat.core.coordinates.AstroUtil;
 
 import java.util.Calendar;
@@ -92,9 +92,10 @@ public class JAT_SPA_compare01 {
 			double acRA = ac.equatorialCoord.RA.getDegrees();
 			double acdec = ac.equatorialCoord.dec.getDegrees();
 			Angle longitude = new Angle(ds.longitude, Angle.DEGREES);
-			AstroDateTime adt = new AstroDateTime(ds.year, ds.month + 1, ds.day, hour, ds.minute, ds.second, ds.timeZoneString,
-					longitude);
-			ac.equatorialToHorizonDS(adt, ds.latitude);
+			Angle latitude = new Angle(ds.latitude, Angle.DEGREES);
+			AstroDateTimeLocation adt = new AstroDateTimeLocation(ds.year, ds.month + 1, ds.day, hour, ds.minute, ds.second, ds.timeZoneString,
+					longitude,latitude);
+			ac.equatorialToHorizonDS(adt);
 			double acaz = ac.horizontalCoord.azimuth.getDegrees();
 			double acalt = ac.horizontalCoord.altitude.getDegrees();
 

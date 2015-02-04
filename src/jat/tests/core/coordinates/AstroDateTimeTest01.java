@@ -1,17 +1,17 @@
 package jat.tests.core.coordinates;
 
-import jat.core.coordinates.AstroDateTime;
+import jat.core.coordinates.AstroDateTimeLocation;
 
 public class AstroDateTimeTest01 {
 
 	public static void main(final String[] args) {
-		AstroDateTime adt;
+		AstroDateTimeLocation adt;
 		double JD;
 		String s, t;
 
 		System.out.println("AstroDateTimeTest01");
 
-		adt = new AstroDateTime(1985, 2, 17, 6, 0, 0, "CST6CDT");
+		adt = new AstroDateTimeLocation(1985, 2, 17, 6, 0, 0, "CST6CDT");
 		// adt=new AstroDateTime(1985, 2, 17, 6, 0, 0, "EST");
 		//adt.println();
 		// System.out.println(adt.getLocalDateTime());

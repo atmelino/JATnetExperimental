@@ -1,8 +1,47 @@
+
+
+	public void equatorialToHorizonDS(AstroDateTimeLocation adt, double latitude) {
+
+		Angle HA = adt.getLST().subtract(equatorialCoord.RA);
+		Angle dec = equatorialCoord.dec;
+		equatorialCoord = new EquatorialCoord(HA, null, dec);
+		// equatorialCoord.println();
+		// equatorialToHorizonDS(latitude);
+	}
+	// public void horizonToEquatorial(double latitude) {
+	public void horizonToEquatorial() {
+		// System.out.println("horizonToEquatorial");
+
+	}
+		//System.out.println("hour angle and dec for latitude 52 deg:");
+		//Angle Az = new Angle(283.271111, Angle.DEGREES);
+		//Angle Alt = new Angle(19.334444, Angle.DEGREES);
+
+
+
+				// Hour angle
+		// t = String.format("%-5d%-4d%-4d%-4d%-4d%-4d", year, month, day, hour,
+		// minute, second);
+		// System.out.println(t);
+				//this.latDeg = latitude;
+		
+				///ac.equatorialCoord.println();
+		ac.equatorialToHorizonDS(adt, 52);
+		//ac.horizontalCoord.println();
 		
 		
+				// HA=AstroUtil.rightAscensionToHourAngle(adt, RA);
 		
+				// ac.horizontalCoord.println();
+		//ac.horizontalCoord.altitude.println("alt", Angle.DEGREES);
+		//ac.horizontalCoord.azimuth.println("Az", Angle.DEGREES);
+		//ac.horizontalCoord.altitude.println("alt", Angle.ARCDEGREES);
+		//ac.horizontalCoord.azimuth.println("Az", Angle.ARCDEGREES);
 		
-		
+				//ac.equatorialCoord.HA.println("HA", Angle.HOURANGLE);
+		//ac.equatorialCoord.HA.println("HA decimal", Angle.DECIMALHOURS);
+		//ac.equatorialCoord.dec.println("dec", Angle.DEGREES);
+		// ac.equatorialCoord.println();
 		
 				//double N1 = N0 % 360;
 		

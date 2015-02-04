@@ -1,16 +1,16 @@
 package jat.examples.coordinates;
 
-import jat.core.coordinates.AstroDateTime;
+import jat.core.coordinates.AstroDateTimeLocation;
 
 public class PractAstrTest12 {
 
-	public static void main(final String[] args) {
+	public void run() {
 		String s, t;
 
 		System.out.println("Practical Astronomy 12 UT to GST");
 		System.out.println("4/22/1980 14:36:52 UTC");
 
-		AstroDateTime adt = new AstroDateTime(1980, 4, 22, 14, 36, 51, 670,"UTC");
+		AstroDateTimeLocation adt = new AstroDateTimeLocation(1980, 4, 22, 14, 36, 51, 670,"UTC");
 		//AstroDateTime adt = new AstroDateTime(1980, 4, 22, 14, 36, 52,"UTC");
 		//adt.println();
 		double GST = adt.getGST().getHours();
@@ -21,6 +21,11 @@ public class PractAstrTest12 {
 		System.out.println(t);
 		t = String.format("%-14s%-12s%-12s", "GST", "04:40:05", GSTString);
 		System.out.println(t);
+	}
+	
+	public static void main(final String[] args) {
 
+		PractAstrTest12 p=new PractAstrTest12();
+		p.run();
 	}
 }

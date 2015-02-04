@@ -4,37 +4,55 @@ import jat.core.coordinates.*;
 
 public class PractAstrTest25 {
 
-	public static void main(final String[] args) {
+	public void run() {
+		String s, t;
 
 		System.out.println("Practical Astronomy 25 equatorial to horizon coordinates conversion");
+		System.out.println("Convert hour angle 5h 51m 44s and declination 23 13' 10'' at latitude 52 to azimuth and altitude");
 
 		AstroCoordinate ac = new AstroCoordinate();
 
 		Angle HA = new Angle(5, 51, 44, Angle.HOURANGLE);
 		Angle dec = new Angle(23, 13, 10, Angle.ARCDEGREES);
 		ac.equatorialCoord = new EquatorialCoord(HA, null, dec);
-		ac.equatorialCoord.HA.println("HA", Angle.HOURANGLE);
-		ac.equatorialCoord.HA.println("HA decimal", Angle.DECIMALHOURS);
-		ac.equatorialCoord.dec.println("dec", Angle.DEGREES);
-		// ac.equatorialCoord.println();
-		ac.equatorialToHorizonDS(52);
-		// ac.horizontalCoord.println();
-		ac.horizontalCoord.altitude.println("alt", Angle.DEGREES);
-		ac.horizontalCoord.azimuth.println("Az", Angle.DEGREES);
-		ac.horizontalCoord.altitude.println("alt", Angle.ARCDEGREES);
-		ac.horizontalCoord.azimuth.println("Az", Angle.ARCDEGREES);
+		Angle latitude= new Angle(52.,Angle.DEGREES);
+		AstroDateTimeLocation adt=new AstroDateTimeLocation(null, latitude);
+		ac.equatorialToHorizonDS(adt);
+		s = String.format("%-8s%-12s%-12s", "", "Expected", "JAT");
+		System.out.println(s);
+		t = String.format("%-8s%-12s%-12.6f", "Az", "283.271027", ac.horizontalCoord.azimuth.getDegrees());
+		System.out.println(t);
+		t = String.format("%-8s%-12s%-12s", "Az", "283 16'16''", ac.horizontalCoord.azimuth.getArcDegString());
+		System.out.println(t);
+		t = String.format("%-8s%-12s%-12.6f", "Alt", "19.334345", ac.horizontalCoord.altitude.getDegrees());
+		System.out.println(t);
+		t = String.format("%-8s%-12s%-12s", "Alt", "19 20'04''", ac.horizontalCoord.altitude.getArcDegString());
+		System.out.println(t);
 
 		System.out.println();
 		System.out.println("Azimuth and altitude for latitude 52 deg and longitude 64 West:");
-		
+		System.out.println("Convert right ascension 18h 32m 21s and declination 23 13' 10'' at longitude 64 West and latitude 52 to azimuth and altitude");
+
 		Angle longitude = new Angle(-64, Angle.DEGREES);
 		Angle RA = new Angle(18, 32, 21, Angle.HOURANGLE);
-		AstroDateTime adt = new AstroDateTime(1980, 4, 22, 14, 36, 52, "UTC", longitude);
-		//HA=AstroUtil.rightAscensionToHourAngle(adt, RA);		
+		AstroDateTimeLocation adt2 = new AstroDateTimeLocation(1980, 4, 22, 14, 36, 52, "UTC", longitude,latitude);
 		ac.equatorialCoord = new EquatorialCoord(null, RA, dec);
-		ac.equatorialCoord.println();
-		ac.equatorialToHorizonDS(adt,52);
-		ac.horizontalCoord.println();
+		ac.equatorialToHorizonDS(adt2);
+		t = String.format("%-8s%-12s%-12.6f", "Az", "283.271027", ac.horizontalCoord.azimuth.getDegrees());
+		System.out.println(t);
+		t = String.format("%-8s%-12s%-12s", "Az", "283 16'16''", ac.horizontalCoord.azimuth.getArcDegString());
+		System.out.println(t);
+		t = String.format("%-8s%-12s%-12.6f", "Alt", "19.334345", ac.horizontalCoord.altitude.getDegrees());
+		System.out.println(t);
+		t = String.format("%-8s%-12s%-12s", "Alt", "19 20'04''", ac.horizontalCoord.altitude.getArcDegString());
+		System.out.println(t);
 
 	}
+
+	public static void main(final String[] args) {
+
+		PractAstrTest25 p = new PractAstrTest25();
+		p.run();
+	}
+
 }

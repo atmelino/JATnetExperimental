@@ -27,13 +27,13 @@ public class AstroUtil {
 		return x - Math.floor(x);
 	}
 
-	public static Angle rightAscensionToHourAngle(AstroDateTime LST, Angle RA)
+	public static Angle rightAscensionToHourAngle(AstroDateTimeLocation LST, Angle RA)
 	{
 		Angle HA=LST.getLST().subtract(RA);
 		return HA;		
 	}
 
-	public static Angle hourAngleToRightAscension(AstroDateTime LST, Angle HA)
+	public static Angle hourAngleToRightAscension(AstroDateTimeLocation LST, Angle HA)
 	{
 		Angle RA=LST.getLST().subtract(HA);
 		return RA;		

@@ -11,12 +11,12 @@ public class PractAstrTest27 {
 		System.out.println("Practical Astronomy 27 ecliptic to equatorial coordinates conversion");
 
 		DateTime currentDateTime = new DateTime(1979, 12, 31, 0, 0, DateTimeZone.forID("UTC"));
-		AstroCoordinate rf = new AstroCoordinate();
+		AstroCoordinate ac = new AstroCoordinate();
 		Angle lambda = new Angle( 139, 41, 10, Angle.ARCDEGREES);
 		Angle beta = new Angle( 4, 52, 31, Angle.ARCDEGREES);
-		rf.eclipticCoord = new EclipticCoord(lambda, beta);
-		rf.eclipticCoord.println();
-		rf.eclipticToEquatorial(currentDateTime);
-		rf.equatorialCoord.println();
+		ac.eclipticCoord = new EclipticCoord(lambda, beta);
+		ac.eclipticCoord.println();
+		ac.eclipticToEquatorial(currentDateTime);
+		ac.equatorialCoord.println();
 	}
 }

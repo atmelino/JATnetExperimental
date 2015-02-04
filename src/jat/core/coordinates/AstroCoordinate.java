@@ -1,6 +1,5 @@
 package jat.core.coordinates;
 
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
@@ -22,8 +21,6 @@ import org.joda.time.Days;
  */
 public class AstroCoordinate {
 
-	private double latDeg;
-
 	// azimuth, altitude
 	public HorizontalCoord horizontalCoord;
 
@@ -35,32 +32,25 @@ public class AstroCoordinate {
 
 	String s, t;
 
-	public void equatorialToHorizon(int year, int month, int day, int hour, int minute, int second, double longitude,
-			double latitude) {
-		this.latDeg = latitude;
+	public void equatorialToHorizon(int year, int month, int day, int hour, int minute, int second, double longitude, double latitude) {
 		double haDeg, haRad;
 		double decRad;
 		double latRad;
 		double RADeg = equatorialCoord.RA.getDegrees();
 		double decDeg = equatorialCoord.dec.getDegrees();
 
-		// Hour angle
-		// t = String.format("%-5d%-4d%-4d%-4d%-4d%-4d", year, month, day, hour,
-		// minute, second);
-		// System.out.println(t);
 		haDeg = MST(year, month, day, hour, minute, second, longitude) - RADeg;
 
 		haDeg = AstroUtil.limitDegreesTo360(haDeg);
 
 		haRad = Math.toRadians(haDeg);
 		decRad = Math.toRadians(decDeg);
-		latRad = Math.toRadians(latDeg);
+		latRad = Math.toRadians(latitude);
 
 		double sin_alt = Math.sin(decRad) * Math.sin(latRad) + Math.cos(decRad) * Math.cos(latRad) * Math.cos(haRad);
 		double altRad = Math.asin(sin_alt);
 
-		double cos_azm = (Math.sin(decRad) - Math.sin(altRad) * Math.sin(latRad))
-				/ (Math.cos(altRad) * Math.cos(latRad));
+		double cos_azm = (Math.sin(decRad) - Math.sin(altRad) * Math.sin(latRad)) / (Math.cos(altRad) * Math.cos(latRad));
 		double azRad = Math.acos(cos_azm);
 
 		double altDeg = Math.toDegrees(altRad);
@@ -76,12 +66,31 @@ public class AstroCoordinate {
 
 	}
 
-	public void horizonToEquatorial() {
-		// System.out.println("horizonToEquatorial");
+
+	public void horizonToEquatorial(double LST) {
+		//horizonToEquatorial();
+
+		double RARad;
+		// equatorialCoord.HA.println("HA");
+		double temp = LST - equatorialCoord.HA.getHours();
+
+		if (temp < 0)
+			RARad = temp + 24;
+		else
+			RARad = temp;
+		Angle RA = new Angle(RARad, Angle.DECIMALHOURS);
+		Angle dec = equatorialCoord.dec;
+		equatorialCoord = new EquatorialCoord(null, RA, dec);
+
+	}
+
+	public void horizonToEquatorial(AstroDateTimeLocation adt) {
+		//double latitude = 2.;
 
 		double azRad = horizontalCoord.azimuth.getRadians();
 		double altRad = horizontalCoord.altitude.getRadians();
-		double latRad = Math.toRadians(latDeg);
+		//double latRad = Math.toRadians(latitude);
+		double latRad = adt.getLocalLatitude().getRadians();
 
 		double sinAlt = Math.sin(altRad);
 		double cosAlt = Math.cos(altRad);
@@ -107,29 +116,17 @@ public class AstroCoordinate {
 
 	}
 
-	public void horizonToEquatorial(double LST) {
-		horizonToEquatorial();
+	public void equatorialToHorizonDS(AstroDateTimeLocation adt) {
 
-		double RARad;
-		// equatorialCoord.HA.println("HA");
-		double temp = LST - equatorialCoord.HA.getHours();
-
-		if (temp < 0)
-			RARad = temp + 24;
-		else
-			RARad = temp;
-		Angle RA = new Angle(RARad, Angle.DECIMALHOURS);
-		Angle dec = equatorialCoord.dec;
-		equatorialCoord = new EquatorialCoord(null, RA, dec);
-
-	}
-
-	public void equatorialToHorizonDS(double latitude) {
-		this.latDeg = latitude;
+		if (equatorialCoord.RA != null) {
+			Angle HA = adt.getLST().subtract(equatorialCoord.RA);
+			Angle dec = equatorialCoord.dec;
+			equatorialCoord = new EquatorialCoord(HA, null, dec);
+		}
 
 		double HARAd = equatorialCoord.HA.getRadians();
 		double decRad = equatorialCoord.dec.getRadians();
-		double latRad = Math.toRadians(latDeg);
+		double latRad = adt.getLocalLatitude().getRadians();
 
 		double sinDec = Math.sin(decRad);
 		double cosDec = Math.cos(decRad);
@@ -153,16 +150,6 @@ public class AstroCoordinate {
 		Angle alt = new Angle(altRad, Angle.RADIANS);
 		horizontalCoord = new HorizontalCoord(az, alt);
 
-	}
-
-	public void equatorialToHorizonDS(AstroDateTime adt, double latitude) {
-		this.latDeg = latitude;
-
-		Angle HA = adt.getLST().subtract(equatorialCoord.RA);
-		Angle dec = equatorialCoord.dec;
-		equatorialCoord = new EquatorialCoord(HA, null, dec);
-		// equatorialCoord.println();
-		equatorialToHorizonDS(latitude);
 	}
 
 	public void eclipticToEquatorial(DateTime currentDateTime) {
@@ -249,60 +236,41 @@ public class AstroCoordinate {
 		double DFs = Math.toRadians(93.27191 + 483202.017538 * jt - 0.0036825 * jt2 + jt3 / 327270);
 		double OMs = Math.toRadians(125.04452 - 1934.136261 * jt + 0.0020708 * jt2 + jt3 / 450000);
 
-		double deltaPsi = -(171996 + 174.2 * jt) * Math.sin(OMs) - (13187 + 1.6 * jt)
-				* Math.sin(-2 * Ds + 2 * DFs + 2 * OMs) - (2274 + 0.2 * jt) * Math.sin(2 * DFs + 2 * OMs)
-				+ (2062 + 0.2 * jt) * Math.sin(2 * OMs) + (1426 - 3.4 * jt) * Math.sin(Ms) + (712 + 0.1 * jt)
-				* Math.sin(M1s);
-		deltaPsi += (-517 + 1.2 * jt) * Math.sin(-2 * Ds + Ms + 2 * DFs + 2 * OMs) - (386 + 0.4 * jt)
-				* Math.sin(2 * DFs + OMs) - 301 * Math.sin(M1s + 2 * DFs + 2 * OMs) + (217 - 0.5 * jt)
+		double deltaPsi = -(171996 + 174.2 * jt) * Math.sin(OMs) - (13187 + 1.6 * jt) * Math.sin(-2 * Ds + 2 * DFs + 2 * OMs) - (2274 + 0.2 * jt) * Math.sin(2 * DFs + 2 * OMs) + (2062 + 0.2 * jt)
+				* Math.sin(2 * OMs) + (1426 - 3.4 * jt) * Math.sin(Ms) + (712 + 0.1 * jt) * Math.sin(M1s);
+		deltaPsi += (-517 + 1.2 * jt) * Math.sin(-2 * Ds + Ms + 2 * DFs + 2 * OMs) - (386 + 0.4 * jt) * Math.sin(2 * DFs + OMs) - 301 * Math.sin(M1s + 2 * DFs + 2 * OMs) + (217 - 0.5 * jt)
 				* Math.sin(-2 * Ds - Ms + 2 * DFs + 2 * OMs) - 158 * Math.sin(-2 * Ds + M1s);
-		deltaPsi += (129 + 0.1 * jt) * Math.sin(-2 * Ds + 2 * DFs + OMs) + 123 * Math.sin(-M1s + 2 * DFs + 2 * OMs)
-				+ 63 * Math.sin(2 * Ds) + (63 + 0.1 * jt) * Math.sin(M1s + OMs) - 59
+		deltaPsi += (129 + 0.1 * jt) * Math.sin(-2 * Ds + 2 * DFs + OMs) + 123 * Math.sin(-M1s + 2 * DFs + 2 * OMs) + 63 * Math.sin(2 * Ds) + (63 + 0.1 * jt) * Math.sin(M1s + OMs) - 59
 				* Math.sin(2 * Ds - M1s + 2 * DFs + 2 * OMs) - (58 + 0.1 * jt) * Math.sin(-M1s + OMs);
 		deltaPsi -= 51 * Math.sin(M1s + 2 * DFs + OMs);
-		deltaPsi += 48 * Math.sin(-2 * Ds + 2 * M1s) + 46 * Math.sin(-2 * M1s + 2 * DFs + OMs) - 38
-				* Math.sin(2 * Ds + 2 * DFs + 2 * OMs) - 31 * Math.sin(2 * M1s + 2 * DFs + 2 * OMs) + 29
+		deltaPsi += 48 * Math.sin(-2 * Ds + 2 * M1s) + 46 * Math.sin(-2 * M1s + 2 * DFs + OMs) - 38 * Math.sin(2 * Ds + 2 * DFs + 2 * OMs) - 31 * Math.sin(2 * M1s + 2 * DFs + 2 * OMs) + 29
 				* Math.sin(2 * M1s) + 29 * Math.sin(-2 * Ds + M1s + 2 * DFs + 2 * OMs) + 26 * Math.sin(2 * DFs);
-		deltaPsi -= 22 * Math.sin(2 * DFs - 2 * Ds) + 21 * Math.sin(2 * DFs - M1s) + (17 - 0.1 * jt) * Math.sin(2 * Ms)
-				+ 16 * Math.sin(2 * Ds - M1s + OMs) - (16 - 0.1 * jt) * Math.sin(2 * (OMs + DFs + Ms - Ds)) - 15
-				* Math.sin(Ms + OMs) - 13 * Math.sin(OMs + M1s - 2 * Ds) - 12 * Math.sin(OMs - Ms);
-		deltaPsi += 11 * Math.sin(2 * (M1s - DFs)) - 10 * Math.sin(2 * Ds - M1s + 2 * DFs) - 8
-				* Math.sin(2 * Ds + M1s + 2 * DFs + 2 * OMs) + 7 * Math.sin(Ms + 2 * DFs + 2 * OMs) - 7
-				* Math.sin(Ms + M1s - 2 * Ds) - 7 * Math.sin(2 * DFs + 2 * OMs - Ms) - 7
-				* Math.sin(2 * Ds + 2 * DFs + OMs);
+		deltaPsi -= 22 * Math.sin(2 * DFs - 2 * Ds) + 21 * Math.sin(2 * DFs - M1s) + (17 - 0.1 * jt) * Math.sin(2 * Ms) + 16 * Math.sin(2 * Ds - M1s + OMs) - (16 - 0.1 * jt)
+				* Math.sin(2 * (OMs + DFs + Ms - Ds)) - 15 * Math.sin(Ms + OMs) - 13 * Math.sin(OMs + M1s - 2 * Ds) - 12 * Math.sin(OMs - Ms);
+		deltaPsi += 11 * Math.sin(2 * (M1s - DFs)) - 10 * Math.sin(2 * Ds - M1s + 2 * DFs) - 8 * Math.sin(2 * Ds + M1s + 2 * DFs + 2 * OMs) + 7 * Math.sin(Ms + 2 * DFs + 2 * OMs) - 7
+				* Math.sin(Ms + M1s - 2 * Ds) - 7 * Math.sin(2 * DFs + 2 * OMs - Ms) - 7 * Math.sin(2 * Ds + 2 * DFs + OMs);
 		deltaPsi += 6 * Math.sin(2 * Ds + M1s);
-		deltaPsi += 6 * Math.sin(2 * (OMs + DFs + M1s - Ds)) + 6 * Math.sin(OMs + 2 * DFs + M1s - 2 * Ds) - 6
-				* Math.sin(2 * Ds - 2 * M1s + OMs) - 6 * Math.sin(2 * Ds + OMs) + 5 * Math.sin(M1s - Ms) - 5
-				* Math.sin(OMs + 2 * DFs - Ms - 2 * Ds) - 5 * Math.sin(OMs - 2 * Ds) - 5
-				* Math.sin(OMs + 2 * DFs + 2 * M1s);
-		deltaPsi += 4 * Math.sin(OMs - 2 * M1s - 2 * Ds) + 4 * Math.sin(OMs + 2 * DFs + Ms - 2 * Ds) + 4
-				* Math.sin(M1s - 2 * DFs) - 4 * Math.sin(M1s - Ds) - 4 * Math.sin(Ms - 2 * Ds) - 4 * Math.sin(Ds) + 3
-				* Math.sin(2 * DFs + M1s) - 3 * Math.sin(2 * (OMs + DFs - M1s)) - 3 * Math.sin(M1s - Ms - Ds);
+		deltaPsi += 6 * Math.sin(2 * (OMs + DFs + M1s - Ds)) + 6 * Math.sin(OMs + 2 * DFs + M1s - 2 * Ds) - 6 * Math.sin(2 * Ds - 2 * M1s + OMs) - 6 * Math.sin(2 * Ds + OMs) + 5 * Math.sin(M1s - Ms)
+				- 5 * Math.sin(OMs + 2 * DFs - Ms - 2 * Ds) - 5 * Math.sin(OMs - 2 * Ds) - 5 * Math.sin(OMs + 2 * DFs + 2 * M1s);
+		deltaPsi += 4 * Math.sin(OMs - 2 * M1s - 2 * Ds) + 4 * Math.sin(OMs + 2 * DFs + Ms - 2 * Ds) + 4 * Math.sin(M1s - 2 * DFs) - 4 * Math.sin(M1s - Ds) - 4 * Math.sin(Ms - 2 * Ds) - 4
+				* Math.sin(Ds) + 3 * Math.sin(2 * DFs + M1s) - 3 * Math.sin(2 * (OMs + DFs - M1s)) - 3 * Math.sin(M1s - Ms - Ds);
 		deltaPsi -= 3 * Math.sin(M1s + Ms);
-		deltaPsi -= 3 * Math.sin(2 * OMs + 2 * DFs + M1s - Ms) - 3 * Math.sin(2 * OMs + 2 * DFs - M1s - Ms + 2 * Ds)
-				- 3 * Math.sin(2 * OMs + 2 * DFs + 3 * M1s) - 3 * Math.sin(2 * OMs + 2 * DFs - Ms + 2 * Ds);
+		deltaPsi -= 3 * Math.sin(2 * OMs + 2 * DFs + M1s - Ms) - 3 * Math.sin(2 * OMs + 2 * DFs - M1s - Ms + 2 * Ds) - 3 * Math.sin(2 * OMs + 2 * DFs + 3 * M1s) - 3
+				* Math.sin(2 * OMs + 2 * DFs - Ms + 2 * Ds);
 		deltaPsi *= 0.0001 / 3600;
 
-		double deltaEps = (92025 + 8.9 * jt) * Math.cos(OMs) + (5736 - 3.1 * jt)
-				* Math.cos(-2 * Ds + 2 * DFs + 2 * OMs) + (977 - 0.5 * jt) * Math.cos(2 * DFs + 2 * OMs)
-				+ (-895 + 0.5 * jt) * Math.cos(2 * OMs) + (54 - 0.1 * jt) * Math.cos(Ms) - 7 * Math.cos(M1s);
-		deltaEps += (224 - 0.6 * jt) * Math.cos(-2 * Ds + Ms + 2 * DFs + 2 * OMs) + 200 * Math.cos(2 * DFs + OMs)
-				+ (129 - 0.1 * jt) * Math.cos(M1s + 2 * DFs + 2 * OMs) + (-95 + 0.3 * jt)
+		double deltaEps = (92025 + 8.9 * jt) * Math.cos(OMs) + (5736 - 3.1 * jt) * Math.cos(-2 * Ds + 2 * DFs + 2 * OMs) + (977 - 0.5 * jt) * Math.cos(2 * DFs + 2 * OMs) + (-895 + 0.5 * jt)
+				* Math.cos(2 * OMs) + (54 - 0.1 * jt) * Math.cos(Ms) - 7 * Math.cos(M1s);
+		deltaEps += (224 - 0.6 * jt) * Math.cos(-2 * Ds + Ms + 2 * DFs + 2 * OMs) + 200 * Math.cos(2 * DFs + OMs) + (129 - 0.1 * jt) * Math.cos(M1s + 2 * DFs + 2 * OMs) + (-95 + 0.3 * jt)
 				* Math.cos(-2 * Ds - Ms + 2 * DFs + 2 * OMs) - 70 * Math.cos(-2 * Ds + 2 * DFs + OMs);
-		deltaEps -= 53 * Math.cos(-M1s + 2 * DFs + 2 * OMs) - 33 * Math.cos(M1s + OMs) + 26
-				* Math.cos(2 * Ds - M1s + 2 * DFs + 2 * OMs) + 32 * Math.cos(-M1s + OMs) + 27
+		deltaEps -= 53 * Math.cos(-M1s + 2 * DFs + 2 * OMs) - 33 * Math.cos(M1s + OMs) + 26 * Math.cos(2 * Ds - M1s + 2 * DFs + 2 * OMs) + 32 * Math.cos(-M1s + OMs) + 27
 				* Math.cos(M1s + 2 * DFs + OMs) - 24 * Math.cos(-2 * M1s + 2 * DFs + OMs);
-		deltaEps += 16 * Math.cos(2 * (Ds + DFs + OMs)) + 13 * Math.cos(2 * (M1s + DFs + OMs)) - 12
-				* Math.cos(2 * OMs + 2 * DFs + M1s - 2 * Ds) - 10 * Math.cos(OMs + 2 * DFs - M1s) - 8
+		deltaEps += 16 * Math.cos(2 * (Ds + DFs + OMs)) + 13 * Math.cos(2 * (M1s + DFs + OMs)) - 12 * Math.cos(2 * OMs + 2 * DFs + M1s - 2 * Ds) - 10 * Math.cos(OMs + 2 * DFs - M1s) - 8
 				* Math.cos(2 * Ds - M1s + OMs) + 7 * Math.cos(2 * (OMs + DFs + Ms - Ds)) + 9 * Math.cos(Ms + OMs);
-		deltaEps += 7 * Math.cos(OMs + M1s - 2 * Ds) + 6 * Math.cos(OMs - Ms) + 5
-				* Math.cos(OMs + 2 * DFs - M1s + 2 * Ds) + 3 * Math.cos(2 * OMs + 2 * DFs + M1s + 2 * Ds) - 3
-				* Math.cos(2 * OMs + 2 * DFs + Ms) + 3 * Math.cos(2 * OMs + 2 * DFs - Ms) + 3
-				* Math.cos(OMs + 2 * DFs + 2 * Ds);
-		deltaEps -= 3 * Math.cos(2 * (OMs + DFs + M1s - Ds)) - 3 * Math.cos(OMs + 2 * DFs + M1s - 2 * Ds) + 3
-				* Math.cos(OMs - 2 * M1s + 2 * Ds) + 3 * Math.cos(OMs + 2 * Ds) + 3
-				* Math.cos(OMs + 2 * DFs - Ms - 2 * Ds) + 3 * Math.cos(OMs - 2 * Ds) + 3
-				* Math.cos(OMs + 2 * DFs + 2 * M1s);
+		deltaEps += 7 * Math.cos(OMs + M1s - 2 * Ds) + 6 * Math.cos(OMs - Ms) + 5 * Math.cos(OMs + 2 * DFs - M1s + 2 * Ds) + 3 * Math.cos(2 * OMs + 2 * DFs + M1s + 2 * Ds) - 3
+				* Math.cos(2 * OMs + 2 * DFs + Ms) + 3 * Math.cos(2 * OMs + 2 * DFs - Ms) + 3 * Math.cos(OMs + 2 * DFs + 2 * Ds);
+		deltaEps -= 3 * Math.cos(2 * (OMs + DFs + M1s - Ds)) - 3 * Math.cos(OMs + 2 * DFs + M1s - 2 * Ds) + 3 * Math.cos(OMs - 2 * M1s + 2 * Ds) + 3 * Math.cos(OMs + 2 * Ds) + 3
+				* Math.cos(OMs + 2 * DFs - Ms - 2 * Ds) + 3 * Math.cos(OMs - 2 * Ds) + 3 * Math.cos(OMs + 2 * DFs + 2 * M1s);
 		deltaEps *= 0.0001 / 3600;
 
 		double eps = (21.448 / 60 + 26) / 60 + 23 + (-46.815 * jt - 0.00059 * jt2 + 0.001813 * jt3) / 3600;
@@ -338,14 +306,14 @@ public class AstroCoordinate {
 		// System.out.println("Days Since Epoch: " + days.getDays());
 
 		double N0 = 360 / 365.242191 * days.getDays();
-		//System.out.println("N0: " + N0);
-		
-		double N=AstroUtil.limitDegreesTo360(N0);
-		//System.out.println("N: " + N);
+		// System.out.println("N0: " + N0);
+
+		double N = AstroUtil.limitDegreesTo360(N0);
+		// System.out.println("N: " + N);
 
 		// mean anomaly
 		double M0 = N + Constants.eps_g_1990 - Constants.omega_g_1990;
-		double M=AstroUtil.limitDegreesTo360(M0);
+		double M = AstroUtil.limitDegreesTo360(M0);
 		// System.out.println("M: " + M);
 
 		double MRad = Math.toRadians(M);
