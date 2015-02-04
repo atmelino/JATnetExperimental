@@ -6,7 +6,7 @@ import jat.core.coordinates.*;
 
 public class PractAstrTest27 {
 
-	public static void main(final String[] args) {
+	public void run() {
 		String s, t;
 
 		System.out.println("Practical Astronomy 27 ecliptic to equatorial coordinates conversion");
@@ -14,12 +14,12 @@ public class PractAstrTest27 {
 
 		DateTime currentDateTime = new DateTime(1979, 12, 31, 0, 0, DateTimeZone.forID("UTC"));
 		AstroCoordinate ac = new AstroCoordinate();
-		Angle lambda = new Angle( 139, 41, 10, Angle.ARCDEGREES);
-		Angle beta = new Angle( 4, 52, 31, Angle.ARCDEGREES);
+		Angle lambda = new Angle(139, 41, 10, Angle.ARCDEGREES);
+		Angle beta = new Angle(4, 52, 31, Angle.ARCDEGREES);
 		ac.eclipticCoord = new EclipticCoord(lambda, beta);
-		ac.eclipticCoord.println();
+		// ac.eclipticCoord.println();
 		ac.eclipticToEquatorial(currentDateTime);
-		ac.equatorialCoord.println();
+		// ac.equatorialCoord.println();
 
 		s = String.format("%-8s%-12s%-12s", "", "Expected", "JAT");
 		System.out.println(s);
@@ -32,15 +32,11 @@ public class PractAstrTest27 {
 		t = String.format("%-8s%-12s%-12s", "dec", "19 32'14.2''", ac.equatorialCoord.dec.getArcDegString());
 		System.out.println(t);
 
-	
-	
 	}
-	
-	public void run() {
 
+	public static void main(final String[] args) {
 		PractAstrTest27 p = new PractAstrTest27();
 		p.run();
 	}
 
-	
 }
