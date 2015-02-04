@@ -116,8 +116,12 @@ public class AstroDateTimeLocation {
 		convert();
 	}
 
-	public Angle getLST() {
+	public boolean isLSTNull() {
+		boolean retval = (LST == null ? true : false);
+		return retval;
+	}
 
+	public Angle getLST() {
 		try {
 			LST.toString();
 		} catch (NullPointerException e) {
@@ -133,7 +137,7 @@ public class AstroDateTimeLocation {
 		LST = lST;
 		convert();
 	}
-	
+
 	public Angle getLocalLongitude() {
 		return localLongitude;
 	}
@@ -149,7 +153,6 @@ public class AstroDateTimeLocation {
 	public void setLocalLongitude(Angle localLongitude) {
 		this.localLongitude = localLongitude;
 	}
-
 
 	private void convert() {
 

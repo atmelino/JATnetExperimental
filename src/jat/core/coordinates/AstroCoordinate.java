@@ -67,29 +67,12 @@ public class AstroCoordinate {
 	}
 
 
-	public void horizonToEquatorial(double LST) {
-		//horizonToEquatorial();
-
-		double RARad;
-		// equatorialCoord.HA.println("HA");
-		double temp = LST - equatorialCoord.HA.getHours();
-
-		if (temp < 0)
-			RARad = temp + 24;
-		else
-			RARad = temp;
-		Angle RA = new Angle(RARad, Angle.DECIMALHOURS);
-		Angle dec = equatorialCoord.dec;
-		equatorialCoord = new EquatorialCoord(null, RA, dec);
-
-	}
-
 	public void horizonToEquatorial(AstroDateTimeLocation adt) {
-		//double latitude = 2.;
+		// double latitude = 2.;
 
 		double azRad = horizontalCoord.azimuth.getRadians();
 		double altRad = horizontalCoord.altitude.getRadians();
-		//double latRad = Math.toRadians(latitude);
+		// double latRad = Math.toRadians(latitude);
 		double latRad = adt.getLocalLatitude().getRadians();
 
 		double sinAlt = Math.sin(altRad);
@@ -101,18 +84,26 @@ public class AstroCoordinate {
 
 		double decRad = Math.asin(sinAlt * sinLat + cosAlt * cosLat * cosAz);
 		double HAprimeRad = Math.acos((sinAlt - sinLat * Math.sin(decRad)) / (cosLat * Math.cos(decRad)));
+		// equatorialCoord.HA.println("HA");
 
-		double HARad;
-
-		// System.out.println(sinAz);
-		if (sinAz < 0)
-			HARad = HAprimeRad;
-		else
-			HARad = 2 * Math.PI - HAprimeRad;
+		double HARad = AstroUtil.limitRadiansTo2PI(HAprimeRad);
 
 		Angle HA = new Angle(HARad, Angle.RADIANS);
 		Angle dec = new Angle(decRad, Angle.RADIANS);
 		equatorialCoord = new EquatorialCoord(HA, null, dec);
+
+		if (!adt.isLSTNull()) {
+			double RARad;
+			double temp = adt.getLST().getHours() - equatorialCoord.HA.getHours();
+
+			if (temp < 0)
+				RARad = temp + 24;
+			else
+				RARad = temp;
+			Angle RA = new Angle(RARad, Angle.DECIMALHOURS);
+			dec = equatorialCoord.dec;
+			equatorialCoord = new EquatorialCoord(null, RA, dec);
+		}
 
 	}
 

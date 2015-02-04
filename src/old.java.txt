@@ -1,5 +1,30 @@
 
 
+
+	public void horizonToEquatorial(double LST) {
+		// horizonToEquatorial();
+
+		double RARad;
+		// equatorialCoord.HA.println("HA");
+		double temp = LST - equatorialCoord.HA.getHours();
+
+		if (temp < 0)
+			RARad = temp + 24;
+		else
+			RARad = temp;
+		Angle RA = new Angle(RARad, Angle.DECIMALHOURS);
+		Angle dec = equatorialCoord.dec;
+		equatorialCoord = new EquatorialCoord(null, RA, dec);
+
+	}
+
+
+		// System.out.println(sinAz);
+		if (sinAz < 0)
+			HARad = HAprimeRad;
+		else
+			HARad = 2 * Math.PI - HAprimeRad;
+
 	public void equatorialToHorizonDS(AstroDateTimeLocation adt, double latitude) {
 
 		Angle HA = adt.getLST().subtract(equatorialCoord.RA);
