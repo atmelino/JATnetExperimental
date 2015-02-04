@@ -1,5 +1,9 @@
 
 
+		// AstroDateTimeLocation adt2 = new AstroDateTimeLocation(1980, 4, 22,
+		// 14, 36, 51,670, "UTC", longitude, latitude);
+
+		// this(year, month, day, hour, minute, second, TZString);
 
 	public void horizonToEquatorial(double LST) {
 		// horizonToEquatorial();

@@ -7,6 +7,7 @@ public class PractAstrTestAll {
 
 		new PractAstrTest04().run();
 		new PractAstrTest12().run();
+		new PractAstrTest13().run();
 		new PractAstrTest14().run();
 		new PractAstrTest24().run();
 		new PractAstrTest25().run();
