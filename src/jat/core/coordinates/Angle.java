@@ -101,6 +101,7 @@ public class Angle {
 	void convert() {
 
 		degrees = Math.toDegrees(radians);
+		//System.out.println(degrees+ " degrees");
 		hours = degrees / 15.;
 
 		// Angle expressed as SHA in degrees, minutes, seconds

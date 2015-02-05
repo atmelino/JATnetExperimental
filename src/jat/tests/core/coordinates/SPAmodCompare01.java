@@ -9,7 +9,7 @@ import java.util.SimpleTimeZone;
 
 import solarpositioning.JulianDate;
 
-public class SPAmodTest01 {
+public class SPAmodCompare01 {
 
 	public static void main(String[] args) {
 		String s, t;

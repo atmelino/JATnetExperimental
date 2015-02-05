@@ -12,7 +12,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 
-public class SPAmodTest02 {
+public class SPAmodCompare02 {
 	public class dataSet {
 		int timeZoneOffset;
 		String timeZoneString;
@@ -46,7 +46,7 @@ public class SPAmodTest02 {
 	}
 	public static void main(String[] args) {
 		String s, t;
-		SPAmodTest02 jsp = new SPAmodTest02();
+		SPAmodCompare02 jsp = new SPAmodCompare02();
 		dataSet ds;
 
 		dataSet Greenwich = jsp.new dataSet(0,"UTC", 1980, 1, 27, 12, 0, 0, 52., 0., 1830.14);
