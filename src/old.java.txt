@@ -1,5 +1,17 @@
 
 
+
+			//decRad = Math.asin(Math.sin(altRad) * Math.sin(latRad) + Math.cos(altRad) * Math.cos(latRad) * Math.cos(azRad));
+			//HA = Math.acos((Math.sin(altRad) - Math.sin(latRad) * Math.sin(decRad)) / Math.cos(latRad) * Math.cos(decRad));
+			// HA = 0.7;
+			// String t = String.format("%-12d%-12.5f%-12.5f%-12.5f%-12.5f",
+			// hour, az, alt, dec, HA);
+			// System.out.println(t); azRad =
+			// org.apache.commons.math3.util.FastMath.toRadians(az);
+			// t = String.format("%-12d%-12.5f%-12.5f%-12.5f%-12.5f%-12.5f",
+			// hour, az, alt, x, y, z);
+
+
 		// AstroDateTimeLocation adt2 = new AstroDateTimeLocation(1980, 4, 22,
 		// 14, 36, 51,670, "UTC", longitude, latitude);
 

@@ -182,8 +182,8 @@ public class AstroDateTimeLocation {
 		}
 	}
 
-	private void convertFromGST() {
-	}
+	//private void convertFromGST() {
+	//}
 
 	private void julianDate() {
 

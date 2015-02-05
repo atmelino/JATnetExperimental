@@ -79,7 +79,7 @@ public class AstroCoordinate {
 		double cosAlt = Math.cos(altRad);
 		double sinLat = Math.sin(latRad);
 		double cosLat = Math.cos(latRad);
-		double sinAz = Math.sin(azRad);
+		//double sinAz = Math.sin(azRad);
 		double cosAz = Math.cos(azRad);
 
 		double decRad = Math.asin(sinAlt * sinLat + cosAlt * cosLat * cosAz);
@@ -273,8 +273,8 @@ public class AstroCoordinate {
 		gst = AstroUtil.limitDegreesTo360(gst);
 		// System.out.println("gst" + gst / 15);
 
-		double d1 = ((gst / 15 - Math.floor(gst / 15)) * 60);
-		double d2 = ((d1 - Math.floor(d1)) * 60);
+		//double d1 = ((gst / 15 - Math.floor(gst / 15)) * 60);
+		//double d2 = ((d1 - Math.floor(d1)) * 60);
 		// System.out.println("gsth" + Math.floor(gst / 15) + "h" +
 		// Math.floor(d1) + "m" + d2 + "s");
 
@@ -282,15 +282,15 @@ public class AstroCoordinate {
 		mst = AstroUtil.limitDegreesTo360(mst);
 		// System.out.println("mst" + mst / 15);
 
-		d1 = ((mst / 15 - Math.floor(mst / 15)) * 60);
-		d2 = ((d1 - Math.floor(d1)) * 60);
+		//d1 = ((mst / 15 - Math.floor(mst / 15)) * 60);
+		//d2 = ((d1 - Math.floor(d1)) * 60);
 		// System.out.println("lsth" + Math.floor(mst / 15) + "h" +
 		// Math.floor(d1) + "m" + d2 + "s");
 
 		return mst;
 	}
 
-	public void sunPosition(DateTime epoch, DateTime currentDateTime) {
+	public void sunPositionDS(DateTime epoch, DateTime currentDateTime) {
 		// System.out.println("sunPosition");
 
 		Days days = Days.daysBetween(epoch, currentDateTime);

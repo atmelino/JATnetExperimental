@@ -19,13 +19,13 @@ public class SPATest {
 		//AzimuthZenithAngle result = SPA.calculateSolarPosition(time, 39.742476, -105.1786, 1830.14, 67, 820, 11);
 
 		
-		GregorianCalendar time = new GregorianCalendar(new SimpleTimeZone(-6 * 60 * 60 * 1000, "LST"));
+		GregorianCalendar date = new GregorianCalendar(new SimpleTimeZone(-6 * 60 * 60 * 1000, "LST"));
 		//time.set(2015, Calendar.JANUARY, 19, 22, 00, 00); 
 		//time.set(2015, Calendar.APRIL, 19, 22, 00, 00); 
-		time.set(2015, Calendar.DECEMBER, 19, 22, 00, 00); 
+		date.set(2015, Calendar.DECEMBER, 19, 22, 00, 00); 
 
 		//AzimuthZenithAngle result = SPA.calculateSolarPosition(time, 27.41305, -82.66034, 1830.14, 67, 820, 11);
-		AzimuthZenithAngle result = SPA.calculateSolarPosition(time, 30.25, -97.75, 1830.14, 67, 820, 11);
+		AzimuthZenithAngle result = SPA.calculateSolarPosition(date, 30.25, -97.75, 1830.14, 67, 820, 11);
 
 		System.out.println(result.getAzimuth());
 		System.out.println(90-result.getZenithAngle());

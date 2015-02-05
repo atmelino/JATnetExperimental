@@ -1,4 +1,4 @@
-package jat.examples.coordinates;
+package jat.tests.core.coordinates;
 
 import jat.core.coordinates.Angle;
 

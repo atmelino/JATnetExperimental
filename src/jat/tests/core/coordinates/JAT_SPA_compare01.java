@@ -1,17 +1,20 @@
-package jat.examples.coordinates;
+package jat.tests.core.coordinates;
 
 import jat.core.coordinates.Angle;
 import jat.core.coordinates.AstroCoordinate;
 import jat.core.coordinates.AstroDateTimeLocation;
 import jat.core.coordinates.AstroUtil;
 
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+
 import solarpositioning.AzimuthZenithAngle;
 import solarpositioning.SPA;
+
 
 public class JAT_SPA_compare01 {
 
@@ -58,7 +61,7 @@ public class JAT_SPA_compare01 {
 		ds = Austin;
 
 		// System.out.println(month);
-		System.out.println("Sun Position SPA vs. JAT");
+		System.out.println("Sun Position SPA original vs. JAT");
 		s = String.format("TimeZone %8s offset %3d date %2d/%2d/%4d lat %-6.2f lon %-6.2f",ds.timeZoneString, ds.timeZoneOffset, ds.month + 1,
 				ds.day, ds.year, ds.latitude, ds.longitude);
 		System.out.println(s);
@@ -69,10 +72,10 @@ public class JAT_SPA_compare01 {
 		for (int hour = 0; hour < 24; hour++) {
 			// System.out.println("hour " + hour);
 
-			GregorianCalendar time = new GregorianCalendar(
+			GregorianCalendar date = new GregorianCalendar(
 					new SimpleTimeZone(ds.timeZoneOffset * 60 * 60 * 1000, "LST"));
-			time.set(ds.year, ds.month, ds.day, hour, ds.minute, ds.second);
-			AzimuthZenithAngle result = SPA.calculateSolarPosition(time, ds.latitude, ds.longitude, ds.elevation, 67,
+			date.set(ds.year, ds.month, ds.day, hour, ds.minute, ds.second);
+			AzimuthZenithAngle result = SPA.calculateSolarPosition(date, ds.latitude, ds.longitude, ds.elevation, 67,
 					820, 11);
 			double SPAnu = SPA.getNuDegrees();
 			double SPARA = SPA.getAlphaDegrees();
@@ -87,7 +90,7 @@ public class JAT_SPA_compare01 {
 			AstroCoordinate ac = new AstroCoordinate();
 			DateTime epoch = new DateTime(1990, 1, 1, 0, 0, DateTimeZone.forID("UTC"));
 			DateTime currentDateTime = new DateTime(ds.year, ds.month + 1, ds.day, hour, 0);
-			ac.sunPosition(epoch, currentDateTime);
+			ac.sunPositionDS(epoch, currentDateTime);
 			ac.eclipticToEquatorial(currentDateTime);
 			double acRA = ac.equatorialCoord.RA.getDegrees();
 			double acdec = ac.equatorialCoord.dec.getDegrees();
