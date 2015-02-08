@@ -47,11 +47,14 @@ public class SPA {
 	private SPA() {
 	}
 
-	public static AstroCoordinate getSolarPosition(final AstroDateTimeLocation adt, final double latitude, final double longitude, final double elevation, final double deltaT, final double pressure,
+	public static AstroCoordinate getSolarPosition(final AstroDateTimeLocation adt,  final double elevation, final double deltaT, final double pressure,
 			final double temperature) {
 
 		AstroCoordinate ac = new AstroCoordinate();
 
+		final double longitude=adt.getLocalLongitude().getDegrees();
+		final double latitude=adt.getLocalLatitude().getDegrees();
+		
 		// calculate Julian (ephemeris) date and millennium
 		final JulianDateJoda jd = new JulianDateJoda(adt, deltaT);
 		final double jme = jd.getJulianEphemerisMillennium();

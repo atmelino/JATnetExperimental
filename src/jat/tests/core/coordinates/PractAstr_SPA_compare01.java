@@ -14,7 +14,7 @@ import org.joda.time.DateTimeZone;
 import solarpositioning.AzimuthZenithAngle;
 import solarpositioning.SPA;
 
-public class JAT_SPA_compare01 {
+public class PractAstr_SPA_compare01 {
 
 	public class dataSet {
 		int timeZoneOffset;
@@ -49,7 +49,7 @@ public class JAT_SPA_compare01 {
 
 	public static void main(final String[] args) {
 		String s, t;
-		JAT_SPA_compare01 jsp = new JAT_SPA_compare01();
+		PractAstr_SPA_compare01 jsp = new PractAstr_SPA_compare01();
 		dataSet ds;
 
 		dataSet Greenwich = jsp.new dataSet(0, "UTC", 1980, Calendar.JANUARY, 27, 12, 0, 0, 52., 0., 1830.14);

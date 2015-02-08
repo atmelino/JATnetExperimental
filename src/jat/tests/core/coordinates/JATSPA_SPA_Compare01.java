@@ -9,12 +9,13 @@ import java.util.SimpleTimeZone;
 
 import solarpositioning.JulianDate;
 
-public class SPAmodCompare01 {
+public class JATSPA_SPA_Compare01 {
 
 	public static void main(String[] args) {
 		String s, t;
 
 		System.out.println("Test for SPA modified to use JodaTime instead of java.util");
+		System.out.println("Should give the same result");
 
 		
 		GregorianCalendar date = new GregorianCalendar(new SimpleTimeZone(-6 * 60 * 60 * 1000, "LST"));

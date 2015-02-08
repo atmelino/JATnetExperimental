@@ -12,7 +12,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 
-public class SPAmodCompare02 {
+public class PractAstr_JATSPA_compare01 {
 	public class dataSet {
 		int timeZoneOffset;
 		String timeZoneString;
@@ -46,11 +46,11 @@ public class SPAmodCompare02 {
 	}
 	public static void main(String[] args) {
 		String s, t;
-		SPAmodCompare02 jsp = new SPAmodCompare02();
+		PractAstr_JATSPA_compare01 jsp = new PractAstr_JATSPA_compare01();
 		dataSet ds;
 
 		dataSet Greenwich = jsp.new dataSet(0,"UTC", 1980, 1, 27, 12, 0, 0, 52., 0., 1830.14);
-		dataSet Austin = jsp.new dataSet(-6, "CST6CDT",2015, 2, 2, 12, 0, 0, 30., -97., 1830.14);
+		dataSet Austin = jsp.new dataSet(-6, "CST6CDT",2015, 2, 7, 12, 0, 0, 30., -97., 1830.14);
 		ds = Greenwich;
 		ds = Austin;
 

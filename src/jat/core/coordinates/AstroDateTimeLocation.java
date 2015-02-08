@@ -125,6 +125,11 @@ public class AstroDateTimeLocation {
 		convert();
 	}
 
+	public void advanceJD(double days) {
+		JD += days;
+		//convert();
+	}
+
 	public Angle getGST() {
 		return GST;
 	}

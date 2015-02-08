@@ -1,6 +1,18 @@
 
 
 
+
+
+
+		System.out.println("JD="+adt.getJD());
+		// ac.eclipticCoord.lambda.println("ecliptic longitude",
+		// Angle.ARCDEGREES);
+		// ac.eclipticCoord.beta.println("ecliptic latitude", Angle.DEGREES);
+		//ac.equatorialCoord.println();
+		// ac.equatorialCoord.println();
+		//ac.horizontalCoord.println();
+
+
 			//decRad = Math.asin(Math.sin(altRad) * Math.sin(latRad) + Math.cos(altRad) * Math.cos(latRad) * Math.cos(azRad));
 			//HA = Math.acos((Math.sin(altRad) - Math.sin(latRad) * Math.sin(decRad)) / Math.cos(latRad) * Math.cos(decRad));
 			// HA = 0.7;
