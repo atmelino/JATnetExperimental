@@ -31,12 +31,12 @@ public class SunPosLoop {
 	private static void printTable(AstroDateTimeLocation adt, AstroCoordinate ac) {
 		String t;
 
-		String tf = "%-12.2f%-14s%-14s%-14s%-14s%-14s%-14s";
+		String tf = "%-12.2f%-14s%-14.4f%-14s%-14.2f%-14s%-14.2f";
 
 		t = String.format(tf, adt.getJD(), ac.eclipticCoord.lambda.getArcDegString(),
-				ac.eclipticCoord.beta.getArcDegString(), ac.equatorialCoord.RA.getHAString(),
-				ac.equatorialCoord.dec.getArcDegString(), ac.horizontalCoord.azimuth.getArcDegString(),
-				ac.horizontalCoord.altitude.getArcDegString());
+				ac.eclipticCoord.beta.getDegrees(), ac.equatorialCoord.RA.getHAString(),
+				ac.equatorialCoord.dec.getDegrees(), ac.horizontalCoord.azimuth.getArcDegString(),
+				ac.horizontalCoord.altitude.getDegrees());
 		System.out.println(t);
 	}
 
