@@ -83,7 +83,7 @@ public class PractAstr_SPA_compare01 {
 			DateTime epoch = new DateTime(1990, 1, 1, 0, 0, DateTimeZone.forID("UTC"));
 			DateTime currentDateTime = new DateTime(ds.year, ds.month + 1, ds.day, hour, 0);
 			ac.sunPositionDS(epoch, currentDateTime);
-			ac.eclipticCoord.println();
+			//ac.eclipticCoord.println();
 			ac.eclipticToEquatorial(currentDateTime);
 			double acRA = ac.equatorialCoord.RA.getDegrees();
 			double acdec = ac.equatorialCoord.dec.getDegrees();
