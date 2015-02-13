@@ -1,0 +1,96 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Adding a Timepicker to jQuery UI Datepicker</title>
+<meta name="Description"
+	content="jQuery Timepicker Addon.  Add a timepicker to your jQuery UI Datepicker.  With options to show only time, format time, and much more." />
+<meta name="Keywords" content="jQuery, UI, datepicker, timepicker, datetime, time, format" />
+
+
+
+<link rel="stylesheet" media="all" type="text/css"
+	href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" media="all" type="text/css"
+	href="../libjs/jqueryPlugin/timepicker/jquery-ui-timepicker-addon.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+<script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/jquery-ui-sliderAccess.js"></script>
+
+<script type='text/javascript'>
+	var ex13;
+	$(document).ready(function() {
+
+		ex13 = $('#basic_example_1');
+
+		$('#utility_example_1_setdt').click(function() {
+			ex13.datetimepicker('setDate', (new Date()));
+		});
+
+		ex13.datetimepicker({
+			timeFormat : 'HH:mm:ss z',
+			stepHour : 1,
+			stepMinute : 1,
+			stepSecond : 1,
+			hourGrid : 4,
+			minuteGrid : 10,
+			secondGrid : 10,
+		});
+
+	});
+
+	var c = 0;
+	var t;
+	var timer_is_on = 0;
+
+	function timedCount() {
+		//document.getElementById('basic_example_1').value = c;
+		ex13.datetimepicker('setDate', (new Date()));
+		c = c + 1;
+		t = setTimeout(function() {
+			timedCount()
+		}, 1000);
+	}
+
+	function doTimer() {
+		if (!timer_is_on) {
+			timer_is_on = 1;
+			timedCount();
+		}
+	}
+
+	function stopCount() {
+		clearTimeout(t);
+		timer_is_on = 0;
+	}
+
+	function liveClicked() {
+		if (document.getElementById('livecb').checked) {
+			doTimer();
+		} else {
+			stopCount();
+		}
+	}
+</script>
+
+
+</head>
+<body>
+
+	<div>
+		<input type="checkbox" onclick="liveClicked()" name="live" id="livecb" value="male" /> live
+	</div>
+	<div>
+		<input type="text" name="basic_example_1" id="basic_example_1" value="" />
+	</div>
+
+
+
+
+
+
+</body>
+</html>
