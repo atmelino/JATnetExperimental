@@ -11,14 +11,27 @@
 
 
 <link rel="stylesheet" media="all" type="text/css"
-	href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
-<link rel="stylesheet" media="all" type="text/css"
 	href="../libjs/jqueryPlugin/timepicker/jquery-ui-timepicker-addon.css" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" media="all" type="text/css" href="../libjs/jquery-ui-1.11.3/themes/smoothness/jquery-ui.css" />
+
+<script type="text/javascript" src="../libjs/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="../libjs/jquery-ui-1.11.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
 <script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/jquery-ui-sliderAccess.js"></script>
+
+
+<style>
+#toolbar {
+	padding: 4px;
+	display: inline-block;
+}
+/* support: IE7 */
+*+html #toolbar {
+	display: inline;
+}
+</style>
+
 
 <script type='text/javascript'>
 	var ex13;
@@ -74,6 +87,72 @@
 			stopCount();
 		}
 	}
+
+	$(function() {
+		$("#beginning").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-seek-start"
+			}
+		});
+		$("#rewind").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-seek-prev"
+			}
+		});
+		$("#play").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-play"
+			}
+		}).click(function() {
+			var options;
+			if ($(this).text() === "play") {
+				options = {
+					label : "pause",
+					icons : {
+						primary : "ui-icon-pause"
+					}
+				};
+			} else {
+				options = {
+					label : "play",
+					icons : {
+						primary : "ui-icon-play"
+					}
+				};
+			}
+			$(this).button("option", options);
+		});
+		$("#stop").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-stop"
+			}
+		}).click(function() {
+			$("#play").button("option", {
+				label : "play",
+				icons : {
+					primary : "ui-icon-play"
+				}
+			});
+		});
+		$("#forward").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-seek-next"
+			}
+		});
+		$("#end").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-seek-end"
+			}
+		});
+		$("#shuffle").button();
+		$("#repeat").buttonset();
+	});
 </script>
 
 
@@ -81,12 +160,22 @@
 <body>
 
 	<div>
-		<input type="checkbox" onclick="liveClicked()" name="live" id="livecb" value="male" /> live
+		<input type="checkbox" onclick="liveClicked()" name="live" id="livecb" value="male" /> live <input type="text"
+			name="basic_example_1" id="basic_example_1" value="" />
 	</div>
-	<div>
-		<input type="text" name="basic_example_1" id="basic_example_1" value="" />
-	</div>
+	<div id="toolbar" class="ui-widget-header ui-corner-all">
+		<button id="beginning">go to beginning</button>
+		<button id="rewind">rewind</button>
+		<button id="play">play</button>
+		<button id="stop">stop</button>
+		<button id="forward">fast forward</button>
+		<button id="end">go to end</button>
 
+		<input type="checkbox" id="shuffle"><label for="shuffle">Shuffle</label> <span id="repeat"> <input
+				type="radio" id="repeat0" name="repeat" checked="checked"><label for="repeat0">No Repeat</label> <input
+					type="radio" id="repeat1" name="repeat"><label for="repeat1">Once</label> <input type="radio"
+						id="repeatall" name="repeat"><label for="repeatall">All</label></span>
+	</div>
 
 
 
