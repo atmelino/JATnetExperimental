@@ -33,6 +33,10 @@
 
 <script type='text/javascript'>
 	var ex13;
+	var myDate;
+	var t;
+	var timer_is_on = 0;
+
 	$(document).ready(function() {
 
 		ex13 = $('#basic_example_1');
@@ -51,10 +55,11 @@
 			secondGrid : 10,
 		});
 
-	});
+		ex13.datetimepicker('setDate', (new Date()));
 
-	var t;
-	var timer_is_on = 0;
+		timedCount();
+
+	});
 
 	function timedCount() {
 
@@ -62,8 +67,15 @@
 			ex13.datetimepicker('setDate', (new Date()));
 		}
 
-		if (document.getElementById('repeat-2').checked) {
-			printlnMessage('messages', 'repeat-2 checked');
+		if (document.getElementById('rewind').checked) {
+			//printlnMessage('messages', 'rewind checked');
+		}
+
+		if (document.getElementById('fastForward').checked) {
+			myDate = ex13.datetimepicker('getDate');
+			myDate.setDate(myDate.getDate() + 50);
+			printlnMessage('messages', myDate);
+			ex13.datetimepicker('setDate', myDate);
 		}
 
 		t = setTimeout(function() {
@@ -85,9 +97,18 @@
 
 	function liveClicked() {
 		if (document.getElementById('livecb').checked) {
-			doTimer();
+			//doTimer();
+			printlnMessage('messages', 'live is on');
+			printlnMessage('messages', document.getElementById('cbStop').checked);
+			document.getElementById('cbStop').checked=false;
+			//document.getElementById('cbStop').checked=false;
+			//$("#cbStop").prop("checked", false);
+
+			$('input[name=fastForward]').attr('checked', true);
+
+			
 		} else {
-			stopCount();
+			//stopCount();
 		}
 	}
 
@@ -108,18 +129,16 @@
 			name="basic_example_1" id="basic_example_1" value="" />
 		<!--                                                                                            -->
 		<span id="repeat"> <!--                                                                                            -->
-			<input type="radio" id="repeat-2" name="repeat"/><label for="repeat-2"><img src="icons/Rewind12.gif"/></label>
-				<!--                                                                                                                 -->
-				<input type="radio" id="repeat-1" name="repeat"/><label for="repeat-1"><img src="icons/Reverse12.gif"/></label>
-					<!--                                                                                                                 -->
-					<input type="radio" id="repeat0" name="repeat" checked="checked"/><label for="repeat0"><img
-							src="icons/Stop12.gif"/></label> <!--                                                                                                                 -->
-						<input type="radio" id="repeat1" name="repeat"/><label for="repeat1"><img src="icons/Play12.gif"/></label>
-							<input type="radio" id="repeatall" name="repeat"/><label for="repeatall"><img
-									src="icons/FastForward12.gif"/></label></span>
+			<input type="radio" id="rewind" name="repeat" /><label for="rewind"><img src="icons/Rewind12.gif" /></label> <!--                                                                                                                 -->
+			<input type="radio" id="repeat-1" name="repeat" /><label for="repeat-1"><img src="icons/Reverse12.gif" /></label> <!--                                                                                                                 -->
+			<input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img
+				src="icons/Stop12.gif" /></label> <!--                                                                                                                 -->
+			<input type="radio" id="repeat1" name="repeat" /><label for="repeat1"><img src="icons/Play12.gif" /></label> <input
+			type="radio" id="fastForward" name="repeat" /><label for="fastForward"><img src="icons/FastForward12.gif" /></label></span>
 	</div>
-<div><textarea id="messages" cols=80; rows=3></textarea>
-</div>	
-	
+	<div>
+		<textarea id="messages" cols=80; rows=3></textarea>
+	</div>
+
 </body>
 </html>
