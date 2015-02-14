@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -9,16 +8,15 @@
 <meta name="Keywords" content="jQuery, UI, datepicker, timepicker, datetime, time, format" />
 
 
-
 <link rel="stylesheet" media="all" type="text/css"
 	href="../libjs/jqueryPlugin/timepicker/jquery-ui-timepicker-addon.css" />
 <link rel="stylesheet" media="all" type="text/css" href="../libjs/jquery-ui-1.11.3/themes/smoothness/jquery-ui.css" />
-
 <script type="text/javascript" src="../libjs/jquery-2.1.1.js"></script>
 <script type="text/javascript" src="../libjs/jquery-ui-1.11.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
 <script type="text/javascript" src="../libjs/jqueryPlugin/timepicker/jquery-ui-sliderAccess.js"></script>
+<script type="text/javascript" src="../libjs/functions.js"></script>
 
 
 <style>
@@ -55,14 +53,19 @@
 
 	});
 
-	var c = 0;
 	var t;
 	var timer_is_on = 0;
 
 	function timedCount() {
-		//document.getElementById('basic_example_1').value = c;
-		ex13.datetimepicker('setDate', (new Date()));
-		c = c + 1;
+
+		if (document.getElementById('livecb').checked) {
+			ex13.datetimepicker('setDate', (new Date()));
+		}
+
+		if (document.getElementById('repeat-2').checked) {
+			printlnMessage('messages', 'repeat-2 checked');
+		}
+
 		t = setTimeout(function() {
 			timedCount()
 		}, 1000);
@@ -89,69 +92,10 @@
 	}
 
 	$(function() {
-		$("#beginning").button({
-			text : false,
-			icons : {
-				primary : "ui-icon-seek-start"
-			}
-		});
-		$("#rewind").button({
-			text : false,
-			icons : {
-				primary : "ui-icon-seek-prev"
-			}
-		});
-		$("#play").button({
-			text : false,
-			icons : {
-				primary : "ui-icon-play"
-			}
-		}).click(function() {
-			var options;
-			if ($(this).text() === "play") {
-				options = {
-					label : "pause",
-					icons : {
-						primary : "ui-icon-pause"
-					}
-				};
-			} else {
-				options = {
-					label : "play",
-					icons : {
-						primary : "ui-icon-play"
-					}
-				};
-			}
-			$(this).button("option", options);
-		});
-		$("#stop").button({
-			text : false,
-			icons : {
-				primary : "ui-icon-stop"
-			}
-		}).click(function() {
-			$("#play").button("option", {
-				label : "play",
-				icons : {
-					primary : "ui-icon-play"
-				}
-			});
-		});
-		$("#forward").button({
-			text : false,
-			icons : {
-				primary : "ui-icon-seek-next"
-			}
-		});
-		$("#end").button({
-			text : false,
-			icons : {
-				primary : "ui-icon-seek-end"
-			}
-		});
-		$("#shuffle").button();
 		$("#repeat").buttonset();
+		$("input[name='repeat']").on("change", function() {
+			//alert(this.id);
+		});
 	});
 </script>
 
@@ -162,24 +106,19 @@
 	<div>
 		<input type="checkbox" onclick="liveClicked()" name="live" id="livecb" value="male" /> live <input type="text"
 			name="basic_example_1" id="basic_example_1" value="" />
+		<!--                                                                                            -->
+		<span id="repeat"> <!--                                                                                            -->
+			<input type="radio" id="repeat-2" name="repeat"><label for="repeat-2"><img src=icons/Rewind12.gif></label>
+				<!--                                                                                                                 -->
+				<input type="radio" id="repeat-1" name="repeat"><label for="repeat-1"><img src=icons/Reverse12.gif></label>
+					<!--                                                                                                                 -->
+					<input type="radio" id="repeat0" name="repeat" checked="checked"><label for="repeat0"><img
+							src=icons/Stop12.gif></label> <!--                                                                                                                 -->
+						<input type="radio" id="repeat1" name="repeat"><label for="repeat1"><img src=icons/Play12.gif></label>
+							<input type="radio" id="repeatall" name="repeat"><label for="repeatall"><img
+									src=icons/FastForward12.gif></label></span>
 	</div>
-	<div id="toolbar" class="ui-widget-header ui-corner-all">
-		<button id="beginning">go to beginning</button>
-		<button id="rewind">rewind</button>
-		<button id="play">play</button>
-		<button id="stop">stop</button>
-		<button id="forward">fast forward</button>
-		<button id="end">go to end</button>
-
-		<input type="checkbox" id="shuffle"><label for="shuffle">Shuffle</label> <span id="repeat"> <input
-				type="radio" id="repeat0" name="repeat" checked="checked"><label for="repeat0">No Repeat</label> <input
-					type="radio" id="repeat1" name="repeat"><label for="repeat1">Once</label> <input type="radio"
-						id="repeatall" name="repeat"><label for="repeatall">All</label></span>
-	</div>
-
-
-
-
+	<textarea id="messages" cols=80; rows=3></textarea>
 
 </body>
 </html>
