@@ -63,7 +63,8 @@
 
 	function timedCount() {
 
-		if (document.getElementById('livecb').checked) {
+		//if (document.getElementById('livecb').checked) {
+		if (document.getElementById('now').checked) {
 			ex13.datetimepicker('setDate', (new Date()));
 		}
 
@@ -100,13 +101,12 @@
 			//doTimer();
 			printlnMessage('messages', 'live is on');
 			printlnMessage('messages', document.getElementById('cbStop').checked);
-			document.getElementById('cbStop').checked=false;
+			document.getElementById('cbStop').checked = false;
 			//document.getElementById('cbStop').checked=false;
 			//$("#cbStop").prop("checked", false);
 
 			$('input[name=fastForward]').attr('checked', true);
 
-			
 		} else {
 			//stopCount();
 		}
@@ -125,10 +125,8 @@
 <body>
 
 	<div>
-		<input type="checkbox" onclick="liveClicked()" name="live" id="livecb" value="male" /> live <input type="text"
-			name="basic_example_1" id="basic_example_1" value="" />
-		<!--                                                                                            -->
-		<span id="repeat"> <!--                                                                                            -->
+		<input type="text" name="basic_example_1" id="basic_example_1" value="" /> <span id="repeat"> <!--                                                                                            -->
+			<input type="radio" id="now" name="repeat" /><label for="now">NOW</label> <!--                                                                                                                 -->
 			<input type="radio" id="rewind" name="repeat" /><label for="rewind"><img src="icons/Rewind12.gif" /></label> <!--                                                                                                                 -->
 			<input type="radio" id="repeat-1" name="repeat" /><label for="repeat-1"><img src="icons/Reverse12.gif" /></label> <!--                                                                                                                 -->
 			<input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img
