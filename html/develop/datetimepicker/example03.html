@@ -53,9 +53,13 @@
 			hourGrid : 4,
 			minuteGrid : 10,
 			secondGrid : 10,
+			showOn : "button",
+			buttonImage : "icons/calendar.gif",
+			buttonImageOnly : true,
+			buttonText : "Select date",
 		});
 
-		ex13.datetimepicker('setDate', (new Date()));
+		//ex13.datetimepicker('setDate', (new Date()));
 
 		timedCount();
 
@@ -64,12 +68,15 @@
 	function timedCount() {
 
 		//if (document.getElementById('livecb').checked) {
-		if (document.getElementById('now').checked) {
+		if (document.getElementById('cbLive').checked) {
 			ex13.datetimepicker('setDate', (new Date()));
 		}
 
 		if (document.getElementById('rewind').checked) {
 			//printlnMessage('messages', 'rewind checked');
+		}
+
+		if (document.getElementById('cbStop').checked) {
 		}
 
 		if (document.getElementById('fastForward').checked) {
@@ -96,26 +103,15 @@
 		timer_is_on = 0;
 	}
 
-	function liveClicked() {
-		if (document.getElementById('livecb').checked) {
-			//doTimer();
-			printlnMessage('messages', 'live is on');
-			printlnMessage('messages', document.getElementById('cbStop').checked);
-			document.getElementById('cbStop').checked = false;
-			//document.getElementById('cbStop').checked=false;
-			//$("#cbStop").prop("checked", false);
-
-			$('input[name=fastForward]').attr('checked', true);
-
-		} else {
-			//stopCount();
-		}
-	}
-
 	$(function() {
 		$("#repeat").buttonset();
 		$("input[name='repeat']").on("change", function() {
 			//alert(this.id);
+			if (this.id == 'cbStop')
+				document.getElementById('speed').value = "0X";
+			if (this.id == 'cbLive')
+				document.getElementById('speed').value = "1X";
+
 		});
 	});
 </script>
@@ -125,14 +121,16 @@
 <body>
 
 	<div>
-		<input type="text" name="basic_example_1" id="basic_example_1" value="" /> <span id="repeat"> <!--                                                                                            -->
-			<input type="radio" id="now" name="repeat" /><label for="now">NOW</label> <!--                                                                                                                 -->
+		<input type="text" name="basic_example_1" id="basic_example_1" value="01/01/0000 00:00:00 -0000" size="26" /> <span
+			id="repeat"> <!--                                                                                            -->
+			<input type="radio" id="cbLive" name="repeat" /><label for="cbLive">LIVE</label> <!--                                                                                                                 -->
 			<input type="radio" id="rewind" name="repeat" /><label for="rewind"><img src="icons/Rewind12.gif" /></label> <!--                                                                                                                 -->
 			<input type="radio" id="repeat-1" name="repeat" /><label for="repeat-1"><img src="icons/Reverse12.gif" /></label> <!--                                                                                                                 -->
 			<input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img
 				src="icons/Stop12.gif" /></label> <!--                                                                                                                 -->
 			<input type="radio" id="repeat1" name="repeat" /><label for="repeat1"><img src="icons/Play12.gif" /></label> <input
 			type="radio" id="fastForward" name="repeat" /><label for="fastForward"><img src="icons/FastForward12.gif" /></label></span>
+		<input type="text" name="speed" id="speed" value="1X" size="4" />
 	</div>
 	<div>
 		<textarea id="messages" cols=80; rows=3></textarea>

@@ -1,4 +1,24 @@
-		// skyBox/FOG
+
+
+
+	function liveClicked() {
+		if (document.getElementById('livecb').checked) {
+			//doTimer();
+			printlnMessage('messages', 'live is on');
+			printlnMessage('messages', document.getElementById('cbStop').checked);
+			document.getElementById('cbStop').checked = false;
+			//document.getElementById('cbStop').checked=false;
+			//$("#cbStop").prop("checked", false);
+
+			$('input[name=fastForward]').attr('checked', true);
+
+		} else {
+			//stopCount();
+		}
+	}
+
+
+// skyBox/FOG
 		var skyBoxGeometry = new THREE.CubeGeometry(1000 * gridSize, 1000 * gridSize, 1000 * gridSize);
 		var skyBoxMaterial = new THREE.MeshBasicMaterial({
 			color : 0x9999ff,
