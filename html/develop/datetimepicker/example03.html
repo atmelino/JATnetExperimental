@@ -107,6 +107,7 @@
 	function rewind() {
 		document.getElementById('cbStop').checked=false;
 		document.getElementById("cbLive").checked = false;
+		$('#cbStop').prop('checked',true);
 	}
 
 	
@@ -134,8 +135,12 @@
 			<input type="radio" id="cbLive" name="repeat" /><label for="cbLive">LIVE</label> <!--                                                                                                                 -->
 			<button onclick="rewind()">
 				<img src="icons/Rewind12.gif" />
-			</button> <input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img
-				src="icons/Stop12.gif" /></label> <!--                                                                                                                 -->
+			</button> 
+			
+<!-- 			<input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img -->
+<!-- 				src="icons/Stop12.gif" /></label> -->
+			<input type="radio" id="cbStop" name="repeat"  /><label for="cbStop"><img
+				src="icons/Stop12.gif" /></label>
 
 			<button onclick="forward()">
 				<img src="icons/FastForward12.gif" />
