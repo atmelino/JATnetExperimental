@@ -28,30 +28,6 @@
 *+html #toolbar {
 	display: inline;
 }
-
-.input_hidden {
-	position: absolute;
-	left: -9999px;
-}
-
-sad_image.png
-
-.selected {
-	background-color: #ccc;
-}
-
-#sites label {
-	display: inline-block;
-	cursor: pointer;
-}
-
-#sites label:hover {
-	background-color: #efefef;
-}
-
-#sites label img {
-	padding: 3px;
-}
 </style>
 
 
@@ -65,10 +41,6 @@ sad_image.png
 	$(document).ready(function() {
 
 		ex13 = $('#basic_example_1');
-
-		$('#utility_example_1_setdt').click(function() {
-			ex13.datetimepicker('setDate', (new Date()));
-		});
 
 		ex13.datetimepicker({
 			timeFormat : 'HH:mm:ss z',
@@ -128,31 +100,39 @@ sad_image.png
 		timer_is_on = 0;
 	}
 
-	function rewind() {
-		document.getElementById('simple').checked = false;
-		document.getElementById('combined').checked = false;
-		// 		document.getElementById("cbLive").checked = false;
-		$('#cbStop').prop('checked', true);
-	}
-
 	$(function() {
 		$("#repeat").buttonset();
 		$("input[name='repeat']").on("change", function() {
 			//alert(this.id);
-			if (this.id == 'cbStop')
-				document.getElementById('speed').value = "0X";
-			if (this.id == 'cbLive')
-				document.getElementById('speed').value = "1X";
-
+			if (this.id == 'cbStop') {
+				timeFactor = 0;
+				document.getElementById('speed').value = timeFactor + "X";
+				//document.getElementById('speed').value = "0X";
+			}
+			if (this.id == 'cbLive') {
+				timeFactor = 1;
+				document.getElementById('speed').value = timeFactor + "X";
+				//document.getElementById('speed').value = "1X";
+			}
 		});
+
 	});
 
-	$(function() {
-		$('#sites input:radio').addClass('input_hidden');
-		$('#sites label').click(function() {
-			$(this).addClass('selected').siblings().removeClass('selected');
-		});
-	});
+	function rewind() {
+		printlnMessage('messages', 'rewind called');
+		timeFactor = timeFactor / 2;
+		document.getElementById('speed').value = timeFactor + "X";
+		$('#cbLive').prop('checked', false).button("refresh");
+		$('#cbStop').prop('checked', false).button("refresh");
+	}
+
+	function forward() {
+		printlnMessage('messages', 'forward called');
+		timeFactor = timeFactor * 2;
+		document.getElementById('speed').value = timeFactor + "X";
+		$('#cbLive').prop('checked', false).button("refresh");
+		$('#cbStop').prop('checked', false).button("refresh");
+	}
 </script>
 
 
@@ -160,48 +140,22 @@ sad_image.png
 <body>
 
 
-	<div id="sites">
-		<input type="radio" name="site" id="so" value="stackoverflow" /><label for="so"><img src="icons/Rewind12.gif" /></label>
-		<input type="radio" name="site" id="sf" value="serverfault" /><label for="sf"><img
-			src="icons/FastForward12.gif" alt="Server Fault" /></label> <input type="radio" name="site" id="su" value="superuser" /><label
-			for="su"><img src="icons/Stop12.gif" alt="Super User" /></label>
-	</div>
 
-
-
-	<div>
-		<input style="position: absolute; left: -9999px;" type="radio" name="emotion" id="sad" /> <label for="sad"><img
-			src="icons/Stop12.gif" style="display: inline-block; cursor: pointer; padding: 3px;" alt="I'm sad" /></label> <input
-			style="position: absolute; left: -9999px;" type="radio" name="emotion" id="happy" /> <label for="happy"><img
-			src="icons/Rewind12.gif" style="display: inline-block; cursor: pointer; padding: 3px;" alt="I'm happy" /></label>
-	</div>
-
-	<div id="emotion">
-		<input type="radio" name="emotion" id="sad" /> <label for="sad"><img src="icons/Stop12.gif" alt="I'm sad" /></label>
-		<input type="radio" name="emotion" id="happy" /> <label for="happy"><img src="icons/Rewind12.gif"
-			alt="I'm happy" /></label>
-	</div>
-	<div>
-		<label><input type="radio" name="combined" id="simple" value="simple" onclick="combinedClicked()" /><img
-			src="icons/Stop12.gif" /></label> <label><input type="radio" name="combined" id="combined" value="combined"
-			onclick="combinedClicked()" />Combined</label>
-	</div>
 	<div>
 		<input type="text" name="basic_example_1" id="basic_example_1" value="01/01/0000 00:00:00 -0000" size="26" /> <span
 			id="repeat"> <!--                                                                                            -->
-			<input type="radio" id="cbLive" name="repeat" /><label for="cbLive">LIVE</label> <!--                                                                                                                 -->
+			<input type="radio" id="cbLive" name="repeat" /><label for="cbLive">LIVE</label>
 
-			<!-- 			<input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img --> <!-- 				src="icons/Stop12.gif" /></label> -->
-			<input type="radio" id="cbStop" name="repeat" /><label for="cbStop"><img src="icons/Stop12.gif" /></label>
+			<button onclick="rewind()">
+				<img src="icons/Rewind12.gif" />
+			</button> <!-- 			<input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img --> <input
+			type="radio" id="cbStop" name="repeat" /><label for="cbStop"><img src="icons/Stop12.gif" /></label>
 
 			<button onclick="forward()">
 				<img src="icons/FastForward12.gif" />
 			</button>
 
 		</span> <input type="text" name="speed" id="speed" value="1X" size="4" />
-		<button onclick="rewind()">
-			<img src="icons/Rewind12.gif" />
-		</button>
 	</div>
 	<div>
 		<textarea id="messages" cols=80; rows=3></textarea>

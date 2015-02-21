@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>buttons</title>
+
+
+<link rel="stylesheet" media="all" type="text/css" href="../../libjs/jquery-ui-1.11.3/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="../../libjs/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="../../libjs/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../libjs/functions.js"></script>
+
+
+<style>
+#toolbar {
+	padding: 4px;
+	display: inline-block;
+}
+/* support: IE7 */
+*+html #toolbar {
+	display: inline;
+}
+
+/* images for radio buttons */
+.input_hidden {
+	position: absolute;
+	left: -9999px;
+}
+
+.selected {
+	background-color: #ccc;
+}
+
+#sites label {
+	display: inline-block;
+	cursor: pointer;
+}
+
+#sites label:hover {
+	background-color: #efefef;
+}
+
+#sites label img {
+	padding: 3px;
+}
+</style>
+
+
+<script type='text/javascript'>
+	$(document).ready(function() {
+	});
+
+	$(function() {
+		$("#repeat").buttonset();
+		$("#radio").buttonset();
+		$("#format").buttonset();
+	});
+
+	$(function() {
+		$('#sites input:radio').addClass('input_hidden');
+		$('#sites label').click(function() {
+			printlnMessage('messages', 'image radio button clicked');
+
+			$(this).addClass('selected').siblings().removeClass('selected');
+		});
+	});
+
+	$(function() {
+		$("input[name='repeat']").on("change", function() {
+			//alert(this.id);
+			if (this.id == 'cbStop')
+				document.getElementById('speed').value = "0X";
+			if (this.id == 'cbLive')
+				document.getElementById('speed').value = "1X";
+		});
+	});
+
+	function check() {
+		printlnMessage('messages', 'check called');
+
+		document.getElementById('simple').checked = true;
+		// 		document.getElementById('combined').checked = true;
+		document.getElementById('so').checked = true;
+		$('#myCheckbox').prop('checked', true);
+
+		$('#b3').prop('checked', true).button("refresh");		
+		$('#check1').prop('checked', true).button("refresh");
+		$('#cbStop').prop('checked', true).button("refresh");
+		$('#radio1').prop('checked', true).button("refresh");
+	}
+
+	function uncheck() {
+		document.getElementById('simple').checked = false;
+		$('#myCheckbox').prop('checked', false); // Unchecks it
+		//document.getElementById('combined').checked = false;
+		$('#b3').prop('checked', false).button("refresh");		
+		$('#check1').prop('checked', false).button("refresh");
+		$('#cbStop').prop('checked', false).button("refresh");
+		$('#radio1').prop('checked', false).button("refresh");
+	}
+
+	$(function() {
+		$('#buttons input').button();
+	});
+</script>
+
+</head>
+
+<body>
+	<div>
+		<button onclick="check()">check</button>
+		<button onclick="uncheck()">uncheck</button>
+	</div>
+
+	<h3>plain html</h3>
+	<div>
+		<input type="checkbox" id="myCheckbox" checked="checked" />
+	</div>
+	<div>
+		<label><input type="radio" name="combined" id="simple" value="simple" onclick="combinedClicked()" /><img
+			src="icons/Stop12.gif" /></label> <label><input type="radio" name="combined" id="combined" value="combined"
+			onclick="combinedClicked()" />Combined</label>
+	</div>
+
+
+	<h3>styled html</h3>
+	<div id="sites">
+		<input type="radio" name="site" id="so" value="stackoverflow" /><label for="so"><img src="icons/Rewind12.gif" /></label>
+		<input type="radio" name="site" id="sf" value="serverfault" /><label for="sf"><img
+			src="icons/FastForward12.gif" alt="Server Fault" /></label> <input type="radio" name="site" id="su" value="superuser" /><label
+			for="su"><img src="icons/Stop12.gif" alt="Super User" /></label>
+	</div>
+
+	<div>
+		<input style="position: absolute; left: -9999px;" type="radio" name="emotion" id="sad" /> <label for="sad"><img
+			src="icons/Stop12.gif" style="display: inline-block; cursor: pointer; padding: 3px;" alt="I'm sad" /></label> <input
+			style="position: absolute; left: -9999px;" type="radio" name="emotion" id="happy" /> <label for="happy"><img
+			src="icons/Rewind12.gif" style="display: inline-block; cursor: pointer; padding: 3px;" alt="I'm happy" /></label>
+	</div>
+
+	<h3>jQuery UI</h3>
+	<div id="buttons">
+		<label for="b1">button1</label> <label for="b2">button2</label> <label for="b3">button3</label> <input type="radio"
+			name="groupa" id="b1" value="b1"> <input type="radio" name="groupa" id="b2" value="b2"> <input
+				type="radio" name="groupa" id="b3" value="b3">
+	</div>
+	<div id="radio">
+		<input type="radio" id="radio1" name="radio" /><label for="radio1"><img src="icons/Rewind12.gif" /></label> <input
+			type="radio" id="radio2" name="radio" checked="checked" /><label for="radio2">Choice 2</label> <input type="radio"
+			id="radio3" name="radio" /><label for="radio3">Choice 3</label>
+	</div>
+	<div id="format">
+		<input type="checkbox" id="check1" /><label for="check1">B</label> <input type="checkbox" id="check2" /><label
+			for="check2">I</label> <input type="checkbox" id="check3" /><label for="check3">U</label>
+	</div>
+	<div>
+		<span id="repeat"> <!--                                                                                            -->
+			<input type="radio" id="cbLive" name="repeat" /><label for="cbLive">LIVE</label> <!--                                                                                                                 -->
+
+			<!-- 			<input type="radio" id="cbStop" name="repeat" checked="checked" /><label for="cbStop"><img --> <!-- 				src="icons/Stop12.gif" /></label> -->
+			<input type="radio" id="cbStop" name="repeat" /><label for="cbStop"><img src="icons/Stop12.gif" /></label>
+
+			<button onclick="forward()">
+				<img src="icons/FastForward12.gif" />
+			</button>
+
+		</span> <input type="text" name="speed" id="speed" value="1X" size="4" />
+		<button onclick="rewind()">
+			<img src="icons/Rewind12.gif" />
+		</button>
+	</div>
+	<div>
+		<textarea id="messages" cols=80; rows=3></textarea>
+	</div>
+
+</body>
+</html>
