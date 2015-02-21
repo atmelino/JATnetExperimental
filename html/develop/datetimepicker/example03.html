@@ -120,18 +120,51 @@
 
 	function rewind() {
 		printlnMessage('messages', 'rewind called');
-		timeFactor = timeFactor / 2;
+
+		if (timeFactor > 1)
+			timeFactor = timeFactor / 2;
+		else {
+			if (timeFactor == 1)
+				timeFactor = 0;
+			else {
+				if (timeFactor == 0)
+					timeFactor = -1;
+				else {
+					if (timeFactor <= -1)
+						timeFactor = timeFactor * 2;
+				}
+			}
+		}
 		document.getElementById('speed').value = timeFactor + "X";
 		$('#cbLive').prop('checked', false).button("refresh");
-		$('#cbStop').prop('checked', false).button("refresh");
+		if (timeFactor == 0)
+			$('#cbStop').prop('checked', true).button("refresh");
+		else
+			$('#cbStop').prop('checked', false).button("refresh");
 	}
 
 	function forward() {
 		printlnMessage('messages', 'forward called');
-		timeFactor = timeFactor * 2;
+		if (timeFactor < -1)
+			timeFactor = timeFactor / 2;
+		else {
+			if (timeFactor == -1)
+				timeFactor = 0;
+			else {
+				if (timeFactor == 0)
+					timeFactor = 1;
+				else {
+					if (timeFactor >= 1)
+						timeFactor = timeFactor * 2;
+				}
+			}
+		}
 		document.getElementById('speed').value = timeFactor + "X";
 		$('#cbLive').prop('checked', false).button("refresh");
-		$('#cbStop').prop('checked', false).button("refresh");
+		if (timeFactor == 0)
+			$('#cbStop').prop('checked', true).button("refresh");
+		else
+			$('#cbStop').prop('checked', false).button("refresh");
 	}
 </script>
 
