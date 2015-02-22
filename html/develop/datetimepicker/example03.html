@@ -56,7 +56,7 @@
 			buttonText : "Select date",
 		});
 
-		//ex13.datetimepicker('setDate', (new Date()));
+		ex13.datetimepicker('setDate', (new Date()));
 
 		timedCount();
 
@@ -64,24 +64,21 @@
 
 	function timedCount() {
 
-		//if (document.getElementById('livecb').checked) {
-		if (document.getElementById('cbLive').checked) {
+		if (document.getElementById('cbLive').checked)
 			ex13.datetimepicker('setDate', (new Date()));
+
+		if (!document.getElementById('cbStop').checked) {
+			myDate = ex13.datetimepicker('getDate');
+			//printlnMessage('messages', myDate);
+			myUTC=myDate.getTime();
+			printlnMessage('messages', myUTC);
+			
+			//myDate.setTime(myUTC);
+			myDate.setTime(myUTC + timeFactor*1000);
+
+			//myDate.setDate(myDate.getSeconds() + timeFactor);
+			ex13.datetimepicker('setDate', myDate);
 		}
-
-		//if (document.getElementById('rewind').checked) {
-		//printlnMessage('messages', 'rewind checked');
-		//}
-
-		if (document.getElementById('cbStop').checked) {
-		}
-
-		// 	if (document.getElementById('fastForward').checked) {
-		// 			myDate = ex13.datetimepicker('getDate');
-		// 			myDate.setDate(myDate.getDate() + 50);
-		// 			printlnMessage('messages', myDate);
-		// 			ex13.datetimepicker('setDate', myDate);
-		// 		}
 
 		t = setTimeout(function() {
 			timedCount()
@@ -175,9 +172,11 @@
 
 
 	<div>
-		<input type="text" name="basic_example_1" id="basic_example_1" value="01/01/0000 00:00:00 -0000" size="26" /> <span
+		<input type="text" name="basic_example_1" id="basic_example_1"  size="26" />
+<!-- 		<input type="text" name="basic_example_1" id="basic_example_1" value="01/01/0000 00:00:00 -0000" size="26" /> -->
+		 <span
 			id="repeat"> <!--                                                                                            -->
-			<input type="radio" id="cbLive" name="repeat" /><label for="cbLive">LIVE</label>
+			<input type="radio" id="cbLive" name="repeat" checked="checked"/><label for="cbLive">LIVE</label>
 
 			<button onclick="rewind()">
 				<img src="icons/Rewind12.gif" />

@@ -1,4 +1,10 @@
 
+		//if (document.getElementById('livecb').checked) {
+// 			if (document.getElementById('fastForward').checked) {
+//}
+		//if (document.getElementById('rewind').checked) {
+		//printlnMessage('messages', 'rewind checked');
+		//}
 
 
 	function liveClicked() {
