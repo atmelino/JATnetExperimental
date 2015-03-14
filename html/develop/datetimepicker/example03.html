@@ -3,10 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Adding a Timepicker to jQuery UI Datepicker</title>
-<meta name="Description"
-	content="jQuery Timepicker Addon.  Add a timepicker to your jQuery UI Datepicker.  With options to show only time, format time, and much more." />
-<meta name="Keywords" content="jQuery, UI, datepicker, timepicker, datetime, time, format" />
-
 
 <link rel="stylesheet" media="all" type="text/css"
 	href="../libjs/jqueryPlugin/timepicker/jquery-ui-timepicker-addon.css" />
@@ -51,7 +47,7 @@
 			minuteGrid : 10,
 			secondGrid : 10,
 			showOn : "button",
-			buttonImage : "icons/calendar.gif",
+			buttonImage : "icons/calendar16x16.gif",
 			buttonImageOnly : true,
 			buttonText : "Select date",
 		});
@@ -70,11 +66,11 @@
 		if (!document.getElementById('cbStop').checked) {
 			myDate = ex13.datetimepicker('getDate');
 			//printlnMessage('messages', myDate);
-			myUTC=myDate.getTime();
+			myUTC = myDate.getTime();
 			printlnMessage('messages', myUTC);
-			
+
 			//myDate.setTime(myUTC);
-			myDate.setTime(myUTC + timeFactor*1000);
+			myDate.setTime(myUTC + timeFactor * 1000);
 
 			//myDate.setDate(myDate.getSeconds() + timeFactor);
 			ex13.datetimepicker('setDate', myDate);
@@ -172,11 +168,10 @@
 
 
 	<div>
-		<input type="text" name="basic_example_1" id="basic_example_1"  size="26" />
-<!-- 		<input type="text" name="basic_example_1" id="basic_example_1" value="01/01/0000 00:00:00 -0000" size="26" /> -->
-		 <span
-			id="repeat"> <!--                                                                                            -->
-			<input type="radio" id="cbLive" name="repeat" checked="checked"/><label for="cbLive">LIVE</label>
+		<input type="text" name="basic_example_1" id="basic_example_1" size="26" />
+		<!-- 		<input type="text" name="basic_example_1" id="basic_example_1" value="01/01/0000 00:00:00 -0000" size="26" /> -->
+		<span id="repeat"> <!--                                                                                            -->
+			<input type="radio" id="cbLive" name="repeat" checked="checked" /><label for="cbLive">LIVE</label>
 
 			<button onclick="rewind()">
 				<img src="icons/Rewind12.gif" />
