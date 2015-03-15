@@ -7,12 +7,17 @@
 
 <script src='../lib/js/dat.gui.js'></script>
 <script src="../lib/js/extra/functions.js"></script>
+<script type="text/javascript" src="tmp/RequestAnimationFrame.js"></script>
 
 
 <script>
 	var gui;
-
-
+	var parameters2;
+	parameters2 = {
+			azimuth : 0.0, // numeric
+			altitude : 0.0, // numeric
+		};
+	
 	function setup() {
 		// initialization
 		init();
@@ -20,17 +25,36 @@
 
 	function init() {
 
-		gui2 = new dat.GUI();
+		//var fizzyText = new FizzyText();
+		//var gui = new dat.GUI();
+		var gui = new dat.GUI();
 		//gui2.name("Astronomical Data");
 		parameters2 = {
 			azimuth : 0.0, // numeric
 			altitude : 0.0, // numeric
 		};
-		gui2.add(parameters2, 'azimuth').name('Azimuth &deg').listen();
-		gui2.add(parameters2, 'altitude').name('Altitude &deg').listen();
+		gui.add(parameters2, 'azimuth').name('Azimuth &deg').listen();
+		gui.add(parameters2, 'altitude').name('Altitude &deg').listen();
+		//gui.add(fizzyText, 'noiseStrength', 0, 100);
 		//gui2.open();
 
 	}
+
+	var update = function() {
+		
+		parameters2.altitude=0.4;
+		//parameters2.altitude=Math.cos(Date.getTime());
+		requestAnimationFrame(update);
+		//fizzyText.noiseStrength = Math.cos(Date.getTime());
+
+		// Iterate over all controllers
+		//for ( var i in gui.__controllers) {
+		//	gui.__controllers[i].updateDisplay();
+		//}
+
+	};
+
+	update();
 </script>
 
 </head>

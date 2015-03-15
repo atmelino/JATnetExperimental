@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<title>dat.gui: update gui Example</title>
+<!--All source-->
+
+<script src='../lib/js/dat.gui.js'></script>
+
+<script>
+	var gui;
+	var parameters2;
+	var counter = 0;
+
+	function setup() {
+		init();
+
+		animate();
+
+	}
+
+	function animate() {
+		requestAnimationFrame(animate);
+		counter++;
+		parameters2.altitude = counter;
+
+	}
+
+	function init() {
+
+		var gui = new dat.GUI();
+
+		//gui2.name("Astronomical Data");
+		parameters2 = {
+			azimuth : 0.0, // numeric
+			altitude : 0.0, // numeric
+		};
+		gui.add(parameters2, 'azimuth').name('Azimuth &deg').listen();
+		gui.add(parameters2, 'altitude').name('Altitude &deg').listen();
+
+	};
+</script>
+
+</head>
+<body onLoad="setup();">
+
+	<div id="helvetica-demo"></div>
+
+
+</body>
+</html>

@@ -14,42 +14,52 @@
 <script type="text/javascript" src="tmp/ControllerFunction.js"></script>
 <script type="text/javascript" src="tmp/ControllerNumber.js"></script>
 
-
 <!-- <script src='../lib/js/dat.gui.js'></script> -->
 <!-- <script src='../lib/js/DAT.GUI.min.js'></script> -->
-
-
 
 <!--Demo-->
 <script type="text/javascript" src="tmp/RequestAnimationFrame.js"></script>
 <script type="text/javascript" src="tmp/improvedNoise.js"></script>
 <script type="text/javascript" src="tmp/demo.js"></script>
 <script>
-	window.onload = function() {
+	var gui;
+	var parameters2;
+	var counter = 0;
 
-		var fizzyText = new FizzyText("david walsh");
+	function setup() {
+		init();
+
+		animate();
+
+	}
+
+	function animate() {
+		requestAnimationFrame(animate);
+		counter++;
+		parameters2.altitude = counter;
+
+	}
+
+	function init() {
+
 		var gui = new DAT.GUI();
 		//var gui = new dat.gui();
 		//var gui = new dat.GUI();
 
-		// Text field
-		gui.add(fizzyText, "message");
+		//gui2.name("Astronomical Data");
+		parameters2 = {
+			azimuth : 0.0, // numeric
+			altitude : 0.0, // numeric
+		};
+		gui.add(parameters2, 'azimuth').name('Azimuth &deg').listen();
+		gui.add(parameters2, 'altitude').name('Altitude &deg').listen();
 
-		// Sliders with min + max
-		gui.add(fizzyText, "maxSize").min(0.5).max(7);
-		gui.add(fizzyText, "growthSpeed").min(0.01).max(1).step(0.05);
-		gui.add(fizzyText, "speed", 0.1, 2, 0.05); // shorthand for min/max/step
-
-		// Sliders with min, max and increment.
-		gui.add(fizzyText, "noiseStrength", 10, 100, 5);
-
-		// Boolean checkbox
-		gui.add(fizzyText, "displayOutline");
 	};
 </script>
 
 </head>
-<body>
+<body onLoad="setup();">
+
 	<div id="helvetica-demo"></div>
 
 
