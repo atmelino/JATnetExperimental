@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    	<title>dat.gui:  Exceptional JavaScript Interface Controller Example</title>
+	<meta name="description" content="dat.gui is a lightweight controller library that allows you to easily manipulate variables and fire functions on the fly. " />
+	<link rel="stylesheet" type="text/css" href="/wp-content/themes/punky/fonts.css" media="all"><link rel="stylesheet" type="text/css" href="/wp-content/themes/punky/style.css?1425417751597" media="all"><!--[if IE]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script><![endif]--><style>
+.demo-frame header, .demo-frame h1, .demo-frame .demo-conversion {
+	display: none;
+}
+
+.demo-wrapper {
+	min-height: 500px;
+}
+
+.bsap {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+</style>	
+	<!--All source-->
+	<link href="tmp/GUI.css" media="screen" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="tmp/GUI.js"></script>
+	<script type="text/javascript" src="tmp/ControllerNumberSlider.js"></script>
+	<script type="text/javascript" src="tmp/Controller.js"></script>
+	<script type="text/javascript" src="tmp/ControllerBoolean.js"></script>
+	<script type="text/javascript" src="tmp/ControllerString.js"></script>
+	<script type="text/javascript" src="tmp/ControllerFunction.js"></script>
+	<script type="text/javascript" src="tmp/ControllerNumber.js"></script>
+
+	<!--Demo-->
+	<link href="docs/docs.css" media="screen" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="tmp/RequestAnimationFrame.js"></script>
+	<script type="text/javascript" src="tmp/improvedNoise.js"></script>
+	<script type="text/javascript" src="tmp/demo.js"></script>
+	<script>
+		
+		window.onload = function() {
+
+			var fizzyText = new FizzyText("david walsh");
+			var gui = new DAT.GUI();
+
+			// Text field
+			gui.add(fizzyText, "message");
+
+			// Sliders with min + max
+			gui.add(fizzyText, "maxSize").min(0.5).max(7);
+			gui.add(fizzyText, "growthSpeed").min(0.01).max(1).step(0.05);
+			gui.add(fizzyText, "speed", 0.1, 2, 0.05); // shorthand for min/max/step
+
+			// Sliders with min, max and increment.
+			gui.add(fizzyText, "noiseStrength", 10, 100, 5);
+
+			// Boolean checkbox
+			gui.add(fizzyText, "displayOutline");
+		};
+		
+		
+		
+	</script>
+	
+</head>
+<body>
+<script>
+z={analyticsID:"UA-2087880-2",themePath:"/wp-content/themes/punky",pluginPath:"libs/curl/src/curl/plugin/",domain:"davidwalsh.name",loadSidebar:!(-1!=navigator.userAgent.toLowerCase().indexOf("googlebot")),d:document,w:this},z.baseUrl=z.themePath+"/js/",-1==location.hostname.indexOf(z.domain)&&(z.isDebug=1,z.analyticsID=0),z.moo="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools"+(z.isDebug?"":"-yui-compressed")+".js";z.analyticsID&&function(){!function(e,a,n,t,c,s,i){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,s=a.createElement(n),i=a.getElementsByTagName(n)[0],s.async=1,s.src=t,i.parentNode.insertBefore(s,i)}(z.w,z.d,"script","//www.google-analytics.com/analytics.js","ga"),ga("create",z.analyticsID,z.domain),ga("send","pageview"),ga("set","nonInteraction",!0)}();</script>
+
+<!-- content wrapper --><div class="main"><div class="center clear"><!-- main content column --><main id="main"><!--CONTENT-->
+<div class="demo-wrapper">
+
+<h1>Demo:  dat.gui:  Exceptional JavaScript Interface Controller</h1>
+
+<div class="demo-conversion">Read <a href="http://davidwalsh.name/dat-gui" target="_top">dat.gui:  Exceptional JavaScript Interface Controller</a></div>
+
+<div id="promoNode"></div>	
+	<p>Modify the values in the top panel to modify the animation.</p>
+	
+	<div id="helvetica-demo"></div>
+	
+		
+</div>
+
+<p class="demo-conversion">Back to: <a href="http://davidwalsh.name/dat-gui" target="_top">dat.gui:  Exceptional JavaScript Interface Controller</a></p>
+
+</main>
+
+	<style>
+		body .one .bsa_it_ad { background: #f8f8f8; border: none; font-family: inherit; width: 200px; position: absolute; top: 0; right: 0; text-align: center; border-radius: 8px; }
+		body .one .bsa_it_ad .bsa_it_i { display: block; padding: 0; float: none; margin: 0 0 5px; }
+		body .one .bsa_it_ad .bsa_it_i img { padding: 10px; border: none; margin: 0 auto; }
+		body .one .bsa_it_ad .bsa_it_t { padding: 6px 0; }
+		body .one .bsa_it_ad .bsa_it_d { padding: 0; font-size: 12px; color: #333; }
+		body .one .bsa_it_p { display: none; }
+		body #bsap_aplink, body #bsap_aplink:hover { display: block; font-size: 10px; margin: 12px 15px 0; text-align: right; }
+	</style>
+	<script type="text/javascript" src="http://cdn.adpacks.com/adpacks.js?legacyid=1280449&zoneid=1386&key=db3b221ddd8cbba67739ae3837520ffe&serve=C6SI42Y&placement=davidwalshname&circle=dev" id="_adpacks_js"></script>
+
+
+<script>
+
+document.body.className+= ' demo-page';
+
+window.addEventListener('load', function() {
+	var s = 'script';
+	var d = document;
+	var w = window;
+	var firstScript = d.getElementsByTagName(s)[0];
+
+	
+	(function() {
+		var first_paragraph = document.getElementsByTagName('p')[0];
+		if(first_paragraph) {
+			first_paragraph.className = 'demo-intro';
+		}
+
+		setTimeout(function() {
+			var headerA = d.getElementById('header-fx');
+			headerA.className += ' complete';
+		}, 2000);
+	})();
+	
+
+	// BSA bitches!
+	var bsa = d.createElement(s);
+	bsa.async = 1;
+	bsa.src = '//s3.buysellads.com/ac/bsa.js';
+	firstScript.parentNode.insertBefore(bsa, firstScript);
+
+	// Promo!
+	(function() {
+
+		var promoNode = d.getElementById('promoNode');
+
+		// Temporary - use MooTools 2.0 when available
+		function createElement(tagName, attr, parent) {
+			var el = d.createElement(tagName);
+			for(prop in attr) {
+				if(attr.hasOwnProperty(prop)) el.setAttribute(prop, attr[prop]);
+			}
+			parent.appendChild(el);
+			return el;
+		}
+
+		// Loads a script
+		function loadScript(url) {
+			var script = d.createElement('script');
+			script.src = url;
+			script.setAttribute('async', 'true');
+			d.documentElement.firstChild.appendChild(script);
+		}
+
+		// Create the Twitter widget, inject
+		createElement('a', {
+			href: '//twitter.com/share',
+			'data-count': 'horizontal',
+			'class': 'twitter-share-button'
+		}, createElement('span', {}, promoNode));
+		loadScript('http://platform.twitter.com/widgets.js');
+
+		// Create the Google Plus icon
+		var gl = createElement('g:plusone', {
+			href: w.location,
+			size: 'medium'
+		}, createElement('span', {}, promoNode));
+		loadScript('//apis.google.com/js/plusone.js');
+		
+		// Create the Facebook widget
+		createElement('iframe', {
+			src: '//facebook.com/plugins/like.php?href=' + w.location,
+			scrolling: 'no',
+			frameborder: 0,
+			allowTransparency: true,
+			style: 'border:none; overflow:hidden; float:left; height:24px; margin-top:3px;'
+		}, createElement('span', {}, promoNode));
+
+	})();
+});
+
+!function(e){var t=e.createElement("link"),s="setAttribute";t[s]("type","text/css"),t[s]("rel","stylesheet"),t[s]("href","//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"),e.head.appendChild(t)}(z.d);</script>
+</body>
+</html>

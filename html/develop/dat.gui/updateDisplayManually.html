@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>GUI (Three.js)</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<script src='../lib/js/dat.gui.js'></script>
+<script src="../lib/js/extra/functions.js"></script>
+
+
+<script>
+	var gui;
+
+
+	function setup() {
+		// initialization
+		init();
+	}
+
+	function init() {
+
+		gui2 = new dat.GUI();
+		//gui2.name("Astronomical Data");
+		parameters2 = {
+			azimuth : 0.0, // numeric
+			altitude : 0.0, // numeric
+		};
+		gui2.add(parameters2, 'azimuth').name('Azimuth &deg').listen();
+		gui2.add(parameters2, 'altitude').name('Altitude &deg').listen();
+		//gui2.open();
+
+	}
+</script>
+
+</head>
+<body onLoad="setup();">
+	<div id='messagesDiv'>
+		<textarea id="messages" cols=60; rows=3;></textarea>
+	</div>
+
+
+
+
+</body>
+</html>
